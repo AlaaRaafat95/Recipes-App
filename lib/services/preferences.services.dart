@@ -2,34 +2,34 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 abstract class SharedPreferencesServices {
   static SharedPreferences? prefs;
-  static setEmail({required String email}) async {
-    return await SharedPreferencesServices.prefs?.setString('email', email);
+  static setEmail({required String email}) {
+    return prefs?.setString('email', email);
   }
 
-  static setName({required String name}) async {
-    await SharedPreferencesServices.prefs?.setString('name', name);
+  static setName({required String name}) {
+    prefs?.setString('name', name);
   }
 
-  static setPassword({required String password}) async {
-    await SharedPreferencesServices.prefs?.setString('password', password);
+  static setPassword({required String password}) {
+    prefs?.setString('password', password);
   }
 
   static String getEmail({required String email}) {
-    return SharedPreferencesServices.prefs?.getString(email) ?? "";
+    return prefs?.getString(email) ?? "";
   }
 
   static String getName({required String name}) {
-    return SharedPreferencesServices.prefs?.getString(name) ?? "";
+    return prefs?.getString(name) ?? "";
   }
 
   static String getPassword({required String password}) {
-    return SharedPreferencesServices.prefs?.getString(password) ?? "";
+    return prefs?.getString(password) ?? "";
   }
 
-  static removePrefs() async {
-    await SharedPreferencesServices.prefs?.remove("name");
-    await SharedPreferencesServices.prefs?.remove("email");
-    await SharedPreferencesServices.prefs?.remove("password");
+  static removePrefs() {
+    prefs?.remove("name");
+    prefs?.remove("email");
+    prefs?.remove("password");
   }
 
   static setPrefs(
