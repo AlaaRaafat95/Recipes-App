@@ -8,13 +8,13 @@ class SplashPage extends StatefulWidget {
 }
 
 class _SplashPageState extends State<SplashPage> {
-  bool? isLogin =
-      SharedPreferencesServices.getEmail(email: "email").toString().isNotEmpty;
+  bool isLogin = SharedPreferencesServices.getEmail().isNotEmpty;
+
   void handelSplashScreenTimer() {
     Future.delayed(const Duration(seconds: 10), () {
       pushReplaceRoute(
         context: context,
-        route: isLogin! ? const HomePage() : const LogInPage(),
+        route: isLogin ? const HomePage() : const LogInPage(),
       );
     });
   }

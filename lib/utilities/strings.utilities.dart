@@ -10,4 +10,5 @@ class AppStrings {
   static const haveAccount = "Have an Account ? ";
   static const signUp = "Sign Up";
   static const logOut = "Log Out";
+  static const emailNotFound = "This Email Not Found , Please Sign Up First";
 }

@@ -65,15 +65,15 @@ class _LogInPageState extends State<LogInPage> {
                   CustomButton(
                     title: AppStrings.logIn,
                     onPressed: () {
-                      if (SharedPreferencesServices.getEmail(email: "email")
-                              .isNotEmpty &&
-                          SharedPreferencesServices.getName(name: "name")
-                              .isNotEmpty) {
+                      if (SharedPreferencesServices.getEmail() ==
+                          emailController.text) {
                         clearData();
                         pushReplaceRoute(
                           context: context,
                           route: const HomePage(),
                         );
+                      } else {
+                        showSnackBar(context);
                       }
                     },
                   ),

@@ -3,7 +3,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 abstract class SharedPreferencesServices {
   static SharedPreferences? prefs;
   static setEmail({required String email}) {
-    return prefs?.setString('email', email);
+    prefs?.setString('email', email);
   }
 
   static setName({required String name}) {
@@ -14,16 +14,16 @@ abstract class SharedPreferencesServices {
     prefs?.setString('password', password);
   }
 
-  static String getEmail({required String email}) {
-    return prefs?.getString(email) ?? "";
+  static String getEmail() {
+    return prefs?.getString("email") ?? "";
   }
 
-  static String getName({required String name}) {
-    return prefs?.getString(name) ?? "";
+  static String getName() {
+    return prefs?.getString("name") ?? "";
   }
 
-  static String getPassword({required String password}) {
-    return prefs?.getString(password) ?? "";
+  static String getPassword() {
+    return prefs?.getString("password") ?? "";
   }
 
   static removePrefs() {

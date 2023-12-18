@@ -12,12 +12,10 @@ class HomePage extends StatelessWidget {
           children: [
             UserAccountsDrawerHeader(
               accountName: CustomText(
-                title:
-                    SharedPreferencesServices.getName(name: "name").toString(),
+                title: SharedPreferencesServices.getName(),
               ),
               accountEmail: CustomText(
-                title: SharedPreferencesServices.getEmail(email: "email")
-                    .toString(),
+                title: SharedPreferencesServices.getEmail(),
               ),
               currentAccountPicture: const CircleAvatar(
                 radius: 10,
@@ -26,7 +24,6 @@ class HomePage extends StatelessWidget {
             CustomButton(
               title: AppStrings.logOut,
               onPressed: () {
-                SharedPreferencesServices.removePrefs();
                 pushReplaceRoute(
                   context: context,
                   route: const LogInPage(),
