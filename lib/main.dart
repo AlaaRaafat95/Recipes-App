@@ -1,7 +1,12 @@
-import 'Constants/exports.dart';
+import 'package:recipe_app/utilities/exports.utilities.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  SharedPreferencesServices.prefs = await SharedPreferences.getInstance();
+
+  runApp(
+    const MyApp(),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -16,7 +21,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: AppColors.primaryColor),
         useMaterial3: true,
       ),
-      home: const LogInPage(),
+      home: const SplashPage(),
     );
   }
 }
