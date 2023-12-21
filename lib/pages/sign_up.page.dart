@@ -123,7 +123,7 @@ class _SignUpPageState extends State<SignUpPage> {
   }
 
   void checkAndNavigate() {
-    if (formKey.currentState!.validate()) {
+    if (formKey.currentState?.validate() ?? false) {
       SharedPreferencesServices.setPrefs(
           name: nameController.text,
           email: emailController.text,
