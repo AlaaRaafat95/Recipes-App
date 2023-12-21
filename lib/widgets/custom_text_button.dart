@@ -19,6 +19,10 @@ class CustomTextButton extends StatelessWidget {
       onPressed: () {
         pushReplaceRoute(context: context, route: route);
       },
+      style: TextButton.styleFrom(
+        padding: const EdgeInsets.all(0),
+        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+      ),
       child: CustomText(
         title: title,
         fontSize: fontSize,

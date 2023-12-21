@@ -1,14 +1,16 @@
 class AppStrings {
-  static const splashScreen = "assets/VietnameseFoods.gif";
-  static const mainPic = "assets/food-login.jpg";
-  static const name = "Enter Your Name";
-  static const country = "Enter Your Country";
-  static const email = "Enter Your Email";
-  static const password = "Enter Your Password";
-  static const logIn = "Log In";
-  static const haveNotAccount = "Haven't an account ?";
-  static const haveAccount = "Have an Account ? ";
-  static const signUp = "Sign Up";
+  static const splashPic = "assets/splash.jpg";
+  static const mainPic = "assets/mainpic.png";
+  static const logoPic = "assets/Logo.png";
+  static const logoName = "Cooking Done The Easy Way";
+  static const name = "Full Name";
+  static const email = "Email Address";
+  static const password = "Password";
+  static const signIn = "Sign in";
+  static const register = "Register";
+  static const forgetPassword = "Forgot Password ?";
+  static const haveNotAccount = " Don't have an account ?";
+  static const haveAccount = "Already registered ?";
   static const logOut = "Log Out";
-  static const emailNotFound = "This Email Not Found , Please Sign Up First";
+  static const emailNotFound = "This Email or Password Not Found ,Try Again";
 }
