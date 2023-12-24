@@ -1,5 +1,4 @@
 import 'package:recipe_app/utilities/exports.utilities.dart';
-import 'package:recipe_app/widgets/reuseable%20functions/validations.function.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});

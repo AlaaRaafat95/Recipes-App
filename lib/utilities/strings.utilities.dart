@@ -13,4 +13,6 @@ class AppStrings {
   static const haveAccount = "Already registered ?";
   static const logOut = "Log Out";
   static const emailNotFound = "This Email or Password Not Found ,Try Again";
+  static RegExp regex =
+      RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
 }

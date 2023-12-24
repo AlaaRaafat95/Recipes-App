@@ -7,11 +7,11 @@ abstract class SharedPreferencesServices {
   }
 
   static setName({required String name}) {
-    prefs?.setString('name', name);
+    prefs?.setString("name", name);
   }
 
   static setPassword({required String password}) {
-    prefs?.setString('password', password);
+    prefs?.setString("password", password);
   }
 
   static String getEmail() {
@@ -33,8 +33,8 @@ abstract class SharedPreferencesServices {
   }
 
   static setPrefs(
-      {required String email, required String password, String? name}) {
-    setName(name: name ?? "User");
+      {required String email, required String password, required String name}) {
+    setName(name: name);
     setEmail(email: email);
     setPassword(password: password);
   }

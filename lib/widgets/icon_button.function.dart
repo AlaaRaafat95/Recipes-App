@@ -1,9 +1,10 @@
 import 'package:recipe_app/utilities/exports.utilities.dart';
 
 class CustomIconButton extends StatelessWidget {
-  bool isShow = false;
+  final bool isShow;
   final VoidCallback onPressed;
-  CustomIconButton({super.key, required this.isShow, required this.onPressed});
+  const CustomIconButton(
+      {super.key, required this.isShow, required this.onPressed});
 
   @override
   Widget build(BuildContext context) {
