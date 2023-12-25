@@ -12,7 +12,7 @@ class _SplashPageState extends State<SplashPage> {
     final bool isLogin = SharedPreferencesServices.getEmail().isNotEmpty;
 
     Future.delayed(
-      const Duration(seconds: 7),
+      const Duration(seconds: 5),
       () {
         pushReplaceRoute(
           context: context,
