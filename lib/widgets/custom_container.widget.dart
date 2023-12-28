@@ -1,18 +1,28 @@
 import 'package:recipe_app/utilities/exports.utilities.dart';
 
-class BackgroundImageContainer extends StatelessWidget {
+class CustomContainer extends StatelessWidget {
   final Widget child;
-  const BackgroundImageContainer({super.key, required this.child});
+  final EdgeInsetsGeometry padding;
+  final Decoration decoration;
+  final double? height;
+  final double? width;
+
+  const CustomContainer({
+    super.key,
+    required this.child,
+    required this.padding,
+    required this.decoration,
+    this.height,
+    this.width,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-        height: MediaQuery.of(context).size.height,
-        padding: const EdgeInsets.only(bottom: 10.0, left: 30.0, right: 30.0),
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-              image: AssetImage(AppStrings.mainPic), fit: BoxFit.cover),
-        ),
+        height: height,
+        width: width,
+        padding: padding,
+        decoration: decoration,
         child: child);
   }
 }

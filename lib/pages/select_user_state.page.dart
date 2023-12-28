@@ -10,15 +10,22 @@ class SelectUserStatePage extends StatelessWidget {
         padding: const EdgeInsets.only(bottom: 20.0, left: 30.0, right: 30.0),
         decoration: const BoxDecoration(
           image: DecorationImage(
-              image: AssetImage(AppStrings.splashPic), fit: BoxFit.cover),
+            image: AssetImage(AppStrings.splashPic),
+            fit: BoxFit.cover,
+          ),
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Spacer(),
-            Image.asset(AppStrings.logoPic),
+            const Spacer(
+              flex: 2,
+            ),
+            Image.asset(
+              AppStrings.logoPic,
+              scale: 3.0,
+            ),
             const SizedBox(
-              height: 10.0,
+              height: 5.0,
             ),
             const CustomText(
               title: AppStrings.logoName,
@@ -26,19 +33,27 @@ class SelectUserStatePage extends StatelessWidget {
               fontSize: 14.0,
             ),
             const Spacer(
-              flex: 2,
+              flex: 3,
             ),
             CustomButton(
-              title: AppStrings.register,
-              fontSize: 16.0,
+              minimumSize: const Size.fromHeight(50.0),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15.0),
+              ),
+              backgroundColor: AppColors.primaryColor,
               onPressed: () {
                 pushReplaceRoute(
                   context: context,
                   route: const SignUpPage(),
                 );
               },
+              child: const CustomText(
+                title: AppStrings.register,
+                color: AppColors.white,
+                fontSize: 16.0,
+              ),
             ),
-            const SizedBox(height: 20.0),
+            const SizedBox(height: 30.0),
             const CustomTextButton(
               route: LogInPage(),
               title: AppStrings.signIn,

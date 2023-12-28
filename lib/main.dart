@@ -18,7 +18,8 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Recipes App',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: AppColors.primaryColor),
+        colorScheme: ColorScheme.fromSeed(
+            seedColor: AppColors.primaryColor, primary: AppColors.primaryColor),
         useMaterial3: true,
       ),
       home: const SplashPage(),
