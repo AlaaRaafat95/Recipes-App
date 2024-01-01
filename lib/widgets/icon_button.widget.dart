@@ -9,6 +9,10 @@ class CustomIconButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return IconButton(
+      constraints: const BoxConstraints(),
+      padding: EdgeInsets.zero,
+      style: IconButton.styleFrom(
+          padding: EdgeInsets.zero, minimumSize: Size.zero),
       onPressed: onPressed,
       icon: icon,
     );

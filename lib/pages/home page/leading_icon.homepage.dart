@@ -6,7 +6,10 @@ class LeadingIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return IconButton(
-      icon: Image.asset(AppStrings.menuIcon),
+      icon: Padding(
+        padding: const EdgeInsets.only(left: 20.0),
+        child: Image.asset(AppStrings.menuIcon),
+      ),
       onPressed: () {
         Scaffold.of(context).openDrawer();
       },
