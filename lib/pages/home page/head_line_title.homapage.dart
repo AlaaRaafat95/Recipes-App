@@ -12,11 +12,12 @@ class HeadLineTitle extends StatelessWidget {
         CustomText(
           title: title,
           fontSize: 18.0,
-          fontWeight: FontWeight.bold,
+          fontWeight: FontWeight.w700,
         ),
         const CustomTextButton(
           route: Text(""),
           title: AppStrings.seeAll,
+          fontWeight: FontWeight.w500,
           color: AppColors.primaryColor,
           fontSize: 14.0,
         ),

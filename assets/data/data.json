@@ -80,7 +80,7 @@
   "mealRate": 4,
   "mealCalories": 280,
   "mealTime":45,
-  "serving" : 1
+  "serving" : 2
 
 },
 {
@@ -91,7 +91,7 @@
   "mealRate": 5,
   "mealCalories": 280,
   "mealTime":45,
-  "serving" : 1
+  "serving" : 2
 
 }
 

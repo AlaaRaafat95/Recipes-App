@@ -31,6 +31,7 @@ class SelectUserStatePage extends StatelessWidget {
               title: AppStrings.logoName,
               color: AppColors.white,
               fontSize: 14.0,
+              fontWeight: FontWeight.w400,
             ),
             const Spacer(
               flex: 3,
@@ -42,7 +43,7 @@ class SelectUserStatePage extends StatelessWidget {
               ),
               backgroundColor: AppColors.primaryColor,
               onPressed: () {
-                pushReplaceRoute(
+                Nagivation.pushReplaceRoute(
                   context: context,
                   route: const SignUpPage(),
                 );
@@ -51,6 +52,7 @@ class SelectUserStatePage extends StatelessWidget {
                 title: AppStrings.register,
                 color: AppColors.white,
                 fontSize: 16.0,
+                fontWeight: FontWeight.w600,
               ),
             ),
             const SizedBox(height: 30.0),
@@ -59,6 +61,7 @@ class SelectUserStatePage extends StatelessWidget {
               title: AppStrings.signIn,
               color: AppColors.white,
               fontSize: 16.0,
+              fontWeight: FontWeight.w600,
             ),
           ],
         ),

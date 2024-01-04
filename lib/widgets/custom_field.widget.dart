@@ -28,19 +28,21 @@ class CustomField extends StatelessWidget {
       obscuringCharacter: "*",
       decoration: InputDecoration(
         prefixIconColor: AppColors.lightGrey,
-        floatingLabelStyle:
-            const TextStyle(fontSize: 14, color: AppColors.lightGrey),
+        floatingLabelStyle: const TextStyle(
+            fontSize: 14.0,
+            color: AppColors.lightGrey,
+            fontWeight: FontWeight.w400),
         prefixIcon: Icon(
           prefixIcon,
         ),
         suffixIcon: suffixIcon,
         suffixIconColor: AppColors.primaryColor,
-        contentPadding: const EdgeInsets.symmetric(horizontal: 20),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 20.0),
         labelText: labelText,
         labelStyle: const TextStyle(
-          fontSize: 14,
-          color: AppColors.lightGrey,
-        ),
+            fontSize: 14.0,
+            color: AppColors.lightGrey,
+            fontWeight: FontWeight.w400),
       ),
       validator: validator,
     );

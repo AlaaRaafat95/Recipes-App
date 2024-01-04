@@ -1,3 +1,4 @@
+import 'package:recipe_app/services/app_value_notifier.services.dart';
 import 'package:recipe_app/utilities/exports.utilities.dart';
 
 class LogInForm extends StatefulWidget {
@@ -8,12 +9,13 @@ class LogInForm extends StatefulWidget {
 }
 
 class _LogInFormState extends State<LogInForm> {
+  late AppValueNotifier appValueNotifier;
   late GlobalKey<FormState> formKey;
-  bool isShow = false;
   late TextEditingController emailController;
   late TextEditingController passwordController;
   @override
   void initState() {
+    appValueNotifier = AppValueNotifier();
     formKey = GlobalKey<FormState>();
     emailController = TextEditingController();
     passwordController = TextEditingController();
@@ -39,7 +41,7 @@ class _LogInFormState extends State<LogInForm> {
             title: AppStrings.signIn,
             fontSize: 18.0,
             color: AppColors.white,
-            fontWeight: FontWeight.w900,
+            fontWeight: FontWeight.w700,
           ),
           const SizedBox(
             height: 30.0,
@@ -50,40 +52,39 @@ class _LogInFormState extends State<LogInForm> {
             labelText: AppStrings.email,
             prefixIcon: Icons.email_outlined,
             validator: (value) {
-              return emailValidator(value ?? "");
+              return Validation.emailValidator(value ?? "");
             },
           ),
           const SizedBox(
             height: 20.0,
           ),
-          CustomField(
-            keyboardType: TextInputType.visiblePassword,
-            controller: passwordController,
-            obscureText: !isShow,
-            labelText: AppStrings.password,
-            prefixIcon: Icons.lock_outline,
-            suffixIcon: CustomIconButton(
-              icon: isShow
-                  ? const Icon(
-                      Icons.visibility_outlined,
-                      size: 20.0,
-                    )
-                  : const Icon(
-                      Icons.visibility_off_outlined,
-                      size: 20.0,
-                      color: AppColors.lightGrey,
-                    ),
-              onPressed: () {
-                setState(
-                  () {
-                    isShow = !isShow;
-                  },
-                );
+          ValueListenableBuilder(
+            valueListenable: appValueNotifier.iconNotifier,
+            builder: (context, value, _) => CustomField(
+              keyboardType: TextInputType.visiblePassword,
+              controller: passwordController,
+              obscureText: !value,
+              labelText: AppStrings.password,
+              prefixIcon: Icons.lock_outline,
+              suffixIcon: CustomIconButton(
+                icon: value
+                    ? const Icon(
+                        Icons.visibility_outlined,
+                        size: 20.0,
+                      )
+                    : const Icon(
+                        Icons.visibility_off_outlined,
+                        size: 20.0,
+                        color: AppColors.lightGrey,
+                      ),
+                onPressed: () {
+                  appValueNotifier.changeIcon();
+                },
+              ),
+              validator: (value) {
+                return Validation.passwordValidator(value ?? "");
               },
             ),
-            validator: (value) {
-              return passwordValidator(value ?? "");
-            },
           ),
           const SizedBox(
             height: 10.0,
@@ -96,6 +97,7 @@ class _LogInFormState extends State<LogInForm> {
                 title: AppStrings.forgetPassword,
                 color: AppColors.blue,
                 fontSize: 12.0,
+                fontWeight: FontWeight.w500,
               ),
             ],
           ),
@@ -115,6 +117,7 @@ class _LogInFormState extends State<LogInForm> {
               title: AppStrings.signIn,
               color: AppColors.white,
               fontSize: 16.0,
+              fontWeight: FontWeight.w600,
             ),
           ),
           const Spacer(flex: 5),
@@ -125,12 +128,14 @@ class _LogInFormState extends State<LogInForm> {
                 title: AppStrings.haveNotAccount,
                 color: AppColors.white,
                 fontSize: 14.0,
+                fontWeight: FontWeight.w500,
               ),
               CustomTextButton(
                 route: SignUpPage(),
                 title: AppStrings.register,
                 color: AppColors.primaryColor,
                 fontSize: 14.0,
+                fontWeight: FontWeight.w500,
               ),
             ],
           ),
@@ -141,15 +146,17 @@ class _LogInFormState extends State<LogInForm> {
 
   void checkAndNavigate() {
     if (formKey.currentState?.validate() ?? false) {
-      if (SharedPreferencesServices.getEmail() == emailController.text &&
-          SharedPreferencesServices.getPassword() == passwordController.text) {
+      if (GetIt.I.get<SharedPreferences>().getString("email") ==
+              emailController.text &&
+          GetIt.I.get<SharedPreferences>().getString("password") ==
+              passwordController.text) {
         clearData();
-        pushReplaceRoute(
+        Nagivation.pushReplaceRoute(
           context: context,
           route: const HomePage(),
         );
       } else {
-        showSnackBar(context);
+        OverlayWidget.showSnackBar(context);
       }
     }
   }
@@ -161,6 +168,7 @@ class _LogInFormState extends State<LogInForm> {
 
   @override
   void dispose() {
+    appValueNotifier.iconNotifier.dispose();
     emailController.dispose();
     passwordController.dispose();
     super.dispose();

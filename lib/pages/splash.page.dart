@@ -9,14 +9,17 @@ class SplashPage extends StatefulWidget {
 
 class _SplashPageState extends State<SplashPage> {
   void checkUserFound() {
-    final bool isLogin = SharedPreferencesServices.getEmail().isNotEmpty;
+    final bool? isLogin =
+        GetIt.I.get<SharedPreferences>().getString("email")?.isNotEmpty;
+    //  SharedPreferencesServices.getEmail().isNotEmpty;
 
     Future.delayed(
       const Duration(seconds: 7),
       () {
-        pushReplaceRoute(
+        Nagivation.pushReplaceRoute(
           context: context,
-          route: isLogin ? const HomePage() : const SelectUserStatePage(),
+          route:
+              isLogin ?? false ? const HomePage() : const SelectUserStatePage(),
         );
       },
     );
@@ -57,6 +60,7 @@ class _SplashPageState extends State<SplashPage> {
               title: AppStrings.logoName,
               color: AppColors.white,
               fontSize: 14.0,
+              fontWeight: FontWeight.w400,
             ),
             const Spacer(
               flex: 2,

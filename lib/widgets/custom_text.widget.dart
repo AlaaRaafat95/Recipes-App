@@ -6,12 +6,14 @@ class CustomText extends StatelessWidget {
   final double? fontSize;
   final FontStyle? fontStyle;
   final FontWeight? fontWeight;
+  final String? fontFamily;
 
   const CustomText(
       {super.key,
       required this.title,
       this.color,
       this.fontSize,
+      this.fontFamily,
       this.fontStyle,
       this.fontWeight});
 
@@ -23,6 +25,7 @@ class CustomText extends StatelessWidget {
           color: color,
           fontSize: fontSize,
           fontStyle: fontStyle,
+          fontFamily: fontFamily,
           fontWeight: fontWeight),
     );
   }

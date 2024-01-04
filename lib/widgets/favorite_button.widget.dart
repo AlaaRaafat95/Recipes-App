@@ -1,30 +1,27 @@
+import 'package:recipe_app/services/app_value_notifier.services.dart';
 import 'package:recipe_app/utilities/exports.utilities.dart';
 
-class FavoriteButton extends StatefulWidget {
+class FavoriteButton extends StatelessWidget {
   const FavoriteButton({
     super.key,
   });
 
   @override
-  State<FavoriteButton> createState() => _FavoriteButtonState();
-}
-
-class _FavoriteButtonState extends State<FavoriteButton> {
-  bool isPressed = false;
-  @override
   Widget build(BuildContext context) {
-    return IconButton(
-      icon: isPressed
-          ? const Icon(
-              Icons.favorite,
-              color: AppColors.red,
-            )
-          : const Icon(Icons.favorite_outline),
-      onPressed: () {
-        setState(() {
-          isPressed = !isPressed;
-        });
-      },
+    AppValueNotifier appValueNotifier = AppValueNotifier();
+    return ValueListenableBuilder(
+      valueListenable: appValueNotifier.iconNotifier,
+      builder: (context, value, _) => IconButton(
+        icon: value
+            ? const Icon(
+                Icons.favorite,
+                color: AppColors.red,
+              )
+            : const Icon(Icons.favorite_outline),
+        onPressed: () {
+          appValueNotifier.changeIcon();
+        },
+      ),
     );
   }
 }

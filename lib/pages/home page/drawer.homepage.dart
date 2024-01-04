@@ -10,10 +10,14 @@ class DrawerEX extends StatelessWidget {
         children: [
           UserAccountsDrawerHeader(
             accountName: CustomText(
-              title: SharedPreferencesServices.getName(),
+              title:
+                  GetIt.I.get<SharedPreferences>().getString("name").toString(),
             ),
             accountEmail: CustomText(
-              title: SharedPreferencesServices.getEmail(),
+              title: GetIt.I
+                  .get<SharedPreferences>()
+                  .getString("email")
+                  .toString(),
             ),
             currentAccountPicture: const CircleAvatar(
               radius: 10.0,
@@ -31,7 +35,7 @@ class DrawerEX extends StatelessWidget {
               color: AppColors.white,
             ),
             onPressed: () {
-              pushReplaceRoute(
+              Nagivation.pushReplaceRoute(
                 context: context,
                 route: const LogInPage(),
               );

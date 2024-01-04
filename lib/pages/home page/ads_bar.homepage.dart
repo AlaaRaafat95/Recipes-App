@@ -1,3 +1,4 @@
+import 'package:recipe_app/services/app_value_notifier.services.dart';
 import 'package:recipe_app/utilities/exports.utilities.dart';
 
 class AdsBar extends StatefulWidget {
@@ -13,9 +14,15 @@ class AdsBar extends StatefulWidget {
 }
 
 class _AdsBarState extends State<AdsBar> {
-  CarouselController carouselController = CarouselController();
+  late CarouselController carouselController;
+  late AppValueNotifier appValueNotifier;
+  @override
+  void initState() {
+    carouselController = CarouselController();
+    appValueNotifier = AppValueNotifier();
+    super.initState();
+  }
 
-  int selectedIndex = 0;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -23,16 +30,15 @@ class _AdsBarState extends State<AdsBar> {
         Stack(
           alignment: Alignment.center,
           children: [
-            CarouselSliderEx(
-              items: widget.adsList,
-              carouselController: carouselController,
-              onPageChanged: (index, _) {
-                setState(
-                  () {
-                    selectedIndex = index;
-                  },
-                );
-              },
+            ValueListenableBuilder(
+              valueListenable: appValueNotifier.selectedIndexNotifier,
+              builder: (context, value, _) => CarouselSliderEx(
+                items: widget.adsList,
+                carouselController: carouselController,
+                onPageChanged: (index, _) {
+                  appValueNotifier.pageChanged(index);
+                },
+              ),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -61,24 +67,29 @@ class _AdsBarState extends State<AdsBar> {
           height: 5.0,
         ),
         Center(
-          child: DotsIndicator(
-            dotsCount: widget.adsList.length,
-            position: selectedIndex,
-            onTap: (position) async {
-              await carouselController.animateToPage(position);
-              setState(
-                () {
-                  selectedIndex = position;
-                },
-              );
-            },
-            decorator: const DotsDecorator(
-              activeSize: Size(25.0, 15.0),
-              size: Size(20.0, 11.0),
+          child: ValueListenableBuilder(
+            valueListenable: appValueNotifier.selectedIndexNotifier,
+            builder: (context, value, _) => DotsIndicator(
+              dotsCount: widget.adsList.length,
+              position: value,
+              onTap: (position) async {
+                await carouselController.animateToPage(position);
+                appValueNotifier.position(position);
+              },
+              decorator: const DotsDecorator(
+                activeSize: Size(25.0, 15.0),
+                size: Size(20.0, 11.0),
+              ),
             ),
           ),
         ),
       ],
     );
+  }
+
+  @override
+  void dispose() {
+    appValueNotifier.selectedIndexNotifier.dispose();
+    super.dispose();
   }
 }

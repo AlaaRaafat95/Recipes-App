@@ -28,6 +28,7 @@ class SearchAndFilter extends StatelessWidget {
                 title: AppStrings.search,
                 color: AppColors.lightGrey,
                 fontSize: 12.0,
+                fontWeight: FontWeight.w400,
               ),
             ],
           ),

@@ -79,16 +79,20 @@ class _HomePageState extends State<HomePage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       CustomText(
-                        title: "Bonjor, ${SharedPreferencesServices.getName()}",
+                        title:
+                            "Bonjor, ${GetIt.I.get<SharedPreferences>().getString("name")}",
                         color: AppColors.lightGrey,
                         fontSize: 12.0,
+                        fontWeight: FontWeight.w500,
                       ),
                       const SizedBox(
                         height: 5.0,
                       ),
                       const CustomText(
                         title: AppStrings.todayCook,
+                        fontWeight: FontWeight.w400,
                         fontSize: 20.0,
+                        fontFamily: "Abril Fatface",
                       ),
                       const SizedBox(
                         height: 5.0,

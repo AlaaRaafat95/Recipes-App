@@ -5,19 +5,21 @@ class CustomTextButton extends StatelessWidget {
   final String title;
   final double? fontSize;
   final Color color;
+  final FontWeight fontWeight;
 
   const CustomTextButton(
       {super.key,
       required this.route,
       required this.title,
       required this.color,
+      required this.fontWeight,
       this.fontSize});
 
   @override
   Widget build(BuildContext context) {
     return TextButton(
       onPressed: () {
-        pushReplaceRoute(context: context, route: route);
+        Nagivation.pushReplaceRoute(context: context, route: route);
       },
       style: TextButton.styleFrom(
         padding: const EdgeInsets.all(0),
@@ -27,6 +29,7 @@ class CustomTextButton extends StatelessWidget {
         title: title,
         fontSize: fontSize,
         color: color,
+        fontWeight: fontWeight,
       ),
     );
   }

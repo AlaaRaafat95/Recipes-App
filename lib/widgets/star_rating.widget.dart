@@ -13,7 +13,7 @@ class StarDisplay extends StatelessWidget {
           return Icon(
             index < value ? Icons.star : Icons.star_border,
             color: AppColors.primaryColor,
-            size: 15.0,
+            size: 17.0,
           );
         },
       ),
