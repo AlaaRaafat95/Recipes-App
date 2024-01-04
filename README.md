@@ -16,5 +16,3 @@ For help getting started with Flutter development, view the
 samples, guidance on mobile development, and a full API reference.
 
 
-https://github.com/AlaaRaafat95/Recipes-App/assets/145221540/bf422c06-9110-4618-b97d-58880d4ac015
-
