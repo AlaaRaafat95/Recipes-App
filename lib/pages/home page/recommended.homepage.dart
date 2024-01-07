@@ -1,13 +1,13 @@
 import 'package:recipe_app/utilities/exports.utilities.dart';
 
 class Recommended extends StatelessWidget {
-  const Recommended({super.key, required this.recipesList});
-  final List<RecipeModel> recipesList;
+  const Recommended({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: recipesList
+      children: BlocProvider.of<RecipesCubit>(context)
+          .recipesList
           .map(
             (e) => e.id! >= 5
                 ? Stack(

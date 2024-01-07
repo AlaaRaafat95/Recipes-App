@@ -16,16 +16,30 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Recipes App',
-      theme: ThemeData(
-        fontFamily: "Hellix",
-        colorScheme: ColorScheme.fromSeed(
-            seedColor: AppColors.primaryColor, primary: AppColors.primaryColor),
-        useMaterial3: true,
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => AdsCubit()..readAds(context),
+        ),
+        BlocProvider(
+          create: (context) => RecipesCubit()..readRecipes(context),
+        ),
+        BlocProvider(
+          create: (context) => AuthCubit(),
+        ),
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Recipes App',
+        theme: ThemeData(
+          fontFamily: "Hellix",
+          colorScheme: ColorScheme.fromSeed(
+              seedColor: AppColors.primaryColor,
+              primary: AppColors.primaryColor),
+          useMaterial3: true,
+        ),
+        home: const SplashPage(),
       ),
-      home: const SplashPage(),
     );
   }
 }

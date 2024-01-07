@@ -1,15 +1,15 @@
 import 'package:recipe_app/utilities/exports.utilities.dart';
 
 class TodayRecipesBar extends StatelessWidget {
-  final List<RecipeModel> recipesList;
-  const TodayRecipesBar({super.key, required this.recipesList});
+  const TodayRecipesBar({super.key});
 
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Row(
-        children: recipesList
+        children: BlocProvider.of<RecipesCubit>(context)
+            .recipesList
             .map(
               (e) => e.id! >= 1 && e.id! <= 4
                   ? Stack(

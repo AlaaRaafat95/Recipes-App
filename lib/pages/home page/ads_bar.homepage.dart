@@ -1,12 +1,8 @@
-import 'package:recipe_app/services/app_value_notifier.services.dart';
 import 'package:recipe_app/utilities/exports.utilities.dart';
 
 class AdsBar extends StatefulWidget {
-  final List<AdModel> adsList;
-
   const AdsBar({
     super.key,
-    required this.adsList,
   });
 
   @override
@@ -15,11 +11,11 @@ class AdsBar extends StatefulWidget {
 
 class _AdsBarState extends State<AdsBar> {
   late CarouselController carouselController;
-  late AppValueNotifier appValueNotifier;
+
   @override
   void initState() {
     carouselController = CarouselController();
-    appValueNotifier = AppValueNotifier();
+
     super.initState();
   }
 
@@ -30,13 +26,12 @@ class _AdsBarState extends State<AdsBar> {
         Stack(
           alignment: Alignment.center,
           children: [
-            ValueListenableBuilder(
-              valueListenable: appValueNotifier.selectedIndexNotifier,
-              builder: (context, value, _) => CarouselSliderEx(
-                items: widget.adsList,
+            BlocBuilder<AdsCubit, AdsState>(
+              builder: (context, _) => CarouselSliderEx(
+                items: BlocProvider.of<AdsCubit>(context).adsList,
                 carouselController: carouselController,
                 onPageChanged: (index, _) {
-                  appValueNotifier.pageChanged(index);
+                  BlocProvider.of<AdsCubit>(context).pageChanged(index);
                 },
               ),
             ),
@@ -67,14 +62,14 @@ class _AdsBarState extends State<AdsBar> {
           height: 5.0,
         ),
         Center(
-          child: ValueListenableBuilder(
-            valueListenable: appValueNotifier.selectedIndexNotifier,
-            builder: (context, value, _) => DotsIndicator(
-              dotsCount: widget.adsList.length,
-              position: value,
+          child: BlocBuilder<AdsCubit, AdsState>(
+            builder: (context, _) => DotsIndicator(
+              dotsCount: BlocProvider.of<AdsCubit>(context).adsList.length,
+              position:
+                  BlocProvider.of<AdsCubit>(context).selectedIndexNotifier,
               onTap: (position) async {
                 await carouselController.animateToPage(position);
-                appValueNotifier.position(position);
+                BlocProvider.of<AdsCubit>(context).position(position);
               },
               decorator: const DotsDecorator(
                 activeSize: Size(25.0, 15.0),
@@ -85,11 +80,5 @@ class _AdsBarState extends State<AdsBar> {
         ),
       ],
     );
-  }
-
-  @override
-  void dispose() {
-    appValueNotifier.selectedIndexNotifier.dispose();
-    super.dispose();
   }
 }

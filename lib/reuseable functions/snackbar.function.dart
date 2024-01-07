@@ -1,10 +1,11 @@
 import 'package:recipe_app/utilities/exports.utilities.dart';
 
 abstract class OverlayWidget {
-  static void showSnackBar(BuildContext context) {
+  static void showSnackBar(
+      {required BuildContext context, required String title}) {
     SnackBar snackBar = SnackBar(
-      content: const CustomText(
-        title: AppStrings.emailNotFound,
+      content: CustomText(
+        title: title,
       ),
       backgroundColor: AppColors.primaryColor,
       showCloseIcon: true,

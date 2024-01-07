@@ -36,3 +36,8 @@ export 'package:recipe_app/widgets/favorite_button.widget.dart';
 export 'package:recipe_app/pages/home%20page/ads_bar.homepage.dart';
 export 'package:recipe_app/pages/home%20page/search_filter.homepage.dart';
 export 'package:get_it/get_it.dart';
+export 'package:flutter_bloc/flutter_bloc.dart';
+export 'package:recipe_app/bloc/ads%20cubit/ads_cubit.dart';
+export 'package:recipe_app/bloc/auth%20cubit/auth_cubit.dart';
+export 'package:recipe_app/bloc/recipes%20cubit/recipes_cubit.dart';
+export 'package:recipe_app/services/app_value_notifier.services.dart';

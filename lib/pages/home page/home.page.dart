@@ -8,41 +8,12 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  List<AdModel> adsList = [];
-  List<RecipeModel> recipesList = [];
-  void readAds() async {
-    String response = await rootBundle.loadString("assets/data/data.json");
-    List<Map<String, dynamic>> responseDecode = List<Map<String, dynamic>>.from(
-      jsonDecode(response)["ads"],
-    );
-
-    adsList = responseDecode
-        .map(
-          (e) => AdModel.fromJson(e),
-        )
-        .toList();
-    setState(() {});
-  }
-
-  void readRecipes() async {
-    String response = await rootBundle.loadString("assets/data/data.json");
-    List<Map<String, dynamic>> responseDecode = List<Map<String, dynamic>>.from(
-      jsonDecode(response)["fresh_reipes"],
-    );
-
-    recipesList = responseDecode
-        .map(
-          (e) => RecipeModel.fromJson(e),
-        )
-        .toList();
-    setState(() {});
-  }
-
+  late AdsCubit adsCubit;
+  late RecipesCubit recipesCubit;
   @override
   void initState() {
-    readAds();
-    readRecipes();
-
+    adsCubit = BlocProvider.of<AdsCubit>(context);
+    recipesCubit = BlocProvider.of<RecipesCubit>(context);
     super.initState();
   }
 
@@ -67,66 +38,69 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       drawer: const DrawerEX(),
-      body: adsList.isEmpty
-          ? const Center(
-              child: CircularProgressIndicator(),
-            )
-          : SingleChildScrollView(
-              child: SafeArea(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      CustomText(
-                        title:
-                            "Bonjor, ${GetIt.I.get<SharedPreferences>().getString("name")}",
-                        color: AppColors.lightGrey,
-                        fontSize: 12.0,
-                        fontWeight: FontWeight.w500,
-                      ),
-                      const SizedBox(
-                        height: 5.0,
-                      ),
-                      const CustomText(
-                        title: AppStrings.todayCook,
-                        fontWeight: FontWeight.w400,
-                        fontSize: 20.0,
-                        fontFamily: "Abril Fatface",
-                      ),
-                      const SizedBox(
-                        height: 5.0,
-                      ),
-                      const SearchAndFilter(),
-                      const SizedBox(
-                        height: 5.0,
-                      ),
-                      AdsBar(
-                        adsList: adsList,
-                      ),
-                      const SizedBox(
-                        height: 5.0,
-                      ),
-                      const HeadLineTitle(title: AppStrings.todayRecipes),
-                      const SizedBox(
-                        height: 5.0,
-                      ),
-                      TodayRecipesBar(
-                        recipesList: recipesList,
-                      ),
-                      const SizedBox(
-                        height: 5.0,
-                      ),
-                      const HeadLineTitle(title: AppStrings.recommended),
-                      Recommended(recipesList: recipesList),
-                      const SizedBox(
-                        height: 5.0,
-                      ),
-                    ],
+      body: BlocBuilder<AdsCubit, AdsState>(
+        builder: (context, state) => adsCubit.adsList.isEmpty &&
+                recipesCubit.recipesList.isEmpty
+            ? const Center(
+                child: CircularProgressIndicator(),
+              )
+            : SingleChildScrollView(
+                child: SafeArea(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        CustomText(
+                          title:
+                              "Bonjor, ${GetIt.I.get<SharedPreferences>().getString("name")}",
+                          color: AppColors.lightGrey,
+                          fontSize: 12.0,
+                          fontWeight: FontWeight.w500,
+                        ),
+                        const SizedBox(
+                          height: 5.0,
+                        ),
+                        const CustomText(
+                          title: AppStrings.todayCook,
+                          fontWeight: FontWeight.w400,
+                          fontSize: 20.0,
+                          fontFamily: "Abril Fatface",
+                        ),
+                        const SizedBox(
+                          height: 5.0,
+                        ),
+                        const SearchAndFilter(),
+                        const SizedBox(
+                          height: 5.0,
+                        ),
+                        const AdsBar(),
+                        const SizedBox(
+                          height: 5.0,
+                        ),
+                        const HeadLineTitle(title: AppStrings.todayRecipes),
+                        const SizedBox(
+                          height: 5.0,
+                        ),
+                        BlocBuilder<RecipesCubit, RecipesState>(
+                          builder: (context, state) => const TodayRecipesBar(),
+                        ),
+                        const SizedBox(
+                          height: 5.0,
+                        ),
+                        const HeadLineTitle(title: AppStrings.recommended),
+                        BlocBuilder<RecipesCubit, RecipesState>(
+                          builder: (context, _) => const Recommended(),
+                        ),
+                        const SizedBox(
+                          height: 5.0,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
+      ),
     );
   }
 }
