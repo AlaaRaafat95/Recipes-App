@@ -8,15 +8,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  late AdsCubit adsCubit;
-  late RecipesCubit recipesCubit;
-  @override
-  void initState() {
-    adsCubit = BlocProvider.of<AdsCubit>(context);
-    recipesCubit = BlocProvider.of<RecipesCubit>(context);
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,12 +30,14 @@ class _HomePageState extends State<HomePage> {
       ),
       drawer: const DrawerEX(),
       body: BlocBuilder<AdsCubit, AdsState>(
-        builder: (context, state) => adsCubit.adsList.isEmpty &&
-                recipesCubit.recipesList.isEmpty
-            ? const Center(
-                child: CircularProgressIndicator(),
-              )
-            : SingleChildScrollView(
+          buildWhen: (_, state) => state is AdsFailure || state is AdsSuccess,
+          builder: (_, state) {
+            if (state is AdsFailure) {
+              OverlayWidget.showSnackBar(
+                  context: context, title: "Oops . there is an error");
+            }
+            if (state is AdsSuccess) {
+              return SingleChildScrollView(
                 child: SafeArea(
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20.0),
@@ -82,16 +75,12 @@ class _HomePageState extends State<HomePage> {
                         const SizedBox(
                           height: 5.0,
                         ),
-                        BlocBuilder<RecipesCubit, RecipesState>(
-                          builder: (context, state) => const TodayRecipesBar(),
-                        ),
+                        const TodayRecipesBar(),
                         const SizedBox(
                           height: 5.0,
                         ),
                         const HeadLineTitle(title: AppStrings.recommended),
-                        BlocBuilder<RecipesCubit, RecipesState>(
-                          builder: (context, _) => const Recommended(),
-                        ),
+                        const Recommended(),
                         const SizedBox(
                           height: 5.0,
                         ),
@@ -99,8 +88,12 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                 ),
-              ),
-      ),
+              );
+            }
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }),
     );
   }
 }

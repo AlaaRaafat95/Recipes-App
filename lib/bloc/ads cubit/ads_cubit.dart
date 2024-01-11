@@ -3,21 +3,22 @@ import 'package:recipe_app/utilities/exports.utilities.dart';
 part 'ads_state.dart';
 
 class AdsCubit extends Cubit<AdsState> {
-  AdsCubit() : super(AdsState());
+  AdsCubit() : super(AdsInitial());
   List<AdModel> adsList = [];
-  int selectedIndexNotifier = 0;
+  int selectedIndex = 0;
 
   void pageChanged(int index) {
-    selectedIndexNotifier = index;
-    emit(AdsState());
+    selectedIndex = index;
+    emit(AdsInitial());
   }
 
   void position(int position) {
-    selectedIndexNotifier = position;
-    emit(AdsState());
+    selectedIndex = position;
+    emit(AdsInitial());
   }
 
-  Future<void> readAds(BuildContext context) async {
+  Future<void> readAds() async {
+    emit(AdsLoading());
     try {
       String response = await rootBundle.loadString("assets/data/data.json");
       List<Map<String, dynamic>> responseDecode =
@@ -30,10 +31,9 @@ class AdsCubit extends Cubit<AdsState> {
             (e) => AdModel.fromJson(e),
           )
           .toList();
-      emit(AdsState());
+      emit(AdsSuccess(adsList: adsList));
     } catch (e) {
-      OverlayWidget.showSnackBar(
-          context: context, title: "Faild Loading Data , Try Again");
+      emit(AdsFailure(error: e.toString()));
     }
   }
 }

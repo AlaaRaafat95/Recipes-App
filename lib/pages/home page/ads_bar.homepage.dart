@@ -65,8 +65,7 @@ class _AdsBarState extends State<AdsBar> {
           child: BlocBuilder<AdsCubit, AdsState>(
             builder: (context, _) => DotsIndicator(
               dotsCount: BlocProvider.of<AdsCubit>(context).adsList.length,
-              position:
-                  BlocProvider.of<AdsCubit>(context).selectedIndexNotifier,
+              position: BlocProvider.of<AdsCubit>(context).selectedIndex,
               onTap: (position) async {
                 await carouselController.animateToPage(position);
                 BlocProvider.of<AdsCubit>(context).position(position);
