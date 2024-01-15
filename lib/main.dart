@@ -16,16 +16,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
+    return MultiProvider(
       providers: [
-        BlocProvider<AdsCubit>(
-          create: (context) => AdsCubit()..readAds(),
-        ),
-        BlocProvider<RecipesCubit>(
-          create: (context) => RecipesCubit()..readRecipes(),
-        ),
-        BlocProvider<AuthCubit>(
-          create: (context) => AuthCubit(),
+        ChangeNotifierProvider(
+          create: (context) => RecipeProvider()
+            ..readAds()
+            ..readRecipes(),
         ),
       ],
       child: MaterialApp(

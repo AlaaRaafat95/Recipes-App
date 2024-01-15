@@ -8,26 +8,9 @@ class SplashPage extends StatefulWidget {
 }
 
 class _SplashPageState extends State<SplashPage> {
-  void checkUserFound() {
-    final bool? isLogin =
-        GetIt.I.get<SharedPreferences>().getString("email")?.isNotEmpty;
-    //  SharedPreferencesServices.getEmail().isNotEmpty;
-
-    Future.delayed(
-      const Duration(seconds: 7),
-      () {
-        Nagivation.pushReplaceRoute(
-          context: context,
-          route:
-              isLogin ?? false ? const HomePage() : const SelectUserStatePage(),
-        );
-      },
-    );
-  }
-
   @override
   void initState() {
-    checkUserFound();
+    UserAuth.checkUserFound(context);
     super.initState();
   }
 

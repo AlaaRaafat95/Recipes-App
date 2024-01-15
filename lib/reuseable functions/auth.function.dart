@@ -1,14 +1,12 @@
 import 'package:recipe_app/utilities/exports.utilities.dart';
-part 'auth_state.dart';
 
-class AuthCubit extends Cubit<AuthState> {
-  late GlobalKey<FormState> formKey;
-  late TextEditingController emailController;
-  late TextEditingController passwordController;
-  late TextEditingController nameController;
-  AuthCubit() : super(AuthState());
+abstract class UserAuth {
+  static late GlobalKey<FormState> formKey;
+  static late TextEditingController emailController;
+  static late TextEditingController passwordController;
+  static late TextEditingController nameController;
 
-  void checkLogIn(BuildContext context) {
+  static void checkLogIn(BuildContext context) {
     if (formKey.currentState?.validate() ?? false) {
       if (GetIt.I.get<SharedPreferences>().getString("email") ==
               emailController.text &&
@@ -26,12 +24,12 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
-  void clearLogInData() {
+  static void clearLogInData() {
     emailController.clear();
     passwordController.clear();
   }
 
-  void checkSignUp(BuildContext context) {
+  static void checkSignUp(BuildContext context) {
     if (formKey.currentState?.validate() ?? false) {
       GetIt.I.get<SharedPreferences>().setString("name", nameController.text);
       GetIt.I.get<SharedPreferences>().setString("email", emailController.text);
@@ -51,9 +49,26 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
-  void clearSignUpData() {
+  static void clearSignUpData() {
     nameController.clear();
     emailController.clear();
     passwordController.clear();
+  }
+
+  static void checkUserFound(BuildContext context) {
+    bool? isLogin =
+        GetIt.I.get<SharedPreferences>().getString("email")?.isNotEmpty;
+    //  SharedPreferencesServices.getEmail().isNotEmpty;
+
+    Future.delayed(
+      const Duration(seconds: 4),
+      () {
+        Nagivation.pushReplaceRoute(
+          context: context,
+          route:
+              isLogin ?? false ? const HomePage() : const SelectUserStatePage(),
+        );
+      },
+    );
   }
 }

@@ -8,6 +8,13 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  // @override
+  // void initState() {
+  //   Provider.of<RecipeProvider>(context, listen: false).readAds();
+  //   Provider.of<RecipeProvider>(context, listen: false).readRecipes();
+  //   super.initState();
+  // }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,71 +36,71 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       drawer: const DrawerEX(),
-      body: BlocBuilder<AdsCubit, AdsState>(
-          buildWhen: (_, state) => state is AdsFailure || state is AdsSuccess,
-          builder: (_, state) {
-            if (state is AdsFailure) {
-              OverlayWidget.showSnackBar(
-                  context: context, title: "Oops . there is an error");
-            }
-            if (state is AdsSuccess) {
-              return SingleChildScrollView(
-                child: SafeArea(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        CustomText(
-                          title:
-                              "Bonjor, ${GetIt.I.get<SharedPreferences>().getString("name")}",
-                          color: AppColors.lightGrey,
-                          fontSize: 12.0,
-                          fontWeight: FontWeight.w500,
-                        ),
-                        const SizedBox(
-                          height: 5.0,
-                        ),
-                        const CustomText(
-                          title: AppStrings.todayCook,
-                          fontWeight: FontWeight.w400,
-                          fontSize: 20.0,
-                          fontFamily: "Abril Fatface",
-                        ),
-                        const SizedBox(
-                          height: 5.0,
-                        ),
-                        const SearchAndFilter(),
-                        const SizedBox(
-                          height: 5.0,
-                        ),
-                        const AdsBar(),
-                        const SizedBox(
-                          height: 5.0,
-                        ),
-                        const HeadLineTitle(title: AppStrings.todayRecipes),
-                        const SizedBox(
-                          height: 5.0,
-                        ),
-                        const TodayRecipesBar(),
-                        const SizedBox(
-                          height: 5.0,
-                        ),
-                        const HeadLineTitle(title: AppStrings.recommended),
-                        const Recommended(),
-                        const SizedBox(
-                          height: 5.0,
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              );
-            }
+      body: Consumer<RecipeProvider>(
+        builder: (context, recipe, _) {
+          if (recipe.adsList.isEmpty) {
             return const Center(
               child: CircularProgressIndicator(),
             );
-          }),
+          } else if (recipe.adsList.isNotEmpty) {
+            return SingleChildScrollView(
+              child: SafeArea(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      CustomText(
+                        title:
+                            "Bonjor, ${GetIt.I.get<SharedPreferences>().getString("name")}",
+                        color: AppColors.lightGrey,
+                        fontSize: 12.0,
+                        fontWeight: FontWeight.w500,
+                      ),
+                      const SizedBox(
+                        height: 5.0,
+                      ),
+                      const CustomText(
+                        title: AppStrings.todayCook,
+                        fontWeight: FontWeight.w400,
+                        fontSize: 20.0,
+                        fontFamily: "Abril Fatface",
+                      ),
+                      const SizedBox(
+                        height: 5.0,
+                      ),
+                      const SearchAndFilter(),
+                      const SizedBox(
+                        height: 5.0,
+                      ),
+                      const AdsBar(),
+                      const SizedBox(
+                        height: 5.0,
+                      ),
+                      const HeadLineTitle(title: AppStrings.todayRecipes),
+                      const SizedBox(
+                        height: 5.0,
+                      ),
+                      const TodayRecipesBar(),
+                      const SizedBox(
+                        height: 5.0,
+                      ),
+                      const HeadLineTitle(title: AppStrings.recommended),
+                      const Recommended(),
+                      const SizedBox(
+                        height: 5.0,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            );
+          }
+          return const Center(
+            child: CustomText(title: "Oooops, There is an error Try Again"),
+          );
+        },
+      ),
     );
   }
 }

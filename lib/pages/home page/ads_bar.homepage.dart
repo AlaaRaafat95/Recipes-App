@@ -11,11 +11,9 @@ class AdsBar extends StatefulWidget {
 
 class _AdsBarState extends State<AdsBar> {
   late CarouselController carouselController;
-
   @override
   void initState() {
     carouselController = CarouselController();
-
     super.initState();
   }
 
@@ -26,12 +24,13 @@ class _AdsBarState extends State<AdsBar> {
         Stack(
           alignment: Alignment.center,
           children: [
-            BlocBuilder<AdsCubit, AdsState>(
-              builder: (context, _) => CarouselSliderEx(
-                items: BlocProvider.of<AdsCubit>(context).adsList,
+            Consumer<RecipeProvider>(
+              builder: (context, ads, _) => CarouselSliderEx(
+                items: ads.adsList,
                 carouselController: carouselController,
                 onPageChanged: (index, _) {
-                  BlocProvider.of<AdsCubit>(context).pageChanged(index);
+                  Provider.of<RecipeProvider>(context, listen: false)
+                      .pageChanged(index);
                 },
               ),
             ),
@@ -62,13 +61,14 @@ class _AdsBarState extends State<AdsBar> {
           height: 5.0,
         ),
         Center(
-          child: BlocBuilder<AdsCubit, AdsState>(
-            builder: (context, _) => DotsIndicator(
-              dotsCount: BlocProvider.of<AdsCubit>(context).adsList.length,
-              position: BlocProvider.of<AdsCubit>(context).selectedIndex,
+          child: Consumer<RecipeProvider>(
+            builder: (context, ads, _) => DotsIndicator(
+              dotsCount: ads.adsList.length,
+              position: ads.selectedIndex,
               onTap: (position) async {
                 await carouselController.animateToPage(position);
-                BlocProvider.of<AdsCubit>(context).position(position);
+                Provider.of<RecipeProvider>(context, listen: false)
+                    .position(position);
               },
               decorator: const DotsDecorator(
                 activeSize: Size(25.0, 15.0),
