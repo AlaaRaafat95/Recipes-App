@@ -14,8 +14,8 @@ class HeadLineTitle extends StatelessWidget {
           fontSize: 18.0,
           fontWeight: FontWeight.w700,
         ),
-        const CustomTextButton(
-          route: Text(""),
+        CustomTextButton(
+          onPressed: () {},
           title: AppStrings.seeAll,
           fontWeight: FontWeight.w500,
           color: AppColors.primaryColor,

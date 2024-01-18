@@ -1,10 +1,13 @@
+import 'package:firebase_core/firebase_core.dart';
+import 'package:recipe_app/firebase_options.dart';
+import 'package:recipe_app/reuseable%20functions/log_in_auth.function.dart';
 import 'package:recipe_app/utilities/exports.utilities.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // SharedPreferencesServices.prefs = await SharedPreferences.getInstance();
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  GetIt.I.registerSingleton<SharedPreferences>(prefs);
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
 
   runApp(
     const MyApp(),
@@ -23,6 +26,12 @@ class MyApp extends StatelessWidget {
             ..readAds()
             ..readRecipes(),
         ),
+        ChangeNotifierProvider(
+          create: (context) => UserRegisterAuth(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => UserLogInAuth(),
+        )
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

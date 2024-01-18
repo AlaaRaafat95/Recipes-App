@@ -1,7 +1,7 @@
 import 'package:recipe_app/utilities/exports.utilities.dart';
 
 class CustomTextButton extends StatelessWidget {
-  final Widget route;
+  final VoidCallback onPressed;
   final String title;
   final double? fontSize;
   final Color color;
@@ -9,7 +9,7 @@ class CustomTextButton extends StatelessWidget {
 
   const CustomTextButton(
       {super.key,
-      required this.route,
+      required this.onPressed,
       required this.title,
       required this.color,
       required this.fontWeight,
@@ -18,9 +18,7 @@ class CustomTextButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextButton(
-      onPressed: () {
-        Nagivation.pushReplaceRoute(context: context, route: route);
-      },
+      onPressed: onPressed,
       style: TextButton.styleFrom(
         padding: const EdgeInsets.all(0),
         tapTargetSize: MaterialTapTargetSize.shrinkWrap,

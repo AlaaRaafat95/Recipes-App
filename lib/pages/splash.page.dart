@@ -10,7 +10,7 @@ class SplashPage extends StatefulWidget {
 class _SplashPageState extends State<SplashPage> {
   @override
   void initState() {
-    UserAuth.checkUserFound(context);
+    UserRegisterAuth().checkUserLogedIn(context);
     super.initState();
   }
 

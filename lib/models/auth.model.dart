@@ -1,9 +1,15 @@
-import 'package:recipe_app/utilities/exports.utilities.dart';
+// class UserModel {
+//   final String? name;
+//   final String email;
+//   final String? password;
 
-class UserModel {
-  final TextEditingController? name;
-  final TextEditingController email;
-  final TextEditingController password;
+//   UserModel({this.name, required this.email, this.password});
 
-  UserModel({this.name, required this.email, required this.password});
-}
+//   factory UserModel.fromJson(Map<String, dynamic> data) {
+//     return UserModel(
+//         email: data["email"], name: data["name"], password: data["password"]);
+//   }
+//   Map<String, dynamic> toJson() {
+//     return {"email": email, "name": name, "password": password};
+//   }
+// }

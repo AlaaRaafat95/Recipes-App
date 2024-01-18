@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:recipe_app/utilities/exports.utilities.dart';
 
 class HomePage extends StatefulWidget {
@@ -8,13 +9,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  // @override
-  // void initState() {
-  //   Provider.of<RecipeProvider>(context, listen: false).readAds();
-  //   Provider.of<RecipeProvider>(context, listen: false).readRecipes();
-  //   super.initState();
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,7 +46,7 @@ class _HomePageState extends State<HomePage> {
                     children: [
                       CustomText(
                         title:
-                            "Bonjor, ${GetIt.I.get<SharedPreferences>().getString("name")}",
+                            "Bonjor, ${FirebaseAuth.instance.currentUser?.displayName.toString()}",
                         color: AppColors.lightGrey,
                         fontSize: 12.0,
                         fontWeight: FontWeight.w500,

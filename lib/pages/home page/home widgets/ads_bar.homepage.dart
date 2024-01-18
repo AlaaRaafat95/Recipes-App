@@ -67,6 +67,7 @@ class _AdsBarState extends State<AdsBar> {
               position: ads.selectedIndex,
               onTap: (position) async {
                 await carouselController.animateToPage(position);
+
                 Provider.of<RecipeProvider>(context, listen: false)
                     .position(position);
               },

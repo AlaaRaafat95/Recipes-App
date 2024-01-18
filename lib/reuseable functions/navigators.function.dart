@@ -34,7 +34,7 @@ class CustomPageRoute extends PageRouteBuilder {
   // }
 }
 
-abstract class Nagivation {
+abstract class Navigation {
   static void pushRoute({
     required BuildContext context,
     required Widget route,
