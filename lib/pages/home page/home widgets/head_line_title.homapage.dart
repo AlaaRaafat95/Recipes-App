@@ -2,7 +2,9 @@ import 'package:recipe_app/utilities/exports.utilities.dart';
 
 class HeadLineTitle extends StatelessWidget {
   final String title;
-  const HeadLineTitle({super.key, required this.title});
+  final VoidCallback onPressed;
+  const HeadLineTitle(
+      {super.key, required this.title, required this.onPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +17,7 @@ class HeadLineTitle extends StatelessWidget {
           fontWeight: FontWeight.w700,
         ),
         CustomTextButton(
-          onPressed: () {},
+          onPressed: onPressed,
           title: AppStrings.seeAll,
           fontWeight: FontWeight.w500,
           color: AppColors.primaryColor,

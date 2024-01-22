@@ -8,17 +8,18 @@ class SignUpForm extends StatefulWidget {
 }
 
 class _SignUpFormState extends State<SignUpForm> {
-  late UserRegisterAuth userRegisterAuth;
+  late UserRegisterProvider userRegisterAuth;
   @override
   void initState() {
-    userRegisterAuth = Provider.of<UserRegisterAuth>(context, listen: false);
+    userRegisterAuth =
+        Provider.of<UserRegisterProvider>(context, listen: false);
     userRegisterAuth.initSignUp();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<UserRegisterAuth>(
+    return Consumer<UserRegisterProvider>(
       builder: (context, userRegister, child) => Form(
         key: userRegister.formKey,
         child: Column(

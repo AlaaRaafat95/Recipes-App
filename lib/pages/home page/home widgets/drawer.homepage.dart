@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:recipe_app/utilities/exports.utilities.dart';
 
 class DrawerEX extends StatelessWidget {
@@ -9,26 +8,25 @@ class DrawerEX extends StatelessWidget {
     return Drawer(
       child: Column(
         children: [
-          Consumer<UserRegisterAuth>(
-            builder: (context, userRegister, child) => UserAccountsDrawerHeader(
-              accountName: CustomText(
-                title:
-                    FirebaseAuth.instance.currentUser?.displayName.toString() ??
-                        "No Name",
-              ),
-              accountEmail: CustomText(
-                title: FirebaseAuth.instance.currentUser?.email.toString() ??
-                    "No Email",
-              ),
-              currentAccountPicture: CircleAvatar(
-                radius: 10.0,
-                child: CustomText(
-                  title: userRegister.getUserNameCapitalLetters(
-                      username: FirebaseAuth.instance.currentUser?.displayName
-                              .toString() ??
-                          "",
-                      limitTo: 2),
-                ),
+          UserAccountsDrawerHeader(
+            accountName: CustomText(
+              title:
+                  FirebaseAuth.instance.currentUser?.displayName.toString() ??
+                      "No Name",
+            ),
+            accountEmail: CustomText(
+              title: FirebaseAuth.instance.currentUser?.email.toString() ??
+                  "No Email",
+            ),
+            currentAccountPicture: CircleAvatar(
+              radius: 10.0,
+              child: CustomText(
+                title: Provider.of<UserRegisterProvider>(context)
+                    .getUserNameCapitalLetters(
+                        username: FirebaseAuth.instance.currentUser?.displayName
+                                .toString() ??
+                            "",
+                        limitTo: 2),
               ),
             ),
           ),
@@ -43,14 +41,9 @@ class DrawerEX extends StatelessWidget {
               fontSize: 16.0,
               color: AppColors.white,
             ),
-            onPressed: () async {
-              await FirebaseAuth.instance.signOut();
-
-              Navigation.pushReplaceRoute(
-                context: context,
-                route: const LogInPage(),
-              );
-            },
+            onPressed: () =>
+                Provider.of<UserRegisterProvider>(context, listen: false)
+                    .signOut(context),
           ),
         ],
       ),

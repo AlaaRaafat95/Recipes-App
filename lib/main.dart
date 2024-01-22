@@ -1,6 +1,3 @@
-import 'package:firebase_core/firebase_core.dart';
-import 'package:recipe_app/firebase_options.dart';
-import 'package:recipe_app/reuseable%20functions/log_in_auth.function.dart';
 import 'package:recipe_app/utilities/exports.utilities.dart';
 
 void main() async {
@@ -23,27 +20,32 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(
           create: (context) => RecipeProvider()
-            ..readAds()
-            ..readRecipes(),
+            ..getFreshRecipes(isLimit: true)
+            ..getRecommendedRecipes(isLimit: true),
         ),
         ChangeNotifierProvider(
-          create: (context) => UserRegisterAuth(),
+          create: (context) => UserRegisterProvider(),
         ),
         ChangeNotifierProvider(
-          create: (context) => UserLogInAuth(),
-        )
+          create: (context) => UserLogInProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => AdsProvider()..readAds(),
+        ),
       ],
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Recipes App',
-        theme: ThemeData(
-          fontFamily: "Hellix",
-          colorScheme: ColorScheme.fromSeed(
-              seedColor: AppColors.primaryColor,
-              primary: AppColors.primaryColor),
-          useMaterial3: true,
+      child: OverlayKit(
+        child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: 'Recipes App',
+          theme: ThemeData(
+            fontFamily: "Hellix",
+            colorScheme: ColorScheme.fromSeed(
+                seedColor: AppColors.primaryColor,
+                primary: AppColors.primaryColor),
+            useMaterial3: true,
+          ),
+          home: const SplashPage(),
         ),
-        home: const SplashPage(),
       ),
     );
   }

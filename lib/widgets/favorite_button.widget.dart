@@ -14,7 +14,7 @@ class FavoriteButton extends StatelessWidget {
         icon: value
             ? const Icon(
                 Icons.favorite,
-                color: AppColors.red,
+                color: AppColors.primaryColor,
               )
             : const Icon(Icons.favorite_outline),
         onPressed: () {

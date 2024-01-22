@@ -1,4 +1,3 @@
-import 'package:recipe_app/reuseable%20functions/log_in_auth.function.dart';
 import 'package:recipe_app/utilities/exports.utilities.dart';
 
 class LogInForm extends StatefulWidget {
@@ -9,17 +8,17 @@ class LogInForm extends StatefulWidget {
 }
 
 class _LogInFormState extends State<LogInForm> {
-  late UserLogInAuth userLogInAuth;
+  late UserLogInProvider userLogInAuth;
   @override
   void initState() {
-    userLogInAuth = Provider.of<UserLogInAuth>(context, listen: false);
+    userLogInAuth = Provider.of<UserLogInProvider>(context, listen: false);
     userLogInAuth.initLogin();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<UserLogInAuth>(
+    return Consumer<UserLogInProvider>(
       builder: (context, userLogIn, child) => Form(
         key: userLogIn.formKey,
         child: Column(

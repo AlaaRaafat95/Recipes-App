@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:recipe_app/utilities/exports.utilities.dart';
 
 class SplashPage extends StatefulWidget {
@@ -8,10 +9,27 @@ class SplashPage extends StatefulWidget {
 }
 
 class _SplashPageState extends State<SplashPage> {
+  StreamSubscription<User?>? listner;
   @override
   void initState() {
-    UserRegisterAuth().checkUserLogedIn(context);
+    initSPlash();
     super.initState();
+  }
+
+  void initSPlash() async {
+    await Future.delayed(const Duration(seconds: 2));
+    listner = FirebaseAuth.instance.authStateChanges().listen((user) {
+      Navigation.pushReplaceRoute(
+        context: context,
+        route: user != null ? const HomePage() : const SelectUserStatePage(),
+      );
+    });
+  }
+
+  @override
+  void dispose() {
+    listner?.cancel();
+    super.dispose();
   }
 
   @override

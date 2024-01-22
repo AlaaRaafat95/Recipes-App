@@ -1,8 +1,6 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/foundation.dart';
 import 'package:recipe_app/utilities/exports.utilities.dart';
 
-class UserRegisterAuth extends ChangeNotifier {
+class UserRegisterProvider extends ChangeNotifier {
   GlobalKey<FormState>? formKey;
   TextEditingController? emailController;
   TextEditingController? passwordController;
@@ -18,6 +16,7 @@ class UserRegisterAuth extends ChangeNotifier {
   Future<void> signUp(BuildContext context) async {
     try {
       if (formKey?.currentState?.validate() ?? false) {
+        OverlayLoadingProgress.start();
         var credential =
             await FirebaseAuth.instance.createUserWithEmailAndPassword(
           email: emailController!.text,
@@ -25,23 +24,30 @@ class UserRegisterAuth extends ChangeNotifier {
         );
         if (credential.user != null) {
           await credential.user?.updateDisplayName(nameController!.text);
+          OverlayLoadingProgress.stop();
           clearSignUpData();
-          Navigation.pushReplaceRoute(
-            context: context,
-            route: const HomePage(),
-          );
+          if (context.mounted) {
+            Navigation.pushReplaceRoute(
+              context: context,
+              route: const HomePage(),
+            );
+          }
         }
+        OverlayLoadingProgress.stop();
       }
     } on FirebaseAuthException catch (e) {
       if (e.code == 'email-already-in-use') {
-        OverlayWidget.showSnackBar(
-            context: context,
-            title: 'The account already exists for that email.');
+        if (context.mounted) {
+          OverlayWidget.showSnackBar(
+              context: context,
+              title: 'The account already exists for that email.');
+        }
       }
     } catch (e) {
       if (kDebugMode) {
         print(e);
       }
+      OverlayLoadingProgress.stop();
     }
   }
 
@@ -58,17 +64,6 @@ class UserRegisterAuth extends ChangeNotifier {
     isIconPressed = true;
   }
 
-  Future<void> checkUserLogedIn(BuildContext context) async {
-    await Future.delayed(const Duration(seconds: 5), () {
-      FirebaseAuth.instance.authStateChanges().listen((user) {
-        Navigation.pushReplaceRoute(
-          context: context,
-          route: user != null ? const HomePage() : const SelectUserStatePage(),
-        );
-      });
-    });
-  }
-
   String getUserNameCapitalLetters(
       {required String? username, required int limitTo}) {
     String result =
@@ -80,5 +75,21 @@ class UserRegisterAuth extends ChangeNotifier {
   void changeVisibility() {
     isIconPressed = !isIconPressed;
     notifyListeners();
+  }
+
+  Future<void> signOut(BuildContext context) async {
+    OverlayLoadingProgress.start();
+    await Future.delayed(
+      const Duration(seconds: 2),
+    );
+    await FirebaseAuth.instance.signOut();
+
+    if (context.mounted) {
+      Navigation.pushReplaceRoute(
+        context: context,
+        route: const LogInPage(),
+      );
+    }
+    OverlayLoadingProgress.stop();
   }
 }

@@ -1,8 +1,6 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/foundation.dart';
 import 'package:recipe_app/utilities/exports.utilities.dart';
 
-class UserLogInAuth extends ChangeNotifier {
+class UserLogInProvider extends ChangeNotifier {
   GlobalKey<FormState>? formKey;
   TextEditingController? emailController;
   TextEditingController? passwordController;
@@ -16,27 +14,50 @@ class UserLogInAuth extends ChangeNotifier {
   Future<void> logIn(BuildContext context) async {
     try {
       if (formKey?.currentState?.validate() ?? false) {
+        OverlayLoadingProgress.start();
         await FirebaseAuth.instance.signInWithEmailAndPassword(
-            email: emailController!.text, password: passwordController!.text);
+            email: emailController?.text ?? "",
+            password: passwordController?.text ?? "");
 
         clearLogInData();
-        Navigation.pushReplaceRoute(
-          context: context,
-          route: const HomePage(),
+        OverlayLoadingProgress.stop();
+        OverlayToastMessage.show(
+          widget: const PopUpMsg(
+            title: "Log In Successfully",
+            userState: UserState.success,
+          ),
         );
+
+        if (context.mounted) {
+          Navigation.pushReplaceRoute(
+            context: context,
+            route: const HomePage(),
+          );
+        }
       }
     } on FirebaseAuthException catch (e) {
+      OverlayLoadingProgress.stop();
       if (e.code == 'user-not-found') {
-        OverlayWidget.showSnackBar(
-            context: context, title: 'No user found for that email.');
+        if (context.mounted) {
+          OverlayWidget.showSnackBar(
+              context: context, title: 'No user found for that email.');
+        }
       } else if (e.code == 'wrong-password') {
-        OverlayWidget.showSnackBar(
-            context: context, title: 'Wrong password provided for that user.');
+        if (context.mounted) {
+          OverlayWidget.showSnackBar(
+              context: context,
+              title: 'Wrong password provided for that user.');
+        }
       } else if (e.code == "user-disabled") {
-        OverlayWidget.showSnackBar(
-            context: context, title: 'This email Account was disabled');
+        OverlayLoadingProgress.stop();
+
+        if (context.mounted) {
+          OverlayWidget.showSnackBar(
+              context: context, title: 'This email Account was disabled');
+        }
       }
     } catch (e) {
+      OverlayLoadingProgress.stop();
       if (kDebugMode) {
         print(e);
       }

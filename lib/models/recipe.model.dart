@@ -1,5 +1,5 @@
 class RecipeModel {
-  int? id;
+  String? mealDesc;
   String? image;
   String? mealType;
   String? mealName;
@@ -7,26 +7,30 @@ class RecipeModel {
   int? mealCalories;
   int? mealTime;
   int? serving;
+  List<dynamic>? mealIngredients;
+
   RecipeModel.fromJson(Map<String, dynamic> jsonData) {
-    id = jsonData["id"];
     image = jsonData["image"];
     mealType = jsonData["mealType"];
     mealName = jsonData["mealName"];
+    mealDesc = jsonData["mealDesc"];
     mealRate = jsonData["mealRate"];
     mealCalories = jsonData["mealCalories"];
     mealTime = jsonData["mealTime"];
     serving = jsonData["serving"];
+    mealIngredients = jsonData["mealIngredients"];
   }
   Map<String, dynamic> toJson() {
     return {
-      "id": id,
+      "mealDesc": mealDesc,
       "image": image,
       "mealType": mealType,
       "mealName": mealName,
       "mealRate": mealRate,
       "mealCalories": mealCalories,
       "mealTime": mealTime,
-      "serving": serving
+      "serving": serving,
+      "mealIngredients": mealIngredients
     };
   }
 }

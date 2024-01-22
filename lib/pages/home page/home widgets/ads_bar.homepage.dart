@@ -19,66 +19,70 @@ class _AdsBarState extends State<AdsBar> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Stack(
-          alignment: Alignment.center,
-          children: [
-            Consumer<RecipeProvider>(
-              builder: (context, ads, _) => CarouselSliderEx(
-                items: ads.adsList,
-                carouselController: carouselController,
-                onPageChanged: (index, _) {
-                  Provider.of<RecipeProvider>(context, listen: false)
-                      .pageChanged(index);
-                },
-              ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                CustomButton(
-                  padding: const EdgeInsets.all(5.0),
-                  minimumSize: Size.zero,
-                  onPressed: () async {
-                    await carouselController.previousPage();
-                  },
-                  child: const Icon(Icons.arrow_back_outlined),
-                ),
-                CustomButton(
-                  padding: const EdgeInsets.all(5.0),
-                  minimumSize: Size.zero,
-                  onPressed: () async {
-                    await carouselController.nextPage();
-                  },
-                  child: const Icon(Icons.arrow_forward_outlined),
-                ),
-              ],
-            ),
-          ],
-        ),
-        const SizedBox(
-          height: 5.0,
-        ),
-        Center(
-          child: Consumer<RecipeProvider>(
-            builder: (context, ads, _) => DotsIndicator(
-              dotsCount: ads.adsList.length,
-              position: ads.selectedIndex,
-              onTap: (position) async {
-                await carouselController.animateToPage(position);
+    return Consumer<AdsProvider>(
+      builder: (context, ads, child) => ads.adsList == null
+          ? const Center(
+              child: CircularProgressIndicator(),
+            )
+          : (ads.adsList?.isEmpty ?? false)
+              ? const Center(
+                  child: Text("No Data Found"),
+                )
+              : Column(
+                  children: [
+                    Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        CarouselSliderEx(
+                          items: ads.adsList!,
+                          carouselController: carouselController,
+                          onPageChanged: (index, _) {
+                            ads.pageChanged(index);
+                          },
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            CustomButton(
+                              padding: const EdgeInsets.all(5.0),
+                              minimumSize: Size.zero,
+                              onPressed: () async {
+                                await carouselController.previousPage();
+                              },
+                              child: const Icon(Icons.arrow_back_outlined),
+                            ),
+                            CustomButton(
+                              padding: const EdgeInsets.all(5.0),
+                              minimumSize: Size.zero,
+                              onPressed: () async {
+                                await carouselController.nextPage();
+                              },
+                              child: const Icon(Icons.arrow_forward_outlined),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 5.0,
+                    ),
+                    Center(
+                      child: DotsIndicator(
+                        dotsCount: ads.adsList!.length,
+                        position: ads.selectedIndex,
+                        onTap: (position) async {
+                          await carouselController.animateToPage(position);
 
-                Provider.of<RecipeProvider>(context, listen: false)
-                    .position(position);
-              },
-              decorator: const DotsDecorator(
-                activeSize: Size(25.0, 15.0),
-                size: Size(20.0, 11.0),
-              ),
-            ),
-          ),
-        ),
-      ],
+                          ads.position(position);
+                        },
+                        decorator: const DotsDecorator(
+                          activeSize: Size(25.0, 15.0),
+                          size: Size(20.0, 11.0),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
     );
   }
 }
