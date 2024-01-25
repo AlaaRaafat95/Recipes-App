@@ -1,9 +1,8 @@
 import 'package:recipe_app/utilities/exports.utilities.dart';
 
 class FavoriteButton extends StatelessWidget {
-  const FavoriteButton({
-    super.key,
-  });
+  final String favId;
+  const FavoriteButton({super.key, required this.favId});
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +17,7 @@ class FavoriteButton extends StatelessWidget {
               )
             : const Icon(Icons.favorite_outline),
         onPressed: () {
-          appValueNotifier.changeIcon();
+          appValueNotifier.toggleIcon(context: context, favId: favId);
         },
       ),
     );

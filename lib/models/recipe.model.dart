@@ -1,4 +1,5 @@
 class RecipeModel {
+  String? docId;
   String? mealDesc;
   String? image;
   String? mealType;
@@ -7,9 +8,13 @@ class RecipeModel {
   int? mealCalories;
   int? mealTime;
   int? serving;
-  List<dynamic>? mealIngredients;
+  List<String>? mealIngredients;
+  bool? isFresh;
 
-  RecipeModel.fromJson(Map<String, dynamic> jsonData) {
+  List<String>? usersIds;
+
+  RecipeModel.fromJson(Map<String, dynamic> jsonData, [String? doc]) {
+    docId = doc;
     image = jsonData["image"];
     mealType = jsonData["mealType"];
     mealName = jsonData["mealName"];
@@ -18,10 +23,26 @@ class RecipeModel {
     mealCalories = jsonData["mealCalories"];
     mealTime = jsonData["mealTime"];
     serving = jsonData["serving"];
-    mealIngredients = jsonData["mealIngredients"];
+    mealIngredients = jsonData["mealIngredients"] != null
+        ? List<String>.from(
+            jsonData["mealIngredients"].map(
+              (e) => e.toString(),
+            ),
+          )
+        : null;
+    isFresh = jsonData["isFresh"];
+
+    usersIds = jsonData["usersIds"] != null
+        ? List<String>.from(
+            jsonData["usersIds"].map(
+              (e) => e.toString(),
+            ),
+          )
+        : null;
   }
   Map<String, dynamic> toJson() {
     return {
+      "docId": docId,
       "mealDesc": mealDesc,
       "image": image,
       "mealType": mealType,
@@ -30,7 +51,9 @@ class RecipeModel {
       "mealCalories": mealCalories,
       "mealTime": mealTime,
       "serving": serving,
-      "mealIngredients": mealIngredients
+      "mealIngredients": mealIngredients,
+      "isFresh": isFresh,
+      "usersIds": usersIds
     };
   }
 }

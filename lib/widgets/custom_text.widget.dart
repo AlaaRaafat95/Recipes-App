@@ -7,6 +7,7 @@ class CustomText extends StatelessWidget {
   final FontStyle? fontStyle;
   final FontWeight? fontWeight;
   final String? fontFamily;
+  final TextOverflow? overFlow;
 
   const CustomText(
       {super.key,
@@ -15,13 +16,15 @@ class CustomText extends StatelessWidget {
       this.fontSize,
       this.fontFamily,
       this.fontStyle,
-      this.fontWeight});
+      this.fontWeight,
+      this.overFlow});
 
   @override
   Widget build(BuildContext context) {
     return Text(
       title,
       style: TextStyle(
+          overflow: overFlow,
           color: color,
           fontSize: fontSize,
           fontStyle: fontStyle,

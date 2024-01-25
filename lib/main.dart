@@ -2,6 +2,7 @@ import 'package:recipe_app/utilities/exports.utilities.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -21,7 +22,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (context) => RecipeProvider()
             ..getFreshRecipes(isLimit: true)
-            ..getRecommendedRecipes(isLimit: true),
+            ..getRecommendedRecipes(),
         ),
         ChangeNotifierProvider(
           create: (context) => UserRegisterProvider(),
@@ -31,6 +32,12 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (context) => AdsProvider()..readAds(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => IngredientsProvider()..getIngredients(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => FavouritesProvider(),
         ),
       ],
       child: OverlayKit(

@@ -31,7 +31,7 @@ class UserLogInProvider extends ChangeNotifier {
         if (context.mounted) {
           Navigation.pushReplaceRoute(
             context: context,
-            route: const HomePage(),
+            route: const MasterDrawerPage(),
           );
         }
       }

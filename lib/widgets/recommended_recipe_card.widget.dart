@@ -1,12 +1,12 @@
 import 'package:recipe_app/utilities/exports.utilities.dart';
 
-class RecipeCard extends StatelessWidget {
-  const RecipeCard({super.key, required this.recipesList});
-  final List<RecipeModel> recipesList;
+class RecommendedRecipeCard extends StatelessWidget {
+  final List<RecipeModel> recipeModel;
+  const RecommendedRecipeCard({super.key, required this.recipeModel});
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: recipesList
+      children: recipeModel
           .map(
             (e) => Stack(
               alignment: Alignment.topRight,
@@ -113,10 +113,9 @@ class RecipeCard extends StatelessWidget {
                     ),
                   ),
                 ),
-                const Padding(
-                  padding: EdgeInsets.only(right: 10.0),
-                  child: FavoriteButton(),
-                ),
+                Padding(
+                    padding: const EdgeInsets.only(right: 10.0),
+                    child: FavoriteButton(favId: e.docId ?? "")),
               ],
             ),
           )

@@ -4,7 +4,7 @@ class RecipeProvider extends ChangeNotifier {
   List<RecipeModel>? _freshRecipesList;
   List<RecipeModel>? _recommendedRecipesList;
 
-  List<RecipeModel>? get freshrecipesList => _freshRecipesList;
+  List<RecipeModel>? get freshRecipesList => _freshRecipesList;
   List<RecipeModel>? get recommendedRecipesList => _recommendedRecipesList;
 
   Future<void> getFreshRecipes({required bool isLimit}) async {
@@ -12,15 +12,14 @@ class RecipeProvider extends ChangeNotifier {
       var recipes = isLimit
           ? await FirebaseFirestore.instance
               .collection("fresh_recipes")
+              .where("isFresh", isEqualTo: true)
               .limit(3)
               .get()
           : await FirebaseFirestore.instance.collection("fresh_recipes").get();
       if (recipes.docs.isNotEmpty) {
         _freshRecipesList = List<RecipeModel>.from(
           recipes.docs.map(
-            (doc) => RecipeModel.fromJson(
-              doc.data(),
-            ),
+            (doc) => RecipeModel.fromJson(doc.data(), doc.id),
           ),
         );
       } else {
@@ -28,11 +27,9 @@ class RecipeProvider extends ChangeNotifier {
       }
       notifyListeners();
     } catch (e) {
-      print(e);
-
       OverlayToastMessage.show(
         widget: const PopUpMsg(
-          title: "There was an error",
+          title: "Loading Fresh Recipes Faild",
           userState: UserState.failed,
         ),
       );
@@ -40,22 +37,18 @@ class RecipeProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> getRecommendedRecipes({required bool isLimit}) async {
+  Future<void> getRecommendedRecipes() async {
     try {
-      var recipes = isLimit
-          ? await FirebaseFirestore.instance
-              .collection("recommended_recipes")
-              .limit(3)
-              .get()
-          : await FirebaseFirestore.instance
-              .collection("recommended_recipes")
-              .get();
+      var recipes = await FirebaseFirestore.instance
+          .collection("fresh_recipes")
+          .where("isFresh", isEqualTo: false)
+          .limit(3)
+          .get();
+
       if (recipes.docs.isNotEmpty) {
         _recommendedRecipesList = List<RecipeModel>.from(
           recipes.docs.map(
-            (doc) => RecipeModel.fromJson(
-              doc.data(),
-            ),
+            (doc) => RecipeModel.fromJson(doc.data(), doc.id),
           ),
         );
       } else {
@@ -63,13 +56,9 @@ class RecipeProvider extends ChangeNotifier {
       }
       notifyListeners();
     } catch (e) {
-      if (kDebugMode) {
-        print(e);
-      }
-
       OverlayToastMessage.show(
         widget: const PopUpMsg(
-          title: "There was an error",
+          title: "Loading Recommended Recipes Faild",
           userState: UserState.failed,
         ),
       );
