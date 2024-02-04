@@ -17,7 +17,3 @@ samples, guidance on mobile development, and a full API reference.
 
 
 
-https://github.com/AlaaRaafat95/Recipes-App/assets/145221540/b59c4019-4020-4d96-9a9b-c1d6f17a34c0
-
-
-
