@@ -21,7 +21,7 @@ class _SplashPageState extends State<SplashPage> {
     listner = FirebaseAuth.instance.authStateChanges().listen((user) {
       Navigation.pushReplaceRoute(
         context: context,
-        route: user != null
+        route: user != null && user.emailVerified
             ? const MasterDrawerPage()
             : const SelectUserStatePage(),
       );

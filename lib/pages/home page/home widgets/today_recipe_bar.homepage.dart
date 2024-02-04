@@ -8,15 +8,27 @@ class TodayRecipesBar extends StatelessWidget {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Consumer<RecipeProvider>(
-        builder: (context, recipes, child) => recipes.freshRecipesList == null
+        builder: (context, recipes, _) => recipes.freshRecipesList == null
             ? const Center(
                 child: CircularProgressIndicator(),
               )
             : recipes.freshRecipesList?.isEmpty ?? false
                 ? const Center(
-                    child: Text("No Data Found"),
+                    child: CustomText(
+                        title: "No Today Recipes Found",
+                        color: AppColors.primaryColor,
+                        fontSize: 15,
+                        fontStyle: FontStyle.italic),
                   )
-                : const FreshRecipesCard(),
+                : Row(
+                    children: recipes.freshRecipesList!
+                        .map(
+                          (e) => FreshRecipesCard(
+                            recipeModel: e,
+                          ),
+                        )
+                        .toList(),
+                  ),
       ),
     );
   }

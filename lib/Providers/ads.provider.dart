@@ -3,6 +3,10 @@ import 'package:recipe_app/utilities/exports.utilities.dart';
 class AdsProvider extends ChangeNotifier {
   List<AdModel>? _adsList;
   int selectedIndex = 0;
+  late CarouselController carouselController;
+  initCarousel() {
+    carouselController = CarouselController();
+  }
 
   List<AdModel>? get adsList => _adsList;
   Future<void> readAds() async {

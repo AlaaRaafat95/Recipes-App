@@ -30,7 +30,12 @@ class IngredientsProvider extends ChangeNotifier {
   Future<void> addIngredientsToUser(
       {required String ingredientId, required bool isAdd}) async {
     try {
-      OverlayLoadingProgress.start();
+      OverlayLoadingProgress.start(
+        widget: Center(
+          child: LoadingAnimationWidget.waveDots(
+              color: AppColors.primaryColor, size: 80),
+        ),
+      );
       if (isAdd) {
         await FirebaseFirestore.instance
             .collection("ingredients")

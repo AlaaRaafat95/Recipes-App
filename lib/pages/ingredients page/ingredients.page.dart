@@ -7,6 +7,14 @@ class IngredientsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+            icon: Padding(
+              padding: const EdgeInsets.only(left: 20.0),
+              child: Image.asset(AppStrings.menuIcon),
+            ),
+            onPressed: () {
+              ZoomDrawer.of(context)!.toggle();
+            }),
         forceMaterialTransparency: true,
         elevation: 0.0,
         actions: [
@@ -46,6 +54,7 @@ class IngredientsPage extends StatelessWidget {
                         ...List.generate(
                           ingredient.ingredientsList!.length,
                           (index) => CustomListTile(
+                            titleColor: AppColors.black,
                             title:
                                 ingredient.ingredientsList![index].name ?? "",
                             icon: Checkbox(
@@ -53,8 +62,7 @@ class IngredientsPage extends StatelessWidget {
                                   MaterialTapTargetSize.shrinkWrap,
                               visualDensity: const VisualDensity(
                                   horizontal: -4, vertical: -4),
-                              side: const BorderSide(
-                                  color: AppColors.primaryColor),
+                              side: const BorderSide(color: AppColors.black),
                               value: ingredient.ingredientsList![index].usersIds
                                   ?.contains(
                                       FirebaseAuth.instance.currentUser?.uid),

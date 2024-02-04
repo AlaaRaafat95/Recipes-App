@@ -1,125 +1,121 @@
 import 'package:recipe_app/utilities/exports.utilities.dart';
 
 class RecommendedRecipeCard extends StatelessWidget {
-  final List<RecipeModel> recipeModel;
+  final RecipeModel recipeModel;
   const RecommendedRecipeCard({super.key, required this.recipeModel});
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: recipeModel
-          .map(
-            (e) => Stack(
-              alignment: Alignment.topRight,
+    return Stack(
+      alignment: Alignment.topRight,
+      children: [
+        GestureDetector(
+          onTap: () {
+            Navigation.pushRoute(
+              context: context,
+              route: MealDetails(
+                recipeModel: recipeModel,
+              ),
+            );
+          },
+          child: CustomContainer(
+            height: 110.0,
+            width: double.infinity,
+            padding: const EdgeInsets.symmetric(horizontal: 10.0),
+            decoration: BoxDecoration(
+              color: AppColors.greyAccent,
+              borderRadius: BorderRadius.circular(20.0),
+            ),
+            margin: const EdgeInsets.only(bottom: 10.0),
+            child: Row(
               children: [
-                GestureDetector(
-                  onTap: () {
-                    Navigation.pushRoute(
-                      context: context,
-                      route: MealDetails(
-                        recipeModel: e,
+                Image.asset(
+                  recipeModel.image.toString(),
+                  height: 70.0,
+                  width: 90.0,
+                ),
+                const SizedBox(
+                  width: 5,
+                ),
+                SizedBox(
+                  width: 150,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      CustomText(
+                        title: recipeModel.mealType.toString(),
+                        fontSize: 10.0,
+                        fontWeight: FontWeight.w500,
+                        color: AppColors.blue,
                       ),
-                    );
-                  },
-                  child: CustomContainer(
-                    height: 110.0,
-                    width: double.infinity,
-                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                    decoration: BoxDecoration(
-                      color: AppColors.greyAccent,
-                      borderRadius: BorderRadius.circular(20.0),
-                    ),
-                    margin: const EdgeInsets.only(bottom: 10.0),
-                    child: Row(
-                      children: [
-                        Image.asset(
-                          e.image.toString(),
-                          height: 70.0,
-                          width: 90.0,
-                        ),
-                        const SizedBox(
-                          width: 5,
-                        ),
-                        SizedBox(
-                          width: 150,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                      CustomText(
+                        title: recipeModel.mealName.toString(),
+                        fontSize: 14.0,
+                        fontWeight: FontWeight.w500,
+                      ),
+                      Row(
+                        children: [
+                          StarDisplay(
+                            value: recipeModel.mealRate!,
+                          ),
+                          const SizedBox(
+                            width: 5.0,
+                          ),
+                          CustomText(
+                            title:
+                                "${recipeModel.mealCalories.toString()} Calories",
+                            fontSize: 10.0,
+                            fontWeight: FontWeight.w400,
+                            color: AppColors.primaryColor,
+                          ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
                             children: [
-                              CustomText(
-                                title: e.mealType.toString(),
-                                fontSize: 10.0,
-                                fontWeight: FontWeight.w500,
-                                color: AppColors.blue,
+                              Image.asset("assets/images/time.png"),
+                              const SizedBox(
+                                width: 5.0,
                               ),
                               CustomText(
-                                title: e.mealName.toString(),
-                                fontSize: 14.0,
-                                fontWeight: FontWeight.w500,
-                              ),
-                              Row(
-                                children: [
-                                  StarDisplay(
-                                    value: e.mealRate!,
-                                  ),
-                                  const SizedBox(
-                                    width: 5.0,
-                                  ),
-                                  CustomText(
-                                    title:
-                                        "${e.mealCalories.toString()} Calories",
-                                    fontSize: 10.0,
-                                    fontWeight: FontWeight.w400,
-                                    color: AppColors.primaryColor,
-                                  ),
-                                ],
-                              ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Row(
-                                    children: [
-                                      Image.asset("assets/images/time.png"),
-                                      const SizedBox(
-                                        width: 5.0,
-                                      ),
-                                      CustomText(
-                                        title: "${e.mealTime} mins",
-                                        fontSize: 8.0,
-                                        fontWeight: FontWeight.w400,
-                                        color: AppColors.lightGrey,
-                                      ),
-                                    ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      Image.asset("assets/images/serving.png"),
-                                      const SizedBox(
-                                        width: 5.0,
-                                      ),
-                                      CustomText(
-                                          title: "${e.serving} Serving",
-                                          fontSize: 8.0,
-                                          fontWeight: FontWeight.w400,
-                                          color: AppColors.lightGrey),
-                                    ],
-                                  ),
-                                ],
+                                title: "${recipeModel.mealTime} mins",
+                                fontSize: 8.0,
+                                fontWeight: FontWeight.w400,
+                                color: AppColors.lightGrey,
                               ),
                             ],
                           ),
-                        ),
-                      ],
-                    ),
+                          Row(
+                            children: [
+                              Image.asset("assets/images/serving.png"),
+                              const SizedBox(
+                                width: 5.0,
+                              ),
+                              CustomText(
+                                  title: "${recipeModel.serving} Serving",
+                                  fontSize: 8.0,
+                                  fontWeight: FontWeight.w400,
+                                  color: AppColors.lightGrey),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
                 ),
-                Padding(
-                    padding: const EdgeInsets.only(right: 10.0),
-                    child: FavoriteButton(favId: e.docId ?? "")),
               ],
             ),
-          )
-          .toList(),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(right: 10.0),
+          child: FavoriteButton(
+            recipeModel: recipeModel,
+          ),
+        ),
+      ],
     );
   }
 }

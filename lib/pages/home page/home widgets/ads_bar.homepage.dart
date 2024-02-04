@@ -10,10 +10,9 @@ class AdsBar extends StatefulWidget {
 }
 
 class _AdsBarState extends State<AdsBar> {
-  late CarouselController carouselController;
   @override
   void initState() {
-    carouselController = CarouselController();
+    Provider.of<AdsProvider>(context, listen: false).initCarousel();
     super.initState();
   }
 
@@ -26,7 +25,11 @@ class _AdsBarState extends State<AdsBar> {
             )
           : (ads.adsList?.isEmpty ?? false)
               ? const Center(
-                  child: Text("No Data Found"),
+                  child: CustomText(
+                      title: "No Ads Found Now",
+                      color: AppColors.primaryColor,
+                      fontSize: 15,
+                      fontStyle: FontStyle.italic),
                 )
               : Column(
                   children: [
@@ -35,7 +38,7 @@ class _AdsBarState extends State<AdsBar> {
                       children: [
                         CarouselSliderEx(
                           items: ads.adsList!,
-                          carouselController: carouselController,
+                          carouselController: ads.carouselController,
                           onPageChanged: (index, _) {
                             ads.pageChanged(index);
                           },
@@ -47,7 +50,7 @@ class _AdsBarState extends State<AdsBar> {
                               padding: const EdgeInsets.all(5.0),
                               minimumSize: Size.zero,
                               onPressed: () async {
-                                await carouselController.previousPage();
+                                await ads.carouselController.previousPage();
                               },
                               child: const Icon(Icons.arrow_back_outlined),
                             ),
@@ -55,7 +58,7 @@ class _AdsBarState extends State<AdsBar> {
                               padding: const EdgeInsets.all(5.0),
                               minimumSize: Size.zero,
                               onPressed: () async {
-                                await carouselController.nextPage();
+                                await ads.carouselController.nextPage();
                               },
                               child: const Icon(Icons.arrow_forward_outlined),
                             ),
@@ -71,7 +74,7 @@ class _AdsBarState extends State<AdsBar> {
                         dotsCount: ads.adsList!.length,
                         position: ads.selectedIndex,
                         onTap: (position) async {
-                          await carouselController.animateToPage(position);
+                          await ads.carouselController.animateToPage(position);
 
                           ads.position(position);
                         },

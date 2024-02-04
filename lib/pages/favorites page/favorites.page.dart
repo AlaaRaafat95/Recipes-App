@@ -1,84 +1,122 @@
+import 'package:recipe_app/pages/favorites%20page/favorites%20page%20states/success_state.favoritesPage.dart';
+import 'package:recipe_app/pages/filter%20page/filter.page.dart';
 import 'package:recipe_app/utilities/exports.utilities.dart';
 
-class FavouritesPage extends StatefulWidget {
-  const FavouritesPage({super.key});
+import 'favorites page states/default_state.favoritesPage.dart';
+import 'favorites page states/error_state.favoritesPage.dart';
+
+class FavoritesPage extends StatefulWidget {
+  const FavoritesPage({
+    super.key,
+  });
 
   @override
-  State<FavouritesPage> createState() => _FavouritesPageState();
+  State<FavoritesPage> createState() => _FavoritesPageState();
 }
 
-class _FavouritesPageState extends State<FavouritesPage> {
-  @override
-  void initState() {
-    Provider.of<FavouritesProvider>(context, listen: false).getFavourites();
-    super.initState();
+class _FavoritesPageState extends State<FavoritesPage> {
+  List<RecipeModel>? recipesList = [];
+  List<RecipeModel>? filteredRecipesList = [];
+  String mealNameFilter = '';
+
+  void onMealNameChanged(String value) {
+    setState(() {
+      mealNameFilter = value;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.white,
+      floatingActionButton: FloatingActionButton(
+        onPressed: () async {
+          await Provider.of<RecipeProvider>(context, listen: false)
+              .getAllRecipes();
+          if (context.mounted) {
+            Navigation.pushRoute(
+              context: context,
+              route: AllRecipesPage(
+                  recipeModel:
+                      Provider.of<RecipeProvider>(context, listen: false)
+                              .allRecipesList ??
+                          []),
+            );
+          }
+        },
+        child: const Icon(Icons.add),
+      ),
       appBar: AppBar(
+        leading: IconButton(
+            icon: Padding(
+              padding: const EdgeInsets.only(left: 20.0),
+              child: Image.asset(AppStrings.menuIcon),
+            ),
+            onPressed: () {
+              ZoomDrawer.of(context)?.toggle();
+            }),
+        title: TextField(
+          decoration: const InputDecoration(
+            labelText: 'Search by Meal Name',
+          ),
+          onChanged: (value) {
+            onMealNameChanged(value);
+          },
+        ),
         forceMaterialTransparency: true,
         elevation: 0.0,
         actions: [
           Padding(
-            padding: const EdgeInsets.only(right: 20.0),
-            child: CustomIconButton(
-              icon: const Icon(
-                Icons.notifications_none_outlined,
-                size: 30.0,
+            padding: const EdgeInsets.only(right: 20),
+            child: InkWell(
+              onTap: () {
+                Navigation.pushRoute(
+                  context: context,
+                  route: const FilterPage(),
+                );
+              },
+              child: Image.asset(
+                AppStrings.filterIcon,
+                scale: 1.5,
               ),
-              onPressed: () {},
             ),
           ),
         ],
       ),
-      body: Consumer<FavouritesProvider>(
-        builder: (context, favourites, child) =>
-            favourites.favouritesList == null
-                ? const Center(
-                    child: CircularProgressIndicator(),
-                  )
-                : (favourites.favouritesList?.isEmpty ?? false)
-                    ? Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Image.asset("assets/images/davecomiskey.png"),
-                            const CustomText(
-                              title: "No Favorites Recipes Yet",
-                              fontFamily: " Abril Fatface",
-                              fontSize: 15,
-                              color: AppColors.primaryColor,
-                            ),
-                          ],
-                        ),
-                      )
-                    : SingleChildScrollView(
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 20.0, vertical: 10.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const CustomText(
-                                title: "Favorites",
-                                fontSize: 20,
-                                fontWeight: FontWeight.w800,
-                              ),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              const SearchAndFilter(),
-                              const SizedBox(
-                                height: 10,
-                              ),
-                              RecommendedRecipeCard(
-                                  recipeModel: favourites.favouritesList ?? []),
-                            ],
-                          ),
-                        ),
-                      ),
+      body: StreamBuilder(
+        stream: FirebaseFirestore.instance
+            .collection('fresh_recipes')
+            .where("favoritesUsersIds",
+                arrayContains: FirebaseAuth.instance.currentUser?.uid)
+            .snapshots(),
+        builder: (context, snapshots) {
+          recipesList = snapshots.data?.docs
+              .map(
+                (e) => RecipeModel.fromJson(e.data(), e.id),
+              )
+              .toList();
+          filteredRecipesList = recipesList
+              ?.where(
+                (recipe) => recipe.mealName!
+                    .toLowerCase()
+                    .contains(mealNameFilter.toLowerCase()),
+              )
+              .toList();
+          if (snapshots.hasError) {
+            return const ErrorState();
+          } else if (snapshots.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          } else {
+            if (recipesList?.isNotEmpty ?? false) {
+              return SuccessState(
+                  mealNameFilter: mealNameFilter,
+                  filteredRecipesList: filteredRecipesList!,
+                  recipesList: recipesList!);
+            } else {
+              return const DefaultState();
+            }
+          }
+        },
       ),
     );
   }

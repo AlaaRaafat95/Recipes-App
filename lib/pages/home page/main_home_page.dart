@@ -1,3 +1,4 @@
+import 'package:recipe_app/pages/filter%20page/filter.page.dart';
 import 'package:recipe_app/utilities/exports.utilities.dart';
 
 class HomePage extends StatelessWidget {
@@ -21,13 +22,18 @@ class HomePage extends StatelessWidget {
             }),
         actions: [
           Padding(
-            padding: const EdgeInsets.only(right: 20.0),
-            child: CustomIconButton(
-              icon: const Icon(
-                Icons.notifications_none_outlined,
-                size: 30.0,
+            padding: const EdgeInsets.only(right: 20),
+            child: InkWell(
+              onTap: () {
+                Navigation.pushRoute(
+                  context: context,
+                  route: const FilterPage(),
+                );
+              },
+              child: Image.asset(
+                AppStrings.filterIcon,
+                scale: 1.5,
               ),
-              onPressed: () {},
             ),
           ),
         ],
@@ -58,7 +64,7 @@ class HomePage extends StatelessWidget {
                 const SizedBox(
                   height: 5.0,
                 ),
-                const SearchAndFilter(),
+                // const SearchAndFilter(),
                 const SizedBox(
                   height: 5.0,
                 ),

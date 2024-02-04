@@ -5,17 +5,25 @@ class Recommended extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer<RecipeProvider>(
-      builder: (context, recipes, child) =>
-          recipes.recommendedRecipesList == null
+      builder: (context, recipes, _) => recipes.recommendedRecipesList == null
+          ? const Center(
+              child: CircularProgressIndicator(),
+            )
+          : recipes.recommendedRecipesList?.isEmpty ?? false
               ? const Center(
-                  child: CircularProgressIndicator(),
+                  child: CustomText(
+                      title: "No Recommended Recipes",
+                      color: AppColors.primaryColor,
+                      fontSize: 15,
+                      fontStyle: FontStyle.italic),
                 )
-              : recipes.recommendedRecipesList?.isEmpty ?? false
-                  ? const Center(
-                      child: Text("No Data Found"),
-                    )
-                  : RecommendedRecipeCard(
-                      recipeModel: recipes.recommendedRecipesList!),
+              : Column(
+                  children: recipes.recommendedRecipesList!
+                      .map(
+                        (e) => RecommendedRecipeCard(recipeModel: e),
+                      )
+                      .toList(),
+                ),
     );
   }
 }

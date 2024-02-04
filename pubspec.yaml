@@ -43,10 +43,17 @@ dependencies:
   cloud_firestore: ^4.14.0
   overlay_kit: ^1.0.8
   flutter_zoom_drawer: ^3.1.1
-    
+  # future_builder_ex: ^3.0.0
+  # flexible_grid_view: ^0.0.2
+  # flutter_rating_bar: ^4.0.1
+  flutter_slidable: ^3.0.1
+  loading_animation_widget: ^1.2.0+4
+  firebase_storage: ^11.6.0
+  file_picker: ^6.1.1
+  popover: ^0.2.8+2
 dev_dependencies:
   flutter_test:
-    sdk: flutter
+    sdk: flutter  
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is

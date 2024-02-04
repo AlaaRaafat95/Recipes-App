@@ -46,7 +46,7 @@ class _SignUpFormState extends State<SignUpForm> {
               keyboardType: TextInputType.name,
               controller: userRegister.nameController,
               labelText: AppStrings.name,
-              prefixIcon: Icons.person_4_outlined,
+              prefixIcon: const Icon(Icons.person_4_outlined),
               validator: (value) {
                 return Validation.nameValidator(value ?? "");
               },
@@ -58,7 +58,7 @@ class _SignUpFormState extends State<SignUpForm> {
               keyboardType: TextInputType.emailAddress,
               controller: userRegister.emailController,
               labelText: AppStrings.email,
-              prefixIcon: Icons.email_outlined,
+              prefixIcon: const Icon(Icons.email_outlined),
               validator: (value) {
                 return Validation.emailValidator(value ?? "");
               },
@@ -70,7 +70,7 @@ class _SignUpFormState extends State<SignUpForm> {
               keyboardType: TextInputType.visiblePassword,
               controller: userRegister.passwordController,
               labelText: AppStrings.password,
-              prefixIcon: Icons.lock_outline,
+              prefixIcon: const Icon(Icons.lock_outline),
               obscureText: userRegister.isIconPressed,
               suffixIcon: CustomIconButton(
                 icon: userRegister.isIconPressed

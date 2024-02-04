@@ -10,8 +10,9 @@ class RecipeModel {
   int? serving;
   List<String>? mealIngredients;
   bool? isFresh;
-
-  List<String>? usersIds;
+  List<String>? favoritesUsersIds;
+  List<String>? recentlyViewedUsersIds;
+  Map<String, String>? mealDirections;
 
   RecipeModel.fromJson(Map<String, dynamic> jsonData, [String? doc]) {
     docId = doc;
@@ -31,13 +32,22 @@ class RecipeModel {
           )
         : null;
     isFresh = jsonData["isFresh"];
-
-    usersIds = jsonData["usersIds"] != null
+    favoritesUsersIds = jsonData["favoritesUsersIds"] != null
         ? List<String>.from(
-            jsonData["usersIds"].map(
+            jsonData["favoritesUsersIds"].map(
               (e) => e.toString(),
             ),
           )
+        : null;
+    recentlyViewedUsersIds = jsonData["recentlyViewedUsersIds"] != null
+        ? List<String>.from(
+            jsonData["recentlyViewedUsersIds"].map(
+              (e) => e.toString(),
+            ),
+          )
+        : null;
+    mealDirections = jsonData["mealDirections"] != null
+        ? Map<String, String>.from(jsonData["mealDirections"])
         : null;
   }
   Map<String, dynamic> toJson() {
@@ -53,7 +63,9 @@ class RecipeModel {
       "serving": serving,
       "mealIngredients": mealIngredients,
       "isFresh": isFresh,
-      "usersIds": usersIds
+      "recentlyViewedUsersIds": recentlyViewedUsersIds,
+      "favoritesUsersIds": favoritesUsersIds,
+      "mealDirections": mealDirections
     };
   }
 }

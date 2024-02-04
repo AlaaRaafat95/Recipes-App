@@ -20,14 +20,15 @@ class HeadLineTitle extends StatelessWidget {
         CustomTextButton(
           onPressed: () async {
             await Provider.of<RecipeProvider>(context, listen: false)
-                .getFreshRecipes(isLimit: false);
+                .getAllRecipes();
             if (context.mounted) {
               Navigation.pushRoute(
                 context: context,
                 route: AllRecipesPage(
                   recipeModel:
                       Provider.of<RecipeProvider>(context, listen: false)
-                          .freshRecipesList!,
+                              .allRecipesList ??
+                          [],
                 ),
               );
             }

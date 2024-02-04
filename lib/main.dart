@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(
           create: (context) => RecipeProvider()
-            ..getFreshRecipes(isLimit: true)
+            ..getFreshRecipes()
             ..getRecommendedRecipes(),
         ),
         ChangeNotifierProvider(
@@ -35,9 +35,6 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (context) => IngredientsProvider()..getIngredients(),
-        ),
-        ChangeNotifierProvider(
-          create: (context) => FavouritesProvider(),
         ),
       ],
       child: OverlayKit(

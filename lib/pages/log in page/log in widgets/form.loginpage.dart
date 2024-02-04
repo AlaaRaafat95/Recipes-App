@@ -1,3 +1,4 @@
+import 'package:recipe_app/pages/log%20in%20page/log%20in%20widgets/reset_password.widget.login.dart';
 import 'package:recipe_app/utilities/exports.utilities.dart';
 
 class LogInForm extends StatefulWidget {
@@ -9,6 +10,7 @@ class LogInForm extends StatefulWidget {
 
 class _LogInFormState extends State<LogInForm> {
   late UserLogInProvider userLogInAuth;
+
   @override
   void initState() {
     userLogInAuth = Provider.of<UserLogInProvider>(context, listen: false);
@@ -45,7 +47,7 @@ class _LogInFormState extends State<LogInForm> {
               keyboardType: TextInputType.emailAddress,
               controller: userLogIn.emailController,
               labelText: AppStrings.email,
-              prefixIcon: Icons.email_outlined,
+              prefixIcon: const Icon(Icons.email_outlined),
               validator: (value) {
                 return Validation.emailValidator(value ?? "");
               },
@@ -58,7 +60,7 @@ class _LogInFormState extends State<LogInForm> {
               controller: userLogIn.passwordController,
               obscureText: userLogIn.isIconPressed,
               labelText: AppStrings.password,
-              prefixIcon: Icons.lock_outline,
+              prefixIcon: const Icon(Icons.lock_outline),
               suffixIcon: CustomIconButton(
                 icon: userLogIn.isIconPressed
                     ? const Icon(
@@ -85,7 +87,12 @@ class _LogInFormState extends State<LogInForm> {
               children: [
                 const Spacer(),
                 CustomTextButton(
-                  onPressed: () {},
+                  onPressed: () async {
+                    await OverlayWidget.showBottomSheet(
+                      context: context,
+                      widget: const UserResetPassword(),
+                    );
+                  },
                   title: AppStrings.forgetPassword,
                   color: AppColors.blue,
                   fontSize: 12.0,
