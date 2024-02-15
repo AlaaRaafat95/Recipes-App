@@ -30,11 +30,11 @@ class RecommendedRecipeCard extends StatelessWidget {
               children: [
                 Image.asset(
                   recipeModel.image.toString(),
-                  height: 70.0,
-                  width: 90.0,
+                  height: 110.0,
+                  width: 120.0,
                 ),
                 const SizedBox(
-                  width: 5,
+                  width: 10,
                 ),
                 SizedBox(
                   width: 150,
@@ -75,7 +75,7 @@ class RecommendedRecipeCard extends StatelessWidget {
                         children: [
                           Row(
                             children: [
-                              Image.asset("assets/images/time.png"),
+                              Image.asset(AppStrings.timeIcon),
                               const SizedBox(
                                 width: 5.0,
                               ),
@@ -89,7 +89,7 @@ class RecommendedRecipeCard extends StatelessWidget {
                           ),
                           Row(
                             children: [
-                              Image.asset("assets/images/serving.png"),
+                              Image.asset(AppStrings.servingIcon),
                               const SizedBox(
                                 width: 5.0,
                               ),

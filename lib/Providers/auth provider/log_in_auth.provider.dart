@@ -1,5 +1,3 @@
-import 'package:file_picker/file_picker.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:recipe_app/utilities/exports.utilities.dart';
 
 class UserLogInProvider extends ChangeNotifier {
@@ -7,6 +5,7 @@ class UserLogInProvider extends ChangeNotifier {
   TextEditingController? emailController;
   TextEditingController? passwordController;
   bool isIconPressed = true;
+
   void initLogin() {
     formKey = GlobalKey<FormState>();
     emailController = TextEditingController();
@@ -16,17 +15,20 @@ class UserLogInProvider extends ChangeNotifier {
   Future<void> logIn(BuildContext context) async {
     try {
       if (formKey?.currentState?.validate() ?? false) {
-        OverlayLoadingProgress.start(
-          widget: Center(
-            child: LoadingAnimationWidget.waveDots(
-                color: AppColors.primaryColor, size: 80),
-          ),
-        );
+        OverlayWidget.showAnimateLoading();
         await FirebaseAuth.instance.signInWithEmailAndPassword(
             email: emailController?.text ?? "",
             password: passwordController?.text ?? "");
         if (FirebaseAuth.instance.currentUser?.emailVerified ?? false) {
           clearLogInData();
+          if (context.mounted) {
+            Provider.of<UserRegisterProvider>(context, listen: false)
+                .getUserNameCapitalLetters(
+              userName:
+                  FirebaseAuth.instance.currentUser!.displayName.toString(),
+            );
+          }
+
           OverlayLoadingProgress.stop();
           OverlayToastMessage.show(
             widget: const PopUpMsg(
@@ -65,8 +67,6 @@ class UserLogInProvider extends ChangeNotifier {
               title: 'Wrong password provided for that user.');
         }
       } else if (e.code == "user-disabled") {
-        OverlayLoadingProgress.stop();
-
         if (context.mounted) {
           OverlayWidget.showSnackBar(
               context: context, title: 'This email Account was disabled');
@@ -74,8 +74,9 @@ class UserLogInProvider extends ChangeNotifier {
       }
     } catch (e) {
       OverlayLoadingProgress.stop();
-      if (kDebugMode) {
-        print(e);
+      if (context.mounted) {
+        OverlayWidget.showSnackBar(
+            context: context, title: AppStrings.errorStateTitle);
       }
     }
   }
@@ -96,21 +97,9 @@ class UserLogInProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  String getUserNameCapitalLetters({required String? username}) {
-    String result =
-        username!.split(' ').take(2).map((word) => word[0]).join('');
-
-    return result;
-  }
-
   Future<void> resetPasswordEmail({required String resetEmail}) async {
     try {
-      OverlayLoadingProgress.start(
-        widget: Center(
-          child: LoadingAnimationWidget.waveDots(
-              color: AppColors.primaryColor, size: 80),
-        ),
-      );
+      OverlayWidget.showAnimateLoading();
       await FirebaseAuth.instance.sendPasswordResetEmail(email: resetEmail);
       OverlayLoadingProgress.stop();
       OverlayToastMessage.show(
@@ -129,12 +118,7 @@ class UserLogInProvider extends ChangeNotifier {
 
   Future<void> updateUerPhotoUrl() async {
     try {
-      OverlayLoadingProgress.start(
-        widget: Center(
-          child: LoadingAnimationWidget.waveDots(
-              color: AppColors.primaryColor, size: 80),
-        ),
-      );
+      OverlayWidget.showAnimateLoading();
       var imageUrl = await FilePicker.platform
           .pickFiles(type: FileType.image, withData: true);
       var refs = FirebaseStorage.instance
@@ -147,6 +131,7 @@ class UserLogInProvider extends ChangeNotifier {
         await FirebaseAuth.instance.currentUser
             ?.updatePhotoURL(await refs.getDownloadURL());
         notifyListeners();
+        OverlayLoadingProgress.stop();
         OverlayToastMessage.show(
           widget: const PopUpMsg(
             title: "Uploading Photo Successfully",
@@ -154,8 +139,6 @@ class UserLogInProvider extends ChangeNotifier {
           ),
         );
       }
-
-      OverlayLoadingProgress.stop();
     } catch (e) {
       OverlayLoadingProgress.stop();
       OverlayToastMessage.show(
@@ -168,7 +151,9 @@ class UserLogInProvider extends ChangeNotifier {
   }
 
   Future<void> removeUerPhotoUrl() async {
+    OverlayWidget.showAnimateLoading();
     await FirebaseAuth.instance.currentUser?.updatePhotoURL(null);
     notifyListeners();
+    OverlayLoadingProgress.stop();
   }
 }

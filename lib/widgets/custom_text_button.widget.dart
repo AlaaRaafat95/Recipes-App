@@ -20,7 +20,7 @@ class CustomTextButton extends StatelessWidget {
     return TextButton(
       onPressed: onPressed,
       style: TextButton.styleFrom(
-        padding: const EdgeInsets.all(0),
+        padding: const EdgeInsets.all(0.0),
         tapTargetSize: MaterialTapTargetSize.shrinkWrap,
       ),
       child: CustomText(

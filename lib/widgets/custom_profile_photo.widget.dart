@@ -1,4 +1,3 @@
-import 'package:popover/popover.dart';
 import 'package:recipe_app/utilities/exports.utilities.dart';
 
 class ProfilePhoto extends StatefulWidget {
@@ -10,6 +9,19 @@ class ProfilePhoto extends StatefulWidget {
 
 class _ProfilePhotoState extends State<ProfilePhoto> {
   @override
+  void initState() {
+    // this future.delayed used only to avoid initState() error due to use  notifyListeners();
+    Future.delayed(Duration.zero).then((_) {
+      Provider.of<UserRegisterProvider>(context, listen: false)
+          .getUserNameCapitalLetters(
+              userName:
+                  FirebaseAuth.instance.currentUser!.displayName.toString());
+    });
+
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Consumer<UserLogInProvider>(
       builder: (context, updatePhoto, _) => InkWell(
@@ -18,20 +30,30 @@ class _ProfilePhotoState extends State<ProfilePhoto> {
           showPopover(
             context: context,
             bodyBuilder: (context) => Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
+              padding: const EdgeInsets.symmetric(horizontal: 10.0),
               child: Column(
                 children: [
                   CustomListTile(
-                      title: "Upload Photo",
-                      icon: const Icon(Icons.photo_camera_outlined),
-                      titleColor: AppColors.black,
-                      onTap: () async {
-                        Navigation.popRoute(context);
-                        await updatePhoto.updateUerPhotoUrl();
-                      }),
+                    title: AppStrings.uploadPhoto,
+                    icon: const Icon(
+                      Icons.photo_camera_outlined,
+                      color: AppColors.primaryColor,
+                    ),
+                    titleColor: AppColors.black,
+                    onTap: () async {
+                      Navigation.popRoute(context);
+                      await updatePhoto.updateUerPhotoUrl();
+                    },
+                  ),
+                  const Divider(
+                    color: AppColors.primaryColor,
+                  ),
                   CustomListTile(
-                      title: "remove Photo",
-                      icon: const Icon(Icons.no_photography_outlined),
+                      title: AppStrings.removePhoto,
+                      icon: const Icon(
+                        Icons.no_photography_outlined,
+                        color: AppColors.primaryColor,
+                      ),
                       titleColor: AppColors.black,
                       onTap: () async {
                         Navigation.popRoute(context);
@@ -41,10 +63,10 @@ class _ProfilePhotoState extends State<ProfilePhoto> {
               ),
             ),
             direction: PopoverDirection.bottom,
-            height: 100,
-            width: 150,
-            arrowHeight: 15,
-            arrowWidth: 30,
+            height: 130.0,
+            width: 170.0,
+            arrowHeight: 15.0,
+            arrowWidth: 30.0,
           );
         },
         child: Stack(
@@ -57,21 +79,19 @@ class _ProfilePhotoState extends State<ProfilePhoto> {
                         : NetworkImage(
                             FirebaseAuth.instance.currentUser!.photoURL!),
                 backgroundColor: AppColors.primaryColor.withOpacity(0.5),
-                radius: 50,
+                radius: 60.0,
                 child: FirebaseAuth.instance.currentUser?.photoURL == null
                     ? CustomText(
-                        title: updatePhoto.getUserNameCapitalLetters(
-                          username: FirebaseAuth
-                              .instance.currentUser?.displayName
-                              .toString(),
-                        ),
-                        fontSize: 20,
+                        title: Provider.of<UserRegisterProvider>(context)
+                            .userName
+                            .toString(),
+                        fontSize: 20.0,
                       )
                     : null),
             const Icon(
               Icons.photo_camera_outlined,
               color: AppColors.primaryColor,
-              size: 25,
+              size: 25.0,
             ),
           ],
         ),

@@ -17,10 +17,10 @@ class FreshRecipesCard extends StatelessWidget {
             ),
           ),
           child: CustomContainer(
-            width: 150.0,
-            height: 220.0,
+            // width: 150.0,
+            height: 250.0,
             padding: const EdgeInsets.all(10.0),
-            margin: const EdgeInsets.only(right: 40.0),
+            margin: const EdgeInsets.only(right: 20.0),
             decoration: BoxDecoration(
               color: AppColors.greyAccent,
               borderRadius: BorderRadius.circular(20.0),
@@ -30,11 +30,11 @@ class FreshRecipesCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Transform.translate(
-                  offset: const Offset(40.0, 5.0),
+                  offset: const Offset(30.0, 0.0),
                   child: Image.asset(
                     recipeModel.image.toString(),
-                    height: 80.0,
-                    width: 150.0,
+                    height: 95.0,
+                    width: 140.0,
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -64,7 +64,7 @@ class FreshRecipesCard extends StatelessWidget {
                   children: [
                     Row(
                       children: [
-                        Image.asset("assets/images/time.png"),
+                        Image.asset(AppStrings.timeIcon),
                         const SizedBox(
                           width: 5.0,
                         ),
@@ -78,7 +78,7 @@ class FreshRecipesCard extends StatelessWidget {
                     ),
                     Row(
                       children: [
-                        Image.asset("assets/images/serving.png"),
+                        Image.asset(AppStrings.servingIcon),
                         const SizedBox(
                           width: 5.0,
                         ),

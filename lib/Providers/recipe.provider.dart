@@ -5,12 +5,10 @@ class RecipeProvider extends ChangeNotifier {
   List<RecipeModel>? _freshRecipesList;
   List<RecipeModel>? _recommendedRecipesList;
   List<RecipeModel>? filteredList;
-  // List<RecipeModel>? _favoritesList;
 
   List<RecipeModel>? get allRecipesList => _allRecipesList;
   List<RecipeModel>? get freshRecipesList => _freshRecipesList;
   List<RecipeModel>? get recommendedRecipesList => _recommendedRecipesList;
-  // List<RecipeModel>? get favoritesList => _favoritesList;
 
   Map<String, dynamic> filter = {
     "mealType": "",
@@ -20,12 +18,7 @@ class RecipeProvider extends ChangeNotifier {
   };
   Future<void> getFilteredRecipes() async {
     try {
-      OverlayLoadingProgress.start(
-        widget: Center(
-          child: LoadingAnimationWidget.waveDots(
-              color: AppColors.primaryColor, size: 80),
-        ),
-      );
+      OverlayWidget.showAnimateLoading();
       Query<Map<String, dynamic>>? result;
       var ref = FirebaseFirestore.instance.collection("fresh_recipes");
       for (var entry in filter.entries) {
@@ -86,7 +79,7 @@ class RecipeProvider extends ChangeNotifier {
       var freshRecipes = await FirebaseFirestore.instance
           .collection("fresh_recipes")
           .where("isFresh", isEqualTo: true)
-          .limit(3)
+          .limit(5)
           .get();
 
       if (freshRecipes.docs.isNotEmpty) {
@@ -115,7 +108,7 @@ class RecipeProvider extends ChangeNotifier {
       var recommendedRecipes = await FirebaseFirestore.instance
           .collection("fresh_recipes")
           .where("isFresh", isEqualTo: false)
-          .limit(3)
+          .limit(5)
           .get();
 
       if (recommendedRecipes.docs.isNotEmpty) {
@@ -139,40 +132,11 @@ class RecipeProvider extends ChangeNotifier {
     }
   }
 
-  // Future<void> getfavoritesRecipes() async {
-  //   try {
-  //     var favouriteRecipes = await FirebaseFirestore.instance
-  //         .collection("fresh_recipes")
-  //         .where("favoritesUsersIds",
-  //             arrayContains: FirebaseAuth.instance.currentUser?.uid)
-  //         .get();
-  //     if (favouriteRecipes.docs.isNotEmpty) {
-  //       _favoritesList = List<RecipeModel>.from(
-  //         favouriteRecipes.docs.map(
-  //           (doc) => RecipeModel.fromJson(doc.data(), doc.id),
-  //         ),
-  //       );
-  //     } else {
-  //       _favoritesList = [];
-  //     }
-  //     notifyListeners();
-  //   } catch (e) {
-  //     OverlayToastMessage.show(
-  //       widget: const PopUpMsg(
-  //           title: "Loading Favorites Faild", userState: UserState.failed),
-  //     );
-  //   }
-  // }
-
   Future<void> addfavoritesToUser(
       {required String recipeId, required bool isFav}) async {
     try {
-      OverlayLoadingProgress.start(
-        widget: Center(
-          child: LoadingAnimationWidget.waveDots(
-              color: AppColors.primaryColor, size: 80),
-        ),
-      );
+      OverlayWidget.showAnimateLoading();
+
       if (isFav) {
         await FirebaseFirestore.instance
             .collection("fresh_recipes")
@@ -190,7 +154,6 @@ class RecipeProvider extends ChangeNotifier {
               FieldValue.arrayRemove([FirebaseAuth.instance.currentUser?.uid])
         });
       }
-      // await getfavoritesRecipes();
 
       await updateRecipe(recipeId: recipeId);
       OverlayLoadingProgress.stop();
@@ -223,12 +186,7 @@ class RecipeProvider extends ChangeNotifier {
   Future<void> removeRecentlyViewedRecipeToUser(
       {required String recipeId}) async {
     try {
-      OverlayLoadingProgress.start(
-        widget: Center(
-          child: LoadingAnimationWidget.waveDots(
-              color: AppColors.primaryColor, size: 80),
-        ),
-      );
+      OverlayWidget.showAnimateLoading();
       await FirebaseFirestore.instance
           .collection("fresh_recipes")
           .doc(recipeId)

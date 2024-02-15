@@ -6,6 +6,8 @@ class UserRegisterProvider extends ChangeNotifier {
   TextEditingController? passwordController;
   TextEditingController? nameController;
   bool isIconPressed = true;
+  String? _userName;
+  String? get userName => _userName;
   void initSignUp() {
     formKey = GlobalKey<FormState>();
     emailController = TextEditingController();
@@ -16,12 +18,7 @@ class UserRegisterProvider extends ChangeNotifier {
   Future<void> signUp(BuildContext context) async {
     try {
       if (formKey?.currentState?.validate() ?? false) {
-        OverlayLoadingProgress.start(
-          widget: Center(
-            child: LoadingAnimationWidget.waveDots(
-                color: AppColors.primaryColor, size: 80),
-          ),
-        );
+        OverlayWidget.showAnimateLoading();
 
         var credential =
             await FirebaseAuth.instance.createUserWithEmailAndPassword(
@@ -30,9 +27,19 @@ class UserRegisterProvider extends ChangeNotifier {
         );
         if (credential.user != null) {
           await credential.user?.updateDisplayName(nameController!.text);
+          getUserNameCapitalLetters(userName: nameController!.text);
+
           await verifyEmail();
-          OverlayLoadingProgress.stop();
           clearSignUpData();
+          OverlayLoadingProgress.stop();
+          OverlayToastMessage.show(
+            widget: const PopUpMsg(
+              title:
+                  "Register Successfully , Sending Email Verification ......",
+              userState: UserState.success,
+            ),
+          );
+
           if (context.mounted) {
             Navigation.pushReplaceRoute(
               context: context,
@@ -43,6 +50,7 @@ class UserRegisterProvider extends ChangeNotifier {
         OverlayLoadingProgress.stop();
       }
     } on FirebaseAuthException catch (e) {
+      OverlayLoadingProgress.stop();
       if (e.code == 'email-already-in-use') {
         if (context.mounted) {
           OverlayLoadingProgress.stop();
@@ -53,8 +61,9 @@ class UserRegisterProvider extends ChangeNotifier {
       }
     } catch (e) {
       OverlayLoadingProgress.stop();
-      if (kDebugMode) {
-        print(e);
+      if (context.mounted) {
+        OverlayWidget.showSnackBar(
+            context: context, title: AppStrings.errorStateTitle);
       }
     }
   }
@@ -78,12 +87,7 @@ class UserRegisterProvider extends ChangeNotifier {
   }
 
   Future<void> signOut(BuildContext context) async {
-    OverlayLoadingProgress.start(
-      widget: Center(
-        child: LoadingAnimationWidget.waveDots(
-            color: AppColors.primaryColor, size: 80),
-      ),
-    );
+    OverlayWidget.showAnimateLoading();
     await Future.delayed(
       const Duration(seconds: 2),
     );
@@ -98,16 +102,10 @@ class UserRegisterProvider extends ChangeNotifier {
     OverlayLoadingProgress.stop();
   }
 
-  Future<void> updateUserName() async {
+  Future<void> updateUserName({required String newName}) async {
     try {
-      OverlayLoadingProgress.start(
-        widget: Center(
-          child: LoadingAnimationWidget.waveDots(
-              color: AppColors.primaryColor, size: 80),
-        ),
-      );
-      await FirebaseAuth.instance.currentUser
-          ?.updateDisplayName(nameController?.text);
+      OverlayWidget.showAnimateLoading();
+      await FirebaseAuth.instance.currentUser?.updateDisplayName(newName);
       notifyListeners();
       OverlayLoadingProgress.stop();
       OverlayToastMessage.show(
@@ -125,43 +123,62 @@ class UserRegisterProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> updateUserPassword() async {
+  Future<void> updateUserPassword(
+      {required String currentPassword, required String newPassword}) async {
     try {
-      OverlayLoadingProgress.start(
-        widget: Center(
-          child: LoadingAnimationWidget.waveDots(
-              color: AppColors.primaryColor, size: 80),
-        ),
+      OverlayWidget.showAnimateLoading();
+
+      AuthCredential credential = EmailAuthProvider.credential(
+        email: FirebaseAuth.instance.currentUser?.email ?? "",
+        password: currentPassword,
       );
-      await FirebaseAuth.instance.currentUser
-          ?.updatePassword(passwordController?.text ?? "");
+
+      await FirebaseAuth.instance.currentUser!
+          .reauthenticateWithCredential(credential);
+
+      await FirebaseAuth.instance.currentUser?.updatePassword(newPassword);
+
       notifyListeners();
+
       OverlayLoadingProgress.stop();
       OverlayToastMessage.show(
         widget: const PopUpMsg(
-            title: "Your Password Updated Successfully",
-            userState: UserState.success),
+          title: "Your Password Updated Successfully",
+          userState: UserState.success,
+        ),
       );
+    } on FirebaseAuthException catch (e) {
+      OverlayLoadingProgress.stop();
+      if (e.code == 'wrong-password') {
+        OverlayToastMessage.show(
+          widget: const PopUpMsg(
+            title: "Incorrect Old Password, Try Again",
+            userState: UserState.failed,
+          ),
+        );
+      }
     } catch (e) {
       OverlayLoadingProgress.stop();
       OverlayToastMessage.show(
         widget: const PopUpMsg(
-            title: "Your Password Didn't Updated , Try Again",
-            userState: UserState.failed),
+          title: "Password Update Failed, Try Again",
+          userState: UserState.failed,
+        ),
       );
     }
   }
 
-  Future<void> deleteUser() async {
+  Future<void> deleteUser({required String currentPassword}) async {
     try {
-      OverlayLoadingProgress.start(
-        widget: Center(
-          child: LoadingAnimationWidget.waveDots(
-              color: AppColors.primaryColor, size: 80),
-        ),
+      OverlayWidget.showAnimateLoading();
+      AuthCredential credential = EmailAuthProvider.credential(
+        email: FirebaseAuth.instance.currentUser!.email!,
+        password: currentPassword,
       );
-      // await FirebaseAuth.instance.currentUser
-      //     ?.reauthenticateWithCredential(credential);
+
+      await FirebaseAuth.instance.currentUser!
+          .reauthenticateWithCredential(credential);
+
       await FirebaseAuth.instance.currentUser?.delete();
       OverlayLoadingProgress.stop();
       OverlayToastMessage.show(
@@ -169,6 +186,16 @@ class UserRegisterProvider extends ChangeNotifier {
             title: "Your Account Deleted Successfully",
             userState: UserState.success),
       );
+    } on FirebaseAuthException catch (e) {
+      OverlayLoadingProgress.stop();
+      if (e.code == 'wrong-password') {
+        OverlayToastMessage.show(
+          widget: const PopUpMsg(
+            title: "Incorrect Password, Try Again",
+            userState: UserState.failed,
+          ),
+        );
+      }
     } catch (e) {
       OverlayLoadingProgress.stop();
       OverlayToastMessage.show(
@@ -179,14 +206,15 @@ class UserRegisterProvider extends ChangeNotifier {
     }
   }
 
+  void getUserNameCapitalLetters({required String userName}) async {
+    String result = userName.split(' ').take(2).map((word) => word[0]).join('');
+    _userName = result;
+    notifyListeners();
+  }
+
   Future<void> verifyEmail() async {
     try {
       await FirebaseAuth.instance.currentUser?.sendEmailVerification();
-
-      OverlayToastMessage.show(
-        widget: const PopUpMsg(
-            title: "Sending Email Successfully", userState: UserState.success),
-      );
     } catch (e) {
       OverlayToastMessage.show(
         widget: const PopUpMsg(

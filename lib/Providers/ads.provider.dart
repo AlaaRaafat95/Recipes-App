@@ -31,7 +31,6 @@ class AdsProvider extends ChangeNotifier {
           userState: UserState.failed,
         ),
       );
-      notifyListeners();
     }
   }
 

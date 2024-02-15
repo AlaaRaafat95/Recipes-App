@@ -56,8 +56,6 @@ abstract class Navigation {
   }
 
   static void popRoute(BuildContext context) {
-    Navigator.pop(
-      context,
-    );
+    Navigator.pop(context);
   }
 }

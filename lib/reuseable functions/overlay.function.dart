@@ -9,11 +9,11 @@ abstract class OverlayWidget {
       ),
       backgroundColor: AppColors.primaryColor,
       showCloseIcon: true,
-      elevation: 2,
+      elevation: 2.0,
       behavior: SnackBarBehavior.floating,
       dismissDirection: DismissDirection.endToStart,
       shape: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(20.0),
         borderSide: const BorderSide(color: AppColors.primaryColor),
       ),
     );
@@ -31,11 +31,11 @@ abstract class OverlayWidget {
       required VoidCallback onPressed}) {
     return AlertDialog(
       title: const CustomText(
-        title: "Delete Recipe",
+        title: AppStrings.deleteRecipe,
       ),
       content: CustomText(
         title: content,
-        fontSize: 15,
+        fontSize: 15.0,
       ),
       actions: [
         TextButton(
@@ -43,21 +43,30 @@ abstract class OverlayWidget {
             Navigator.pop(context);
           },
           child: const CustomText(
-            title: "Cancel",
-            fontSize: 15,
+            title: AppStrings.cancel,
+            fontSize: 15.0,
           ),
         ),
         CustomButton(
-          minimumSize: const Size(50, 50),
+          minimumSize: const Size(50.0, 50.0),
           backgroundColor: AppColors.primaryColor,
           onPressed: onPressed,
           child: const CustomText(
             color: AppColors.white,
-            fontSize: 15,
-            title: "Confirm",
+            fontSize: 15.0,
+            title: AppStrings.confirm,
           ),
         ),
       ],
+    );
+  }
+
+  static void showAnimateLoading() {
+    OverlayLoadingProgress.start(
+      widget: Center(
+        child: LoadingAnimationWidget.waveDots(
+            color: AppColors.primaryColor, size: 80.0),
+      ),
     );
   }
 }
