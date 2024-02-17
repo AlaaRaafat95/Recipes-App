@@ -80,8 +80,9 @@ class _DeleteAccountState extends State<DeleteAccount> {
                                   context: context,
                                   builder: (context) {
                                     return OverlayWidget.alertDialog(
+                                      title: tr("deleteAccount"),
                                       context: context,
-                                      content: tr("doYouWantToDelete"),
+                                      content: tr("doyouWantDeleteAccount"),
                                       onPressed: () async {
                                         await userRegister.deleteUser(
                                             currentPassword:

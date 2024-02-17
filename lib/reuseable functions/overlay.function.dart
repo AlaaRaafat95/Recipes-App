@@ -29,10 +29,11 @@ abstract class OverlayWidget {
   static Widget alertDialog(
       {required BuildContext context,
       required String content,
+      required String title,
       required VoidCallback onPressed}) {
     return AlertDialog(
       title: CustomText(
-        title: tr("deleteRecipe"),
+        title: title,
       ),
       content: CustomText(
         title: content,

@@ -72,6 +72,7 @@ class SuccessState extends StatelessWidget {
                           context: context,
                           builder: (context) {
                             return OverlayWidget.alertDialog(
+                              title: tr("deleteRecipe"),
                               context: context,
                               content: tr("doYouWantToDelete"),
                               onPressed: () {
