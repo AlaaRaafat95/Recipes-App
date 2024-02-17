@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:recipe_app/utilities/exports.utilities.dart';
 
 class SelectUserStatePage extends StatelessWidget {
@@ -27,8 +28,8 @@ class SelectUserStatePage extends StatelessWidget {
             const SizedBox(
               height: 5.0,
             ),
-            const CustomText(
-              title: AppStrings.logoName,
+            CustomText(
+              title: tr("logoName"),
               color: AppColors.white,
               fontSize: 14.0,
               fontWeight: FontWeight.w400,
@@ -48,8 +49,8 @@ class SelectUserStatePage extends StatelessWidget {
                   route: const SignUpPage(),
                 );
               },
-              child: const CustomText(
-                title: AppStrings.register,
+              child: CustomText(
+                title: tr("register"),
                 color: AppColors.white,
                 fontSize: 16.0,
                 fontWeight: FontWeight.w600,
@@ -63,7 +64,7 @@ class SelectUserStatePage extends StatelessWidget {
                   route: const LogInPage(),
                 );
               },
-              title: AppStrings.signIn,
+              title: tr("signIn"),
               color: AppColors.white,
               fontSize: 16.0,
               fontWeight: FontWeight.w600,

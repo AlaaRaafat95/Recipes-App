@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:recipe_app/utilities/exports.utilities.dart';
 
 class HeadLineTitle extends StatelessWidget {
@@ -33,7 +34,7 @@ class HeadLineTitle extends StatelessWidget {
               );
             }
           },
-          title: AppStrings.seeAll,
+          title: tr("seeAll"),
           fontWeight: FontWeight.w500,
           color: AppColors.primaryColor,
           fontSize: 14.0,

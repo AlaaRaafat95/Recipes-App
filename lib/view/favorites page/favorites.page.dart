@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:recipe_app/utilities/exports.utilities.dart';
 import 'package:recipe_app/view/favorites%20page/favorites%20page%20states/success_state.favoritesPage.dart';
 
@@ -45,15 +46,17 @@ class _FavoritesPageState extends State<FavoritesPage> {
       appBar: AppBar(
         leading: IconButton(
             icon: Padding(
-              padding: const EdgeInsets.only(left: 20.0),
+              padding: SharedPreferencesServices.getLocale() == "en"
+                  ? const EdgeInsets.only(left: 20.0)
+                  : const EdgeInsets.only(right: 20.0),
               child: Image.asset(AppStrings.menuIcon),
             ),
             onPressed: () {
               ZoomDrawer.of(context)?.toggle();
             }),
         title: TextField(
-          decoration: const InputDecoration(
-            labelText: AppStrings.searchByMealName,
+          decoration: InputDecoration(
+            labelText: tr("searchByMealName"),
           ),
           onChanged: (value) {
             onMealNameChanged(value);
@@ -63,7 +66,9 @@ class _FavoritesPageState extends State<FavoritesPage> {
         elevation: 0.0,
         actions: [
           Padding(
-            padding: const EdgeInsets.only(right: 20.0),
+            padding: SharedPreferencesServices.getLocale() == "en"
+                ? const EdgeInsets.only(right: 20.0)
+                : const EdgeInsets.only(left: 20.0),
             child: InkWell(
               onTap: () {
                 Navigation.pushRoute(
@@ -109,9 +114,9 @@ class _FavoritesPageState extends State<FavoritesPage> {
                   filteredRecipesList: filteredRecipesList!,
                   recipesList: recipesList!);
             } else {
-              return const DefaultState(
+              return DefaultState(
                 imageUrl: AppStrings.favoriteDefaultStateImage,
-                title: AppStrings.favoriteDefaultStateTitle,
+                title: tr("favoriteDefaultStateTitle"),
               );
             }
           }

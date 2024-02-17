@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:recipe_app/utilities/exports.utilities.dart';
 
 class UserLogInProvider extends ChangeNotifier {
@@ -31,8 +32,8 @@ class UserLogInProvider extends ChangeNotifier {
 
           OverlayLoadingProgress.stop();
           OverlayToastMessage.show(
-            widget: const PopUpMsg(
-              title: "Log In Successfully",
+            widget: PopUpMsg(
+              title: tr("logInSuccessfully"),
               userState: UserState.success,
             ),
           );
@@ -46,10 +47,8 @@ class UserLogInProvider extends ChangeNotifier {
         } else {
           OverlayLoadingProgress.stop();
           OverlayToastMessage.show(
-            widget: const PopUpMsg(
-                title:
-                    "Your Email isn't Verify ,Please Check Your Email Inbox And Try Again",
-                userState: UserState.failed),
+            widget: PopUpMsg(
+                title: tr("yourEmailIsn'tVerify"), userState: UserState.failed),
           );
         }
       }
@@ -58,25 +57,30 @@ class UserLogInProvider extends ChangeNotifier {
       if (e.code == 'user-not-found') {
         if (context.mounted) {
           OverlayWidget.showSnackBar(
-              context: context, title: 'No user found for that email.');
+            context: context,
+            title: tr("noUserFoundForThatEmail"),
+          );
         }
       } else if (e.code == 'wrong-password') {
         if (context.mounted) {
           OverlayWidget.showSnackBar(
-              context: context,
-              title: 'Wrong password provided for that user.');
+            context: context,
+            title: tr("wrongPasswordProvidedForThatUser"),
+          );
         }
       } else if (e.code == "user-disabled") {
         if (context.mounted) {
           OverlayWidget.showSnackBar(
-              context: context, title: 'This email Account was disabled');
+            context: context,
+            title: tr("thisEmailAccountWasDisabled"),
+          );
         }
       }
     } catch (e) {
       OverlayLoadingProgress.stop();
       if (context.mounted) {
         OverlayWidget.showSnackBar(
-            context: context, title: AppStrings.errorStateTitle);
+            context: context, title: tr("errorStateTitle"));
       }
     }
   }
@@ -103,15 +107,14 @@ class UserLogInProvider extends ChangeNotifier {
       await FirebaseAuth.instance.sendPasswordResetEmail(email: resetEmail);
       OverlayLoadingProgress.stop();
       OverlayToastMessage.show(
-        widget: const PopUpMsg(
-            title: "Send Email Successfuly", userState: UserState.success),
+        widget: PopUpMsg(
+            title: tr("sendEmailSuccessfuly"), userState: UserState.success),
       );
     } catch (e) {
       OverlayLoadingProgress.stop();
       OverlayToastMessage.show(
-        widget: const PopUpMsg(
-            title: "Sending Email Faild , Try Again",
-            userState: UserState.failed),
+        widget: PopUpMsg(
+            title: tr("sendingEmailFaild"), userState: UserState.failed),
       );
     }
   }
@@ -133,8 +136,8 @@ class UserLogInProvider extends ChangeNotifier {
         notifyListeners();
         OverlayLoadingProgress.stop();
         OverlayToastMessage.show(
-          widget: const PopUpMsg(
-            title: "Uploading Photo Successfully",
+          widget: PopUpMsg(
+            title: tr("uploadingPhotoSuccessfully"),
             userState: UserState.success,
           ),
         );
@@ -142,8 +145,8 @@ class UserLogInProvider extends ChangeNotifier {
     } catch (e) {
       OverlayLoadingProgress.stop();
       OverlayToastMessage.show(
-        widget: const PopUpMsg(
-          title: "Uploading Photo Faild",
+        widget: PopUpMsg(
+          title: tr("uploadingPhotoFaild"),
           userState: UserState.failed,
         ),
       );

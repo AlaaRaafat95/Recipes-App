@@ -1,14 +1,15 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:recipe_app/utilities/exports.utilities.dart';
 
 abstract class Validation {
   static String? emailValidator(String value) {
     if (value.isEmpty) {
-      return "Please enter email : Johndoe65@gmail.com";
+      return "pleaseEnterEmail".tr();
     } else {
       if (!AppStrings.regex.hasMatch(value)) {
-        return "Enter valid email";
+        return "enterValidEmail".tr();
       } else if (!value.endsWith(".com")) {
-        return "Correct format email : Johndoe65@gmail.com";
+        return "enterValidEmail".tr();
       } else {
         return null;
       }
@@ -17,10 +18,10 @@ abstract class Validation {
 
   static String? passwordValidator(String value) {
     if (value.isEmpty) {
-      return "Please enter password";
+      return "pleaseEnterPassword".tr();
     } else {
       if (!AppStrings.regex.hasMatch(value)) {
-        return "Enter valid password";
+        return "enterValidPassword".tr();
       } else {
         return null;
       }
@@ -29,7 +30,7 @@ abstract class Validation {
 
   static String? nameValidator(String value) {
     if (!validateUsername(value)) {
-      return ("Please enter valid name like : John Doe");
+      return "pleaseEnterValidName".tr();
     }
     return null;
   }

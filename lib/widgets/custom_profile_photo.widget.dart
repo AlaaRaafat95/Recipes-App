@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:recipe_app/utilities/exports.utilities.dart';
 
 class ProfilePhoto extends StatefulWidget {
@@ -11,12 +12,14 @@ class _ProfilePhotoState extends State<ProfilePhoto> {
   @override
   void initState() {
     // this future.delayed used only to avoid initState() error due to use  notifyListeners();
-    Future.delayed(Duration.zero).then((_) {
-      Provider.of<UserRegisterProvider>(context, listen: false)
-          .getUserNameCapitalLetters(
-              userName:
-                  FirebaseAuth.instance.currentUser!.displayName.toString());
-    });
+    Future.delayed(Duration.zero).then(
+      (_) {
+        Provider.of<UserRegisterProvider>(context, listen: false)
+            .getUserNameCapitalLetters(
+          userName: FirebaseAuth.instance.currentUser!.displayName.toString(),
+        );
+      },
+    );
 
     super.initState();
   }
@@ -34,7 +37,7 @@ class _ProfilePhotoState extends State<ProfilePhoto> {
               child: Column(
                 children: [
                   CustomListTile(
-                    title: AppStrings.uploadPhoto,
+                    title: tr("uploadPhoto"),
                     icon: const Icon(
                       Icons.photo_camera_outlined,
                       color: AppColors.primaryColor,
@@ -49,16 +52,17 @@ class _ProfilePhotoState extends State<ProfilePhoto> {
                     color: AppColors.primaryColor,
                   ),
                   CustomListTile(
-                      title: AppStrings.removePhoto,
-                      icon: const Icon(
-                        Icons.no_photography_outlined,
-                        color: AppColors.primaryColor,
-                      ),
-                      titleColor: AppColors.black,
-                      onTap: () async {
-                        Navigation.popRoute(context);
-                        await updatePhoto.removeUerPhotoUrl();
-                      }),
+                    title: tr("removePhoto"),
+                    icon: const Icon(
+                      Icons.no_photography_outlined,
+                      color: AppColors.primaryColor,
+                    ),
+                    titleColor: AppColors.black,
+                    onTap: () async {
+                      Navigation.popRoute(context);
+                      await updatePhoto.removeUerPhotoUrl();
+                    },
+                  ),
                 ],
               ),
             ),

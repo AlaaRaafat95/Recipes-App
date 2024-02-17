@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:recipe_app/utilities/exports.utilities.dart';
 
 class UserRegisterProvider extends ChangeNotifier {
@@ -33,9 +34,8 @@ class UserRegisterProvider extends ChangeNotifier {
           clearSignUpData();
           OverlayLoadingProgress.stop();
           OverlayToastMessage.show(
-            widget: const PopUpMsg(
-              title:
-                  "Register Successfully , Sending Email Verification ......",
+            widget: PopUpMsg(
+              title: tr("registerSuccessfully"),
               userState: UserState.success,
             ),
           );
@@ -55,15 +55,16 @@ class UserRegisterProvider extends ChangeNotifier {
         if (context.mounted) {
           OverlayLoadingProgress.stop();
           OverlayWidget.showSnackBar(
-              context: context,
-              title: 'The account already exists for that email.');
+            context: context,
+            title: tr("theAccountAlreadyExists"),
+          );
         }
       }
     } catch (e) {
       OverlayLoadingProgress.stop();
       if (context.mounted) {
         OverlayWidget.showSnackBar(
-            context: context, title: AppStrings.errorStateTitle);
+            context: context, title: tr("errorStateTitle"));
       }
     }
   }
@@ -107,18 +108,18 @@ class UserRegisterProvider extends ChangeNotifier {
       OverlayWidget.showAnimateLoading();
       await FirebaseAuth.instance.currentUser?.updateDisplayName(newName);
       notifyListeners();
+      // FirebaseAuth.instance.currentUser?.reload();
       OverlayLoadingProgress.stop();
       OverlayToastMessage.show(
-        widget: const PopUpMsg(
-            title: "Your Name Updated Successfully",
+        widget: PopUpMsg(
+            title: tr("yourNameUpdatedSuccessfully"),
             userState: UserState.success),
       );
     } catch (e) {
       OverlayLoadingProgress.stop();
       OverlayToastMessage.show(
-        widget: const PopUpMsg(
-            title: "Your Name Didn't Updated , Try Again",
-            userState: UserState.failed),
+        widget: PopUpMsg(
+            title: tr("yourNameDidn'tUpdated"), userState: UserState.failed),
       );
     }
   }
@@ -142,8 +143,8 @@ class UserRegisterProvider extends ChangeNotifier {
 
       OverlayLoadingProgress.stop();
       OverlayToastMessage.show(
-        widget: const PopUpMsg(
-          title: "Your Password Updated Successfully",
+        widget: PopUpMsg(
+          title: tr("yourPasswordUpdatedSuccessfully"),
           userState: UserState.success,
         ),
       );
@@ -151,8 +152,8 @@ class UserRegisterProvider extends ChangeNotifier {
       OverlayLoadingProgress.stop();
       if (e.code == 'wrong-password') {
         OverlayToastMessage.show(
-          widget: const PopUpMsg(
-            title: "Incorrect Old Password, Try Again",
+          widget: PopUpMsg(
+            title: tr("incorrectOldPassword"),
             userState: UserState.failed,
           ),
         );
@@ -160,8 +161,8 @@ class UserRegisterProvider extends ChangeNotifier {
     } catch (e) {
       OverlayLoadingProgress.stop();
       OverlayToastMessage.show(
-        widget: const PopUpMsg(
-          title: "Password Update Failed, Try Again",
+        widget: PopUpMsg(
+          title: tr("passwordUpdateFailed"),
           userState: UserState.failed,
         ),
       );
@@ -182,16 +183,16 @@ class UserRegisterProvider extends ChangeNotifier {
       await FirebaseAuth.instance.currentUser?.delete();
       OverlayLoadingProgress.stop();
       OverlayToastMessage.show(
-        widget: const PopUpMsg(
-            title: "Your Account Deleted Successfully",
+        widget: PopUpMsg(
+            title: tr("yourAccountDeletedSuccessfully"),
             userState: UserState.success),
       );
     } on FirebaseAuthException catch (e) {
       OverlayLoadingProgress.stop();
       if (e.code == 'wrong-password') {
         OverlayToastMessage.show(
-          widget: const PopUpMsg(
-            title: "Incorrect Password, Try Again",
+          widget: PopUpMsg(
+            title: tr("incorrectPassword"),
             userState: UserState.failed,
           ),
         );
@@ -199,9 +200,8 @@ class UserRegisterProvider extends ChangeNotifier {
     } catch (e) {
       OverlayLoadingProgress.stop();
       OverlayToastMessage.show(
-        widget: const PopUpMsg(
-            title: "Your Account Didn't Deleted , Try Again",
-            userState: UserState.failed),
+        widget: PopUpMsg(
+            title: tr("yourAccountDidn'tDeleted"), userState: UserState.failed),
       );
     }
   }
@@ -217,9 +217,8 @@ class UserRegisterProvider extends ChangeNotifier {
       await FirebaseAuth.instance.currentUser?.sendEmailVerification();
     } catch (e) {
       OverlayToastMessage.show(
-        widget: const PopUpMsg(
-            title: "Sending Email Faild , Try Again",
-            userState: UserState.failed),
+        widget: PopUpMsg(
+            title: tr("sendingEmailFaild"), userState: UserState.failed),
       );
     }
   }

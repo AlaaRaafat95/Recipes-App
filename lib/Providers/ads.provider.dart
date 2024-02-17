@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:recipe_app/utilities/exports.utilities.dart';
 
 class AdsProvider extends ChangeNotifier {
@@ -26,8 +27,8 @@ class AdsProvider extends ChangeNotifier {
       notifyListeners();
     } catch (e) {
       OverlayToastMessage.show(
-        widget: const PopUpMsg(
-          title: "There was an error",
+        widget: PopUpMsg(
+          title: tr("somethingWrong"),
           userState: UserState.failed,
         ),
       );

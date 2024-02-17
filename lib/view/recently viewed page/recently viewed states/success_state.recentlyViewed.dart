@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:recipe_app/utilities/exports.utilities.dart';
 
@@ -20,14 +21,14 @@ class SuccessState extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             if (mealNameFilter.isEmpty && recipesList.isNotEmpty)
-              const Column(
+              Column(
                 children: [
                   CustomText(
-                    title: AppStrings.recentlyViewed,
+                    title: tr("recentlyViewed"),
                     fontSize: 20.0,
                     fontWeight: FontWeight.w800,
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10.0,
                   ),
                 ],
@@ -36,8 +37,9 @@ class SuccessState extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8.0),
                 child: CustomText(
-                  title: "${AppStrings.noRecipesFound} : $mealNameFilter .",
+                  title: "${tr("noRecipesFound")} : $mealNameFilter .",
                   color: Colors.red,
+                  fontSize: 15.0,
                 ),
               )
             else if (mealNameFilter.isNotEmpty &&
@@ -45,7 +47,7 @@ class SuccessState extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8.0),
                 child: CustomText(
-                  title: "${AppStrings.filteredByMealName} : $mealNameFilter .",
+                  title: "${tr("filteredByMealName")} : $mealNameFilter .",
                   fontWeight: FontWeight.bold,
                 ),
               )
@@ -71,7 +73,7 @@ class SuccessState extends StatelessWidget {
                           builder: (context) {
                             return OverlayWidget.alertDialog(
                               context: context,
-                              content: AppStrings.doYouWantToDelete,
+                              content: tr("doYouWantToDelete"),
                               onPressed: () {
                                 Provider.of<RecipeProvider>(context,
                                         listen: false)
@@ -86,7 +88,7 @@ class SuccessState extends StatelessWidget {
                       backgroundColor: AppColors.red,
                       foregroundColor: AppColors.white,
                       icon: Icons.delete,
-                      label: AppStrings.delete,
+                      label: tr("delete"),
                     ),
                   ],
                 ),

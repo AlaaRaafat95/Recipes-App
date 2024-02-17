@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:recipe_app/utilities/exports.utilities.dart';
 
 class ProfileField extends StatelessWidget {
@@ -25,12 +26,12 @@ class ProfileField extends StatelessWidget {
       ),
       title: title,
       trailing: CustomIconButton(
-        onPressed: title == "Email" ? null : onPressed,
-        icon: title == "Delete"
+        onPressed: title == tr("email") ? null : onPressed,
+        icon: title == tr("delete")
             ? const Icon(
                 Icons.delete_forever_outlined,
               )
-            : title == "Email"
+            : title == tr("email")
                 ? const Text("")
                 : const Icon(
                     Icons.edit_outlined,

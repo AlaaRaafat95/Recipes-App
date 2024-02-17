@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:recipe_app/utilities/exports.utilities.dart';
 
 class SignUpForm extends StatefulWidget {
@@ -20,7 +21,7 @@ class _SignUpFormState extends State<SignUpForm> {
   @override
   Widget build(BuildContext context) {
     return Consumer<UserRegisterProvider>(
-      builder: (context, userRegister, child) => Form(
+      builder: (context, userRegister, _) => Form(
         key: userRegister.formKey,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -33,8 +34,8 @@ class _SignUpFormState extends State<SignUpForm> {
             const SizedBox(
               height: 30.0,
             ),
-            const CustomText(
-              title: AppStrings.register,
+            CustomText(
+              title: tr("register"),
               fontSize: 18.0,
               color: AppColors.white,
               fontWeight: FontWeight.w700,
@@ -45,7 +46,7 @@ class _SignUpFormState extends State<SignUpForm> {
             CustomField(
               keyboardType: TextInputType.name,
               controller: userRegister.nameController,
-              labelText: AppStrings.fullName,
+              labelText: tr("fullName"),
               prefixIcon: const Icon(Icons.person_4_outlined),
               validator: (value) {
                 return Validation.nameValidator(value ?? "");
@@ -57,7 +58,7 @@ class _SignUpFormState extends State<SignUpForm> {
             CustomField(
               keyboardType: TextInputType.emailAddress,
               controller: userRegister.emailController,
-              labelText: AppStrings.emailAddress,
+              labelText: tr("emailAddress"),
               prefixIcon: const Icon(Icons.email_outlined),
               validator: (value) {
                 return Validation.emailValidator(value ?? "");
@@ -69,7 +70,7 @@ class _SignUpFormState extends State<SignUpForm> {
             CustomField(
               keyboardType: TextInputType.visiblePassword,
               controller: userRegister.passwordController,
-              labelText: AppStrings.password,
+              labelText: tr("password"),
               prefixIcon: const Icon(Icons.lock_outline),
               obscureText: userRegister.isIconPressed,
               suffixIcon: CustomIconButton(
@@ -103,8 +104,8 @@ class _SignUpFormState extends State<SignUpForm> {
               onPressed: () async {
                 await userRegister.signUp(context);
               },
-              child: const CustomText(
-                title: AppStrings.register,
+              child: CustomText(
+                title: tr("register"),
                 color: AppColors.white,
                 fontSize: 16.0,
                 fontWeight: FontWeight.w600,
@@ -114,8 +115,8 @@ class _SignUpFormState extends State<SignUpForm> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const CustomText(
-                  title: AppStrings.haveAccount,
+                CustomText(
+                  title: tr("haveAccount"),
                   color: AppColors.white,
                   fontWeight: FontWeight.w500,
                   fontSize: 14.0,
@@ -128,7 +129,7 @@ class _SignUpFormState extends State<SignUpForm> {
                       route: const LogInPage(),
                     );
                   },
-                  title: AppStrings.signIn,
+                  title: tr("signIn"),
                   color: AppColors.primaryColor,
                   fontSize: 14.0,
                   fontWeight: FontWeight.w500,

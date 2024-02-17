@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:recipe_app/utilities/exports.utilities.dart';
 
 class HomePage extends StatelessWidget {
@@ -13,7 +14,9 @@ class HomePage extends StatelessWidget {
         elevation: 0.0,
         leading: CustomIconButton(
             icon: Padding(
-              padding: const EdgeInsets.only(left: 20.0),
+              padding: SharedPreferencesServices.getLocale() == "en"
+                  ? const EdgeInsets.only(left: 20.0)
+                  : const EdgeInsets.only(right: 20.0),
               child: Image.asset(AppStrings.menuIcon),
             ),
             onPressed: () {
@@ -32,7 +35,7 @@ class HomePage extends StatelessWidget {
                 Consumer<UserRegisterProvider>(
                   builder: (context, value, _) => CustomText(
                     title:
-                        "Bonjor, ${FirebaseAuth.instance.currentUser?.displayName.toString()}",
+                        "${tr("bonjor")}, ${FirebaseAuth.instance.currentUser?.displayName.toString()}",
                     color: AppColors.lightGrey,
                     fontSize: 12.0,
                     fontWeight: FontWeight.w500,
@@ -41,8 +44,8 @@ class HomePage extends StatelessWidget {
                 const SizedBox(
                   height: 5.0,
                 ),
-                const CustomText(
-                  title: AppStrings.todayCook,
+                CustomText(
+                  title: tr("todayCook"),
                   fontWeight: FontWeight.w400,
                   fontSize: 20.0,
                   fontFamily: "Abril Fatface",
@@ -58,8 +61,8 @@ class HomePage extends StatelessWidget {
                 const SizedBox(
                   height: 5.0,
                 ),
-                const HeadLineTitle(
-                  title: AppStrings.todayRecipes,
+                HeadLineTitle(
+                  title: tr("todayRecipes"),
                 ),
                 const SizedBox(
                   height: 5.0,
@@ -68,8 +71,8 @@ class HomePage extends StatelessWidget {
                 const SizedBox(
                   height: 5.0,
                 ),
-                const HeadLineTitle(
-                  title: AppStrings.recommended,
+                HeadLineTitle(
+                  title: tr("recommended"),
                 ),
                 const Recommended(),
                 const SizedBox(

@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:recipe_app/utilities/exports.utilities.dart';
 
 class SearchAndFilter extends StatelessWidget {
@@ -10,10 +11,12 @@ class SearchAndFilter extends StatelessWidget {
       children: [
         InkWell(
           borderRadius: BorderRadius.circular(10.0),
-          onTap: () => Navigation.pushRoute(
-            context: context,
-            route: const FilterPage(),
-          ),
+          onTap: () async {
+            Navigation.pushRoute(
+              context: context,
+              route: const FilterPage(),
+            );
+          },
           child: CustomContainer(
             decoration: BoxDecoration(
               color: AppColors.greyAccent,
@@ -21,17 +24,17 @@ class SearchAndFilter extends StatelessWidget {
             ),
             padding: const EdgeInsets.all(10.0),
             width: MediaQuery.of(context).size.width * 0.75,
-            child: const Row(
+            child: Row(
               children: [
-                Icon(
+                const Icon(
                   Icons.search_outlined,
                   color: AppColors.lightGrey,
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 5,
                 ),
                 CustomText(
-                  title: AppStrings.search,
+                  title: tr("search"),
                   color: AppColors.lightGrey,
                   fontSize: 12.0,
                   fontWeight: FontWeight.w400,
@@ -42,10 +45,12 @@ class SearchAndFilter extends StatelessWidget {
         ),
         InkWell(
           borderRadius: BorderRadius.circular(10.0),
-          onTap: () => Navigation.pushRoute(
-            context: context,
-            route: const FilterPage(),
-          ),
+          onTap: () async {
+            Navigation.pushRoute(
+              context: context,
+              route: const FilterPage(),
+            );
+          },
           child: CustomContainer(
             decoration: BoxDecoration(
               color: AppColors.greyAccent,

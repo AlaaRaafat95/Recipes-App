@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:recipe_app/utilities/exports.utilities.dart';
 
 class MealDetails extends StatefulWidget {
@@ -35,7 +36,7 @@ class _MealDetailsState extends State<MealDetails> {
                       title: widget.recipeModel.mealType!,
                       color: AppColors.blue,
                       fontWeight: FontWeight.w500,
-                      fontSize: 12.0,
+                      fontSize: 15.0,
                     ),
                     const Spacer(),
                     FavoriteButton(
@@ -54,11 +55,11 @@ class _MealDetailsState extends State<MealDetails> {
                 ),
                 CustomText(title: widget.recipeModel.mealDesc!),
                 const SizedBox(
-                  height: 10,
+                  height: 10.0,
                 ),
                 CustomText(
                   title:
-                      "${widget.recipeModel.mealCalories.toString()} Calories",
+                      "${widget.recipeModel.mealCalories.toString()} ${tr("calories")}",
                   color: AppColors.primaryColor,
                   fontSize: 12.0,
                   fontWeight: FontWeight.w400,
@@ -79,8 +80,9 @@ class _MealDetailsState extends State<MealDetails> {
                               width: 5.0,
                             ),
                             CustomText(
-                              title: " ${widget.recipeModel.mealTime} mins",
-                              fontSize: 8.0,
+                              title:
+                                  " ${widget.recipeModel.mealTime} ${tr("mins")}",
+                              fontSize: 13.0,
                               fontWeight: FontWeight.w400,
                               color: AppColors.lightGrey,
                             ),
@@ -96,8 +98,9 @@ class _MealDetailsState extends State<MealDetails> {
                               width: 5.0,
                             ),
                             CustomText(
-                                title: "${widget.recipeModel.serving} Serving",
-                                fontSize: 8.0,
+                                title:
+                                    "${widget.recipeModel.serving} ${tr("serving")}",
+                                fontSize: 13.0,
                                 fontWeight: FontWeight.w400,
                                 color: AppColors.lightGrey),
                           ],
@@ -111,8 +114,8 @@ class _MealDetailsState extends State<MealDetails> {
                     ),
                   ],
                 ),
-                const CustomText(
-                  title: "${AppStrings.ingredients} : ",
+                CustomText(
+                  title: "${tr("ingredients")} : ",
                   fontFamily: "Abril Fatface",
                   fontSize: 15.0,
                 ),
@@ -125,8 +128,8 @@ class _MealDetailsState extends State<MealDetails> {
                 const SizedBox(
                   height: 10.0,
                 ),
-                const CustomText(
-                  title: "${AppStrings.directions} : ",
+                CustomText(
+                  title: "${tr("directions")} : ",
                   fontFamily: "Abril Fatface",
                   fontSize: 15.0,
                 ),
@@ -150,7 +153,7 @@ class _MealDetailsState extends State<MealDetails> {
                         text: "",
                         children: [
                           TextSpan(
-                            text: "Step ${index + 1} :\n",
+                            text: "${tr("step")} ${index + 1} :\n",
                             style:
                                 const TextStyle(color: AppColors.primaryColor),
                           ),

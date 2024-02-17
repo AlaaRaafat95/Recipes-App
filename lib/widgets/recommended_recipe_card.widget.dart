@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:recipe_app/utilities/exports.utilities.dart';
 
 class RecommendedRecipeCard extends StatelessWidget {
@@ -6,7 +7,7 @@ class RecommendedRecipeCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Stack(
-      alignment: Alignment.topRight,
+      alignment: AlignmentDirectional.topEnd,
       children: [
         GestureDetector(
           onTap: () {
@@ -34,10 +35,10 @@ class RecommendedRecipeCard extends StatelessWidget {
                   width: 120.0,
                 ),
                 const SizedBox(
-                  width: 10,
+                  width: 10.0,
                 ),
                 SizedBox(
-                  width: 150,
+                  width: 150.0,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -63,7 +64,7 @@ class RecommendedRecipeCard extends StatelessWidget {
                           ),
                           CustomText(
                             title:
-                                "${recipeModel.mealCalories.toString()} Calories",
+                                "${recipeModel.mealCalories.toString()} ${tr("calories")}",
                             fontSize: 10.0,
                             fontWeight: FontWeight.w400,
                             color: AppColors.primaryColor,
@@ -80,7 +81,7 @@ class RecommendedRecipeCard extends StatelessWidget {
                                 width: 5.0,
                               ),
                               CustomText(
-                                title: "${recipeModel.mealTime} mins",
+                                title: "${recipeModel.mealTime} ${tr("mins")}",
                                 fontSize: 8.0,
                                 fontWeight: FontWeight.w400,
                                 color: AppColors.lightGrey,
@@ -94,7 +95,8 @@ class RecommendedRecipeCard extends StatelessWidget {
                                 width: 5.0,
                               ),
                               CustomText(
-                                  title: "${recipeModel.serving} Serving",
+                                  title:
+                                      "${recipeModel.serving} ${tr("serving")}",
                                   fontSize: 8.0,
                                   fontWeight: FontWeight.w400,
                                   color: AppColors.lightGrey),

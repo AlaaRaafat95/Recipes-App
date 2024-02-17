@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:recipe_app/utilities/exports.utilities.dart';
 
 class MasterDrawerPage extends StatefulWidget {
@@ -26,16 +27,21 @@ class _MasterDrawerPageState extends State<MasterDrawerPage> {
       mainScreenTapClose: true,
       controller: zoomDrawerController,
       style: DrawerStyle.defaultStyle,
-      menuScreen: Builder(builder: (context) {
-        return MenuPage(
+      menuScreen: Builder(
+        builder: (context) {
+          return MenuPage(
             selectedIndex: currentIndex,
             onSelectedItem: (item) {
-              setState(() {
-                currentIndex = item;
-              });
+              setState(
+                () {
+                  currentIndex = item;
+                },
+              );
               ZoomDrawer.of(context)?.close.call();
-            });
-      }),
+            },
+          );
+        },
+      ),
       mainScreen: PopScope(
         canPop: currentIndex == MenuItems.home ? true : false,
         onPopInvoked: (didPop) {
@@ -54,24 +60,23 @@ class _MasterDrawerPageState extends State<MasterDrawerPage> {
       openCurve: Curves.fastOutSlowIn,
       closeCurve: Curves.bounceIn,
       mainScreenScale: 0.35,
+      isRtl: context.locale.toString() == "ar" ? true : false,
     );
   }
 
   Widget currentScreen() {
-    switch (currentIndex) {
-      case MenuItems.home:
-        return const HomePage();
-      case MenuItems.ingredients:
-        return const IngredientsPage();
-      case MenuItems.favorites:
-        return const FavoritesPage();
-      case MenuItems.recentlyViewed:
-        return const RecentlyViewedPage();
-      case MenuItems.settings:
-        return const SettingsPage();
-
-      default:
-        return const HomePage();
+    if (currentIndex == MenuItems.home) {
+      return const HomePage();
+    } else if (currentIndex == MenuItems.ingredients) {
+      return const IngredientsPage();
+    } else if (currentIndex == MenuItems.favorites) {
+      return const FavoritesPage();
+    } else if (currentIndex == MenuItems.recentlyViewed) {
+      return const RecentlyViewedPage();
+    } else if (currentIndex == MenuItems.settings) {
+      return const SettingsPage();
+    } else {
+      return const HomePage();
     }
   }
 }

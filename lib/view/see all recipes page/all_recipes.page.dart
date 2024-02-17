@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:recipe_app/utilities/exports.utilities.dart';
 
 class AllRecipesPage extends StatelessWidget {
@@ -8,8 +9,8 @@ class AllRecipesPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const CustomText(
-          title: AppStrings.allRecipes,
+        title: CustomText(
+          title: tr("allRecipes"),
         ),
         forceMaterialTransparency: true,
       ),

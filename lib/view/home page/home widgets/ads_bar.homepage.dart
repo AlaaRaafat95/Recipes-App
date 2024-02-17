@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:recipe_app/utilities/exports.utilities.dart';
 
 class AdsBar extends StatefulWidget {
@@ -24,9 +25,9 @@ class _AdsBarState extends State<AdsBar> {
               child: CircularProgressIndicator(),
             )
           : (ads.adsList?.isEmpty ?? false)
-              ? const Center(
+              ? Center(
                   child: CustomText(
-                      title: "No Ads Found Now",
+                      title: tr("noAdsFoundNow"),
                       color: AppColors.primaryColor,
                       fontSize: 15.0,
                       fontStyle: FontStyle.italic),

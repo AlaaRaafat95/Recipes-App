@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:recipe_app/utilities/exports.utilities.dart';
 
 class TodayRecipesBar extends StatelessWidget {
@@ -13,9 +14,9 @@ class TodayRecipesBar extends StatelessWidget {
                 child: CircularProgressIndicator(),
               )
             : recipes.freshRecipesList?.isEmpty ?? false
-                ? const Center(
+                ? Center(
                     child: CustomText(
-                        title: "No Today Recipes Found",
+                        title: tr("noTodayRecipesFound"),
                         color: AppColors.primaryColor,
                         fontSize: 15,
                         fontStyle: FontStyle.italic),

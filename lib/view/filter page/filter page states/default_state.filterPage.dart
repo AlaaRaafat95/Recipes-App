@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:recipe_app/utilities/exports.utilities.dart';
 
 // ignore: must_be_immutable
@@ -25,38 +26,44 @@ class _DefaultFilterState extends State<DefaultFilterState> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const CustomText(
-            title: AppStrings.meal,
+          CustomText(
+            title: tr("meal"),
             fontSize: 16.0,
             fontWeight: FontWeight.w700,
           ),
           Center(
             child: Wrap(
-              spacing: 10.0,
+              spacing: 20.0,
               children: MealType.values
                   .map(
                     (type) => FilterChip(
                       side: const BorderSide(color: AppColors.lightGrey),
                       backgroundColor: AppColors.greyAccent,
                       selectedColor: AppColors.primaryColor,
-                      checkmarkColor: widget.filter.containsValue(type.name)
+                      checkmarkColor: widget.filter
+                              .containsValue(tr(type.name.toLowerCase()))
                           ? AppColors.white
                           : AppColors.transparent,
                       label: CustomText(
-                        title: type.name,
-                        color: widget.filter.containsValue(type.name)
+                        title: tr(type.name.toLowerCase()),
+                        color: widget.filter
+                                .containsValue(tr(type.name.toLowerCase()))
                             ? AppColors.white
                             : AppColors.primaryColor,
                       ),
-                      selected: widget.filter.containsValue(type.name),
+                      selected: widget.filter
+                          .containsValue(tr(type.name.toLowerCase())),
                       onSelected: (selected) {
                         setState(
                           () {
-                            widget.filter["mealType"] =
-                                selected ? type.name : "";
+                            SharedPreferencesServices.getLocale() == "en"
+                                ? widget.filter["mealType_en"] =
+                                    selected ? tr(type.name.toLowerCase()) : ""
+                                : widget.filter["mealType_ar"] =
+                                    selected ? tr(type.name.toLowerCase()) : "";
                           },
                         );
                       },
@@ -74,7 +81,7 @@ class _DefaultFilterState extends State<DefaultFilterState> {
                   height: 10.0,
                 ),
                 CustomText(
-                  title: details.name,
+                  title: tr(details.name.toLowerCase()),
                   fontSize: 16.0,
                   fontWeight: FontWeight.w700,
                 ),
@@ -82,31 +89,32 @@ class _DefaultFilterState extends State<DefaultFilterState> {
                   height: 10.0,
                 ),
                 Slider(
-                  value: details.name == "Serving"
+                  value: tr(details.name.toLowerCase()) == tr("serving")
                       ? widget.servingSlider
-                      : details.name == "Calories"
+                      : tr(details.name.toLowerCase()) == tr("calories")
                           ? widget.caloriesSlider
                           : widget.timeSlider,
-                  label: details.name == "Serving"
+                  label: tr(details.name.toLowerCase()) == tr("serving")
                       ? widget.servingSlider.round().toString()
-                      : details.name == "Calories"
+                      : tr(details.name.toLowerCase()) == tr("calories")
                           ? widget.caloriesSlider.round().toString()
                           : widget.timeSlider.round().toString(),
-                  max: details.name == "Serving"
+                  max: tr(details.name.toLowerCase()) == tr("serving")
                       ? 10.0
-                      : details.name == "Calories"
+                      : tr(details.name.toLowerCase()) == tr("calories")
                           ? 1000.0
                           : 120.0,
-                  divisions: details.name == "Serving" ? 5 : 10,
-                  onChanged: (serving) {
-                    details.name == "Serving"
-                        ? widget.servingSlider = serving
-                        : details.name == "Calories"
-                            ? widget.caloriesSlider = serving
-                            : widget.timeSlider = serving;
-                    details.name == "Serving"
+                  divisions:
+                      tr(details.name.toLowerCase()) == tr("serving") ? 5 : 10,
+                  onChanged: (filterName) {
+                    tr(details.name.toLowerCase()) == tr("serving")
+                        ? widget.servingSlider = filterName
+                        : tr(details.name.toLowerCase()) == tr("calories")
+                            ? widget.caloriesSlider = filterName
+                            : widget.timeSlider = filterName;
+                    tr(details.name.toLowerCase()) == tr("serving")
                         ? widget.filter["serving"] = widget.servingSlider
-                        : details.name == "Calories"
+                        : tr(details.name.toLowerCase()) == tr("calories")
                             ? widget.filter["mealCalories"] =
                                 widget.caloriesSlider
                             : widget.filter["mealTime"] = widget.timeSlider;
@@ -116,17 +124,19 @@ class _DefaultFilterState extends State<DefaultFilterState> {
               ],
             ),
           ),
+          Spacer(),
           CustomButton(
             onPressed: widget.applyButton,
             minimumSize: const Size.fromHeight(50.0),
             backgroundColor: AppColors.primaryColor,
-            child: const CustomText(
-              title: AppStrings.apply,
+            child: CustomText(
+              title: tr("apply"),
               fontSize: 18.0,
               fontWeight: FontWeight.w400,
               color: AppColors.white,
             ),
           ),
+          Spacer(),
         ],
       ),
     );

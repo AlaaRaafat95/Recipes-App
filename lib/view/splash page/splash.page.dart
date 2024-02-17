@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:recipe_app/utilities/exports.utilities.dart';
 
 class SplashPage extends StatefulWidget {
@@ -18,14 +19,21 @@ class _SplashPageState extends State<SplashPage> {
 
   void initSPlash() async {
     await Future.delayed(const Duration(seconds: 2));
-    listner = FirebaseAuth.instance.authStateChanges().listen((user) {
-      Navigation.pushReplaceRoute(
-        context: context,
-        route: user != null && user.emailVerified
-            ? const MasterDrawerPage()
-            : const SelectUserStatePage(),
-      );
-    });
+    if (context.mounted) {
+      Provider.of<LanguageProvider>(context, listen: false).currentLocale =
+          SharedPreferencesServices.getLocale();
+    }
+
+    listner = FirebaseAuth.instance.authStateChanges().listen(
+      (user) {
+        Navigation.pushReplaceRoute(
+          context: context,
+          route: user != null && user.emailVerified
+              ? const MasterDrawerPage()
+              : const SelectUserStatePage(),
+        );
+      },
+    );
   }
 
   @override
@@ -54,13 +62,13 @@ class _SplashPageState extends State<SplashPage> {
             const Spacer(),
             Image.asset(
               AppStrings.logoPic,
-              scale: 3,
+              scale: 3.0,
             ),
             const SizedBox(
               height: 10.0,
             ),
-            const CustomText(
-              title: AppStrings.logoName,
+            CustomText(
+              title: tr("logoName"),
               color: AppColors.white,
               fontSize: 14.0,
               fontWeight: FontWeight.w400,

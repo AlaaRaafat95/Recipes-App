@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:recipe_app/utilities/exports.utilities.dart';
 
 class SuccessState extends StatelessWidget {
@@ -19,14 +20,14 @@ class SuccessState extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             if (mealNameFilter.isEmpty && recipesList.isNotEmpty)
-              const Column(
+              Column(
                 children: [
                   CustomText(
-                    title: AppStrings.favorite,
+                    title: tr("favorite"),
                     fontSize: 20.0,
                     fontWeight: FontWeight.w800,
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10.0,
                   ),
                 ],
@@ -35,16 +36,17 @@ class SuccessState extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8.0),
                 child: CustomText(
-                    title: '${AppStrings.noRecipesFound} : $mealNameFilter .',
-                    color: Colors.red),
+                  title: '${tr("noRecipesFound")} : $mealNameFilter .',
+                  color: Colors.red,
+                  fontSize: 15.0,
+                ),
               )
             else if (mealNameFilter.isNotEmpty &&
                 filteredRecipesList.isNotEmpty)
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8.0),
                 child: CustomText(
-                    title:
-                        '${AppStrings.filteredByMealName} : $mealNameFilter .',
+                    title: '${tr("filteredByMealName")} : $mealNameFilter .',
                     fontWeight: FontWeight.bold),
               )
             else

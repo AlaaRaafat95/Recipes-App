@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:recipe_app/utilities/exports.utilities.dart';
 import 'package:recipe_app/view/profile%20page/profile%20widgets/delete_account.profile.dart';
 
@@ -19,8 +20,8 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const CustomText(
-          title: AppStrings.profile,
+        title: CustomText(
+          title: tr("profile"),
           fontSize: 20.0,
           fontWeight: FontWeight.w800,
         ),
@@ -35,7 +36,7 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
             const NameField(),
             ProfileField(
-                title: AppStrings.email,
+                title: tr("email"),
                 subTitle: FirebaseAuth.instance.currentUser?.email ?? "",
                 onPressed: () {},
                 icon: Icons.email_outlined),

@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:recipe_app/utilities/exports.utilities.dart';
 
 class IngredientsProvider extends ChangeNotifier {
@@ -20,8 +21,8 @@ class IngredientsProvider extends ChangeNotifier {
       notifyListeners();
     } catch (e) {
       OverlayToastMessage.show(
-        widget: const PopUpMsg(
-            title: "Loading Ingredients Faild", userState: UserState.failed),
+        widget: PopUpMsg(
+            title: tr("loadingIngredientsFaild"), userState: UserState.failed),
       );
     }
   }
@@ -52,8 +53,8 @@ class IngredientsProvider extends ChangeNotifier {
     } catch (e) {
       OverlayLoadingProgress.stop();
       OverlayToastMessage.show(
-        widget: const PopUpMsg(
-            title: "Something Wrong ", userState: UserState.failed),
+        widget:
+            PopUpMsg(title: tr("somethingWrong"), userState: UserState.failed),
       );
     }
   }

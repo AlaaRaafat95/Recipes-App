@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:recipe_app/utilities/exports.utilities.dart';
 
 class Recommended extends StatelessWidget {
@@ -10,9 +11,9 @@ class Recommended extends StatelessWidget {
               child: CircularProgressIndicator(),
             )
           : recipes.recommendedRecipesList?.isEmpty ?? false
-              ? const Center(
+              ? Center(
                   child: CustomText(
-                      title: "No Recommended Recipes",
+                      title: tr("noRecommendedRecipes"),
                       color: AppColors.primaryColor,
                       fontSize: 15,
                       fontStyle: FontStyle.italic),

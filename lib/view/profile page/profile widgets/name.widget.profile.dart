@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:recipe_app/utilities/exports.utilities.dart';
 
 class NameField extends StatefulWidget {
@@ -18,8 +19,8 @@ class _NameFieldState extends State<NameField> {
   @override
   Widget build(BuildContext context) {
     return Consumer<UserRegisterProvider>(
-      builder: (context, userRegister, child) => ProfileField(
-          title: AppStrings.name,
+      builder: (context, userRegister, _) => ProfileField(
+          title: tr("name"),
           subTitle: FirebaseAuth.instance.currentUser?.displayName ?? "",
           onPressed: () async {
             await OverlayWidget.showBottomSheet(
@@ -49,7 +50,7 @@ class _NameFieldState extends State<NameField> {
                     CustomField(
                       keyboardType: TextInputType.name,
                       controller: newNameController,
-                      labelText: AppStrings.newName,
+                      labelText: tr("newName"),
                       prefixIcon: const Icon(
                         Icons.person_4_outlined,
                         color: AppColors.primaryColor,
@@ -64,28 +65,33 @@ class _NameFieldState extends State<NameField> {
                     Row(
                       children: [
                         const Spacer(),
-                        CustomButton(
-                          backgroundColor: AppColors.primaryColor,
-                          onPressed: () async {
-                            if (userRegister.formKey?.currentState
-                                    ?.validate() ??
-                                false) {
-                              await userRegister.updateUserName(
-                                  newName: newNameController.text);
+                        Padding(
+                          padding: SharedPreferencesServices.getLocale() == "en"
+                              ? const EdgeInsets.only(right: 20.0)
+                              : const EdgeInsets.only(left: 20.0),
+                          child: CustomButton(
+                            backgroundColor: AppColors.primaryColor,
+                            onPressed: () async {
+                              if (userRegister.formKey?.currentState
+                                      ?.validate() ??
+                                  false) {
+                                await userRegister.updateUserName(
+                                    newName: newNameController.text);
 
-                              if (context.mounted) {
-                                userRegister.getUserNameCapitalLetters(
-                                    userName: newNameController.text);
+                                if (context.mounted) {
+                                  userRegister.getUserNameCapitalLetters(
+                                      userName: newNameController.text);
 
-                                Navigation.popRoute(context);
-                                userRegister.nameController?.clear();
+                                  Navigation.popRoute(context);
+                                  newNameController.clear();
+                                }
                               }
-                            }
-                          },
-                          minimumSize: const Size(30.0, 40.0),
-                          child: const CustomText(
-                            title: AppStrings.resetName,
-                            color: AppColors.white,
+                            },
+                            minimumSize: const Size(30.0, 40.0),
+                            child: CustomText(
+                              title: tr("resetName"),
+                              color: AppColors.white,
+                            ),
                           ),
                         ),
                       ],

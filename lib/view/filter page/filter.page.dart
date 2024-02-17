@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:recipe_app/utilities/exports.utilities.dart';
 import 'package:recipe_app/view/filter%20page/filter%20page%20states/default_state.filterPage.dart';
 
@@ -20,14 +21,16 @@ class _FilterPageState extends State<FilterPage> {
       backgroundColor: AppColors.white,
       appBar: AppBar(
         forceMaterialTransparency: true,
-        title: const CustomText(
-          title: AppStrings.filter,
+        title: CustomText(
+          title: tr("filter"),
           fontSize: 20.0,
           fontWeight: FontWeight.w800,
         ),
         actions: [
           Padding(
-            padding: const EdgeInsets.only(right: 20.0),
+            padding: SharedPreferencesServices.getLocale() == "en"
+                ? const EdgeInsets.only(right: 20.0)
+                : const EdgeInsets.only(left: 20.0),
             child: CustomTextButton(
                 onPressed: () {
                   setState(
@@ -42,7 +45,7 @@ class _FilterPageState extends State<FilterPage> {
                     },
                   );
                 },
-                title: AppStrings.reset,
+                title: tr("reset"),
                 fontSize: 17.0,
                 color: AppColors.primaryColor,
                 fontWeight: FontWeight.w600),
@@ -57,6 +60,7 @@ class _FilterPageState extends State<FilterPage> {
                     applyButton: () async {
                       Provider.of<RecipeProvider>(context, listen: false)
                           .filter = Map<String, dynamic>.from(filter);
+
                       await filteredRecipes.getFilteredRecipes();
                     },
                     servingSlider: servingSlider,

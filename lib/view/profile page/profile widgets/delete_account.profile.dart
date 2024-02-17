@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:recipe_app/utilities/exports.utilities.dart';
 
 class DeleteAccount extends StatefulWidget {
@@ -19,9 +20,9 @@ class _DeleteAccountState extends State<DeleteAccount> {
   @override
   Widget build(BuildContext context) {
     return Consumer<UserRegisterProvider>(
-      builder: (context, userRegister, child) => ProfileField(
-          title: AppStrings.delete,
-          subTitle: AppStrings.deleteAccount,
+      builder: (context, userRegister, _) => ProfileField(
+          title: tr("delete"),
+          subTitle: tr("deleteAccount"),
           onPressed: () async {
             await OverlayWidget.showBottomSheet(
               context: context,
@@ -36,7 +37,7 @@ class _DeleteAccountState extends State<DeleteAccount> {
                     CustomField(
                       keyboardType: TextInputType.visiblePassword,
                       controller: currentPasswordController,
-                      labelText: AppStrings.password,
+                      labelText: tr("password"),
                       prefixIcon: const Icon(Icons.lock_outline),
                       obscureText: userRegister.isIconPressed,
                       suffixIcon: CustomIconButton(
@@ -64,19 +65,23 @@ class _DeleteAccountState extends State<DeleteAccount> {
                     Row(
                       children: [
                         const Spacer(),
-                        CustomButton(
-                          backgroundColor: AppColors.primaryColor,
-                          onPressed: () async {
-                            if (userRegister.formKey?.currentState
-                                    ?.validate() ??
-                                false) {
-                              Navigation.popRoute(context);
-                              return await showDialog(
+                        Padding(
+                          padding: SharedPreferencesServices.getLocale() == "en"
+                              ? const EdgeInsets.only(right: 20.0)
+                              : const EdgeInsets.only(left: 20.0),
+                          child: CustomButton(
+                            backgroundColor: AppColors.primaryColor,
+                            onPressed: () async {
+                              if (userRegister.formKey?.currentState
+                                      ?.validate() ??
+                                  false) {
+                                Navigation.popRoute(context);
+                                return await showDialog(
                                   context: context,
                                   builder: (context) {
                                     return OverlayWidget.alertDialog(
                                       context: context,
-                                      content: AppStrings.doYouWantToDelete,
+                                      content: tr("doYouWantToDelete"),
                                       onPressed: () async {
                                         await userRegister.deleteUser(
                                             currentPassword:
@@ -92,13 +97,15 @@ class _DeleteAccountState extends State<DeleteAccount> {
                                         currentPasswordController.clear();
                                       },
                                     );
-                                  });
-                            }
-                          },
-                          minimumSize: const Size(30.0, 40.0),
-                          child: const CustomText(
-                            title: AppStrings.deleteAccount,
-                            color: AppColors.white,
+                                  },
+                                );
+                              }
+                            },
+                            minimumSize: const Size(30.0, 40.0),
+                            child: CustomText(
+                              title: tr("deleteAccount"),
+                              color: AppColors.white,
+                            ),
                           ),
                         ),
                       ],

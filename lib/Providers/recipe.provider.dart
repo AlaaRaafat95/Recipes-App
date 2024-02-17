@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:recipe_app/utilities/exports.utilities.dart';
 
 class RecipeProvider extends ChangeNotifier {
@@ -10,12 +11,7 @@ class RecipeProvider extends ChangeNotifier {
   List<RecipeModel>? get freshRecipesList => _freshRecipesList;
   List<RecipeModel>? get recommendedRecipesList => _recommendedRecipesList;
 
-  Map<String, dynamic> filter = {
-    "mealType": "",
-    "mealCalories": 0,
-    "serving": 0,
-    "mealTime": 0,
-  };
+  Map<String, dynamic> filter = {};
   Future<void> getFilteredRecipes() async {
     try {
       OverlayWidget.showAnimateLoading();
@@ -41,8 +37,8 @@ class RecipeProvider extends ChangeNotifier {
       OverlayLoadingProgress.stop();
 
       OverlayToastMessage.show(
-        widget: const PopUpMsg(
-          title: "Loading Filtered Recipes Faild",
+        widget: PopUpMsg(
+          title: tr("loadingFilteredRecipesFaild"),
           userState: UserState.failed,
         ),
       );
@@ -65,8 +61,8 @@ class RecipeProvider extends ChangeNotifier {
       notifyListeners();
     } catch (e) {
       OverlayToastMessage.show(
-        widget: const PopUpMsg(
-          title: "Loading All Recipes Faild",
+        widget: PopUpMsg(
+          title: tr("loadingAllRecipesFaild"),
           userState: UserState.failed,
         ),
       );
@@ -94,8 +90,8 @@ class RecipeProvider extends ChangeNotifier {
       notifyListeners();
     } catch (e) {
       OverlayToastMessage.show(
-        widget: const PopUpMsg(
-          title: "Loading Fresh Recipes Faild",
+        widget: PopUpMsg(
+          title: tr("loadingFreshRecipesFaild"),
           userState: UserState.failed,
         ),
       );
@@ -123,8 +119,8 @@ class RecipeProvider extends ChangeNotifier {
       notifyListeners();
     } catch (e) {
       OverlayToastMessage.show(
-        widget: const PopUpMsg(
-          title: "Loading Recommended Recipes Faild",
+        widget: PopUpMsg(
+          title: tr("loadingRecommendedRecipesFaild"),
           userState: UserState.failed,
         ),
       );
@@ -160,8 +156,8 @@ class RecipeProvider extends ChangeNotifier {
     } catch (e) {
       OverlayLoadingProgress.stop();
       OverlayToastMessage.show(
-        widget: const PopUpMsg(
-            title: " Something Wrong", userState: UserState.failed),
+        widget:
+            PopUpMsg(title: tr("somethingWrong"), userState: UserState.failed),
       );
     }
   }
@@ -177,8 +173,8 @@ class RecipeProvider extends ChangeNotifier {
       });
     } catch (e) {
       OverlayToastMessage.show(
-        widget: const PopUpMsg(
-            title: " Something Wrong", userState: UserState.failed),
+        widget:
+            PopUpMsg(title: tr("somethingWrong"), userState: UserState.failed),
       );
     }
   }
@@ -249,8 +245,8 @@ class RecipeProvider extends ChangeNotifier {
       notifyListeners();
     } catch (e) {
       OverlayToastMessage.show(
-        widget: const PopUpMsg(
-          title: "Updating Recipes Faild",
+        widget: PopUpMsg(
+          title: tr("updatingRecipesFaild"),
           userState: UserState.failed,
         ),
       );

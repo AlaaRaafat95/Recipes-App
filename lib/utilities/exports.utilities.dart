@@ -72,3 +72,8 @@ export 'package:recipe_app/view/profile%20page/profile%20widgets/password.widget
 export 'package:recipe_app/view/profile%20page/profile%20widgets/profile_field.profile.dart';
 export 'package:recipe_app/widgets/error_state.widget.dart';
 export 'package:recipe_app/widgets/default_state.widget.dart';
+export 'package:recipe_app/Providers/language.provider.dart';
+export 'package:recipe_app/services/sharedprefs.servies.dart';
+export 'package:shared_preferences/shared_preferences.dart';
+export 'package:recipe_app/view/log%20in%20page/log%20in%20widgets/reset_password.widget.login.dart';
+export 'package:restart_app/restart_app.dart';

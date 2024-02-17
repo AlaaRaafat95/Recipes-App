@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:recipe_app/utilities/exports.utilities.dart';
 
 abstract class OverlayWidget {
@@ -30,8 +31,8 @@ abstract class OverlayWidget {
       required String content,
       required VoidCallback onPressed}) {
     return AlertDialog(
-      title: const CustomText(
-        title: AppStrings.deleteRecipe,
+      title: CustomText(
+        title: tr("deleteRecipe"),
       ),
       content: CustomText(
         title: content,
@@ -42,8 +43,8 @@ abstract class OverlayWidget {
           onPressed: () {
             Navigator.pop(context);
           },
-          child: const CustomText(
-            title: AppStrings.cancel,
+          child: CustomText(
+            title: tr("cancel"),
             fontSize: 15.0,
           ),
         ),
@@ -51,10 +52,10 @@ abstract class OverlayWidget {
           minimumSize: const Size(50.0, 50.0),
           backgroundColor: AppColors.primaryColor,
           onPressed: onPressed,
-          child: const CustomText(
+          child: CustomText(
             color: AppColors.white,
             fontSize: 15.0,
-            title: AppStrings.confirm,
+            title: tr("confirm"),
           ),
         ),
       ],

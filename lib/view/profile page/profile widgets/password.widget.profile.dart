@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:recipe_app/utilities/exports.utilities.dart';
 
 class PasswordField extends StatefulWidget {
@@ -19,8 +20,8 @@ class _PasswordFieldState extends State<PasswordField> {
   @override
   Widget build(BuildContext context) {
     return Consumer<UserRegisterProvider>(
-      builder: (context, userRegister, child) => ProfileField(
-          title: AppStrings.password,
+      builder: (context, userRegister, _) => ProfileField(
+          title: tr("password"),
           subTitle: "********",
           onPressed: () async {
             await OverlayWidget.showBottomSheet(
@@ -36,7 +37,7 @@ class _PasswordFieldState extends State<PasswordField> {
                     CustomField(
                       keyboardType: TextInputType.visiblePassword,
                       controller: userRegister.passwordController,
-                      labelText: AppStrings.oldPassword,
+                      labelText: tr("oldPassword"),
                       prefixIcon: const Icon(Icons.lock_outline),
                       obscureText: userRegister.isIconPressed,
                       suffixIcon: CustomIconButton(
@@ -61,7 +62,7 @@ class _PasswordFieldState extends State<PasswordField> {
                     CustomField(
                       keyboardType: TextInputType.visiblePassword,
                       controller: newPasswordController,
-                      labelText: AppStrings.newPassword,
+                      labelText: tr("newPassword"),
                       prefixIcon: const Icon(Icons.lock_outline),
                       obscureText: userRegister.isIconPressed,
                       suffixIcon: CustomIconButton(
@@ -89,28 +90,33 @@ class _PasswordFieldState extends State<PasswordField> {
                     Row(
                       children: [
                         const Spacer(),
-                        CustomButton(
-                          backgroundColor: AppColors.primaryColor,
-                          onPressed: () async {
-                            if (userRegister.formKey?.currentState
-                                    ?.validate() ??
-                                false) {
-                              await userRegister.updateUserPassword(
-                                  currentPassword:
-                                      userRegister.passwordController!.text,
-                                  newPassword: newPasswordController.text);
-                              if (context.mounted) {
-                                Navigation.popRoute(context);
-                              }
+                        Padding(
+                          padding: SharedPreferencesServices.getLocale() == "en"
+                              ? const EdgeInsets.only(right: 20.0)
+                              : const EdgeInsets.only(left: 20.0),
+                          child: CustomButton(
+                            backgroundColor: AppColors.primaryColor,
+                            onPressed: () async {
+                              if (userRegister.formKey?.currentState
+                                      ?.validate() ??
+                                  false) {
+                                await userRegister.updateUserPassword(
+                                    currentPassword:
+                                        userRegister.passwordController!.text,
+                                    newPassword: newPasswordController.text);
+                                if (context.mounted) {
+                                  Navigation.popRoute(context);
+                                }
 
-                              userRegister.passwordController?.clear();
-                              newPasswordController.clear();
-                            }
-                          },
-                          minimumSize: const Size(30.0, 40.0),
-                          child: const CustomText(
-                            title: AppStrings.resetPassword,
-                            color: AppColors.white,
+                                userRegister.passwordController?.clear();
+                                newPasswordController.clear();
+                              }
+                            },
+                            minimumSize: const Size(30.0, 40.0),
+                            child: CustomText(
+                              title: tr("resetPassword"),
+                              color: AppColors.white,
+                            ),
                           ),
                         ),
                       ],

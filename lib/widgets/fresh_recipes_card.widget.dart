@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:recipe_app/utilities/exports.utilities.dart';
 
 class FreshRecipesCard extends StatelessWidget {
@@ -54,7 +55,8 @@ class FreshRecipesCard extends StatelessWidget {
                   value: recipeModel.mealRate!,
                 ),
                 CustomText(
-                  title: "${recipeModel.mealCalories.toString()} Calories",
+                  title:
+                      "${recipeModel.mealCalories.toString()} ${tr("calories")}",
                   fontSize: 10.0,
                   color: AppColors.primaryColor,
                   fontWeight: FontWeight.w400,
@@ -69,7 +71,7 @@ class FreshRecipesCard extends StatelessWidget {
                           width: 5.0,
                         ),
                         CustomText(
-                          title: " ${recipeModel.mealTime} mins",
+                          title: " ${recipeModel.mealTime} ${tr("mins")}",
                           fontSize: 8.0,
                           fontWeight: FontWeight.w400,
                           color: AppColors.lightGrey,
@@ -83,7 +85,7 @@ class FreshRecipesCard extends StatelessWidget {
                           width: 5.0,
                         ),
                         CustomText(
-                            title: "${recipeModel.serving} Serving",
+                            title: "${recipeModel.serving} ${tr("serving")}",
                             fontSize: 8.0,
                             fontWeight: FontWeight.w400,
                             color: AppColors.lightGrey),

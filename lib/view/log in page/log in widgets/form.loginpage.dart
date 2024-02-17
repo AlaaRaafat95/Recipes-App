@@ -1,4 +1,4 @@
-import 'package:recipe_app/view/log%20in%20page/log%20in%20widgets/reset_password.widget.login.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:recipe_app/utilities/exports.utilities.dart';
 
 class LogInForm extends StatefulWidget {
@@ -21,7 +21,7 @@ class _LogInFormState extends State<LogInForm> {
   @override
   Widget build(BuildContext context) {
     return Consumer<UserLogInProvider>(
-      builder: (context, userLogIn, child) => Form(
+      builder: (context, userLogIn, _) => Form(
         key: userLogIn.formKey,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -34,8 +34,8 @@ class _LogInFormState extends State<LogInForm> {
             const SizedBox(
               height: 30.0,
             ),
-            const CustomText(
-              title: AppStrings.signIn,
+            CustomText(
+              title: tr("signIn"),
               fontSize: 18.0,
               color: AppColors.white,
               fontWeight: FontWeight.w700,
@@ -46,7 +46,7 @@ class _LogInFormState extends State<LogInForm> {
             CustomField(
               keyboardType: TextInputType.emailAddress,
               controller: userLogIn.emailController,
-              labelText: AppStrings.emailAddress,
+              labelText: tr("emailAddress"),
               prefixIcon: const Icon(Icons.email_outlined),
               validator: (value) {
                 return Validation.emailValidator(value ?? "");
@@ -59,7 +59,7 @@ class _LogInFormState extends State<LogInForm> {
               keyboardType: TextInputType.visiblePassword,
               controller: userLogIn.passwordController,
               obscureText: userLogIn.isIconPressed,
-              labelText: AppStrings.password,
+              labelText: tr("password"),
               prefixIcon: const Icon(Icons.lock_outline),
               suffixIcon: CustomIconButton(
                 icon: userLogIn.isIconPressed
@@ -93,7 +93,7 @@ class _LogInFormState extends State<LogInForm> {
                       widget: const UserResetPassword(),
                     );
                   },
-                  title: AppStrings.forgetPassword,
+                  title: tr("forgetPassword"),
                   color: AppColors.blue,
                   fontSize: 12.0,
                   fontWeight: FontWeight.w500,
@@ -112,8 +112,8 @@ class _LogInFormState extends State<LogInForm> {
               onPressed: () async {
                 await userLogIn.logIn(context);
               },
-              child: const CustomText(
-                title: AppStrings.signIn,
+              child: CustomText(
+                title: tr("signIn"),
                 color: AppColors.white,
                 fontSize: 16.0,
                 fontWeight: FontWeight.w600,
@@ -123,8 +123,8 @@ class _LogInFormState extends State<LogInForm> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const CustomText(
-                  title: AppStrings.haveNotAccount,
+                CustomText(
+                  title: tr("haveNotAccount"),
                   color: AppColors.white,
                   fontSize: 14.0,
                   fontWeight: FontWeight.w500,
@@ -137,7 +137,7 @@ class _LogInFormState extends State<LogInForm> {
                       route: const SignUpPage(),
                     );
                   },
-                  title: AppStrings.register,
+                  title: tr("register"),
                   color: AppColors.primaryColor,
                   fontSize: 14.0,
                   fontWeight: FontWeight.w500,
