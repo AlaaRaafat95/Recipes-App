@@ -11,7 +11,7 @@ class ErrorState extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           Image.asset(
-            AppStrings.errorStateImage,
+            AppImageAssets.errorStateImage,
             scale: 1.3,
           ),
           CustomText(

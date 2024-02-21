@@ -1,4 +1,4 @@
-abstract class AppStrings {
+abstract class AppImageAssets {
   static const splashPic = "assets/images/splash.jpg";
   static const mainPic = "assets/images/mainpic.png";
   static const logoPic = "assets/images/logo.png";

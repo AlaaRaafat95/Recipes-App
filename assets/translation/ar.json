@@ -97,10 +97,13 @@
   "sendingEmailFaild":"فشل ارسال الايميل للتأكيد , حاول مره اخري",
   "logInSuccessfully":"تم الدخول بنجاح",
   "yourEmailIsn'tVerify": "هذا الحساب غير مؤكد يرجي فحص الايميل لتأكيد الحساب ",
-  "noUserFoundForThatEmail":"لا يوجد حساب بهذا البريد الاكتروني",
+  "noUserFoundForThatEmail":"لا يوجد حساب لهذا البريد الاكتروني",
   "wrongPasswordProvidedForThatUser":"كلمة مرور غير صحيحية",
   "thisEmailAccountWasDisabled":"تم تعطيل الحساب",
   "sendEmailSuccessfuly":"تم ارسال الايميل بنجاح",
   "uploadingPhotoSuccessfully":"تم تحميل الصورة بنجاح",
-  "uploadingPhotoFaild": "فشل تحميل الصورة"
+  "uploadingPhotoFaild": "فشل تحميل الصورة",
+  "emailNotTrue":"هذا البريد الالكتروني غير صحيح لهذاالحساب",
+  "PleaseEnterYourEmail":"برجاء ادخال البريد الالكتروني اولا",
+  "wrongEmailFormat":"برجاء ادخال البريد الالكتروني بالصيغة الصحيحة"
 }

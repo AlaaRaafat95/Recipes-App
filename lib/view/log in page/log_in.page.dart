@@ -14,7 +14,7 @@ class LogInPage extends StatelessWidget {
               decoration: const BoxDecoration(
                 image: DecorationImage(
                     image: AssetImage(
-                      AppStrings.mainPic,
+                      AppImageAssets.mainPic,
                     ),
                     fit: BoxFit.cover),
               ),

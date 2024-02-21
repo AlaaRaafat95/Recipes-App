@@ -108,7 +108,6 @@ class UserRegisterProvider extends ChangeNotifier {
       OverlayWidget.showAnimateLoading();
       await FirebaseAuth.instance.currentUser?.updateDisplayName(newName);
       notifyListeners();
-      // FirebaseAuth.instance.currentUser?.reload();
       OverlayLoadingProgress.stop();
       OverlayToastMessage.show(
         widget: PopUpMsg(

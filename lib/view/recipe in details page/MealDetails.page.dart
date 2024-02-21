@@ -75,7 +75,7 @@ class _MealDetailsState extends State<MealDetails> {
                       children: [
                         Row(
                           children: [
-                            Image.asset(AppStrings.timeIcon),
+                            Image.asset(AppImageAssets.timeIcon),
                             const SizedBox(
                               width: 5.0,
                             ),
@@ -93,7 +93,7 @@ class _MealDetailsState extends State<MealDetails> {
                         ),
                         Row(
                           children: [
-                            Image.asset(AppStrings.servingIcon),
+                            Image.asset(AppImageAssets.servingIcon),
                             const SizedBox(
                               width: 5.0,
                             ),

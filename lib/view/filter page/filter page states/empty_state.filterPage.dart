@@ -11,7 +11,7 @@ class EmptyFilterState extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           Image.asset(
-            AppStrings.filterEmptyStateImage,
+            AppImageAssets.filterEmptyStateImage,
             scale: 1.5,
           ),
           CustomText(

@@ -124,7 +124,7 @@ class _DefaultFilterState extends State<DefaultFilterState> {
               ],
             ),
           ),
-          Spacer(),
+          const Spacer(),
           CustomButton(
             onPressed: widget.applyButton,
             minimumSize: const Size.fromHeight(50.0),
@@ -136,7 +136,7 @@ class _DefaultFilterState extends State<DefaultFilterState> {
               color: AppColors.white,
             ),
           ),
-          Spacer(),
+          const Spacer(),
         ],
       ),
     );

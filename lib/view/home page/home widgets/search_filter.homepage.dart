@@ -58,7 +58,7 @@ class SearchAndFilter extends StatelessWidget {
             ),
             padding: const EdgeInsets.all(10.0),
             child: Image.asset(
-              AppStrings.filterIcon,
+              AppImageAssets.filterIcon,
               scale: 1.2,
             ),
           ),

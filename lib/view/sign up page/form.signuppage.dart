@@ -28,7 +28,7 @@ class _SignUpFormState extends State<SignUpForm> {
           children: [
             const Spacer(flex: 3),
             Image.asset(
-              AppStrings.logoPic,
+              AppImageAssets.logoPic,
               scale: 3.0,
             ),
             const SizedBox(

@@ -102,5 +102,8 @@
   "thisEmailAccountWasDisabled":"This email Account was disabled",
   "sendEmailSuccessfuly":"Send Email Successfuly",
   "uploadingPhotoSuccessfully":"Uploading Photo Successfully",
-  "uploadingPhotoFaild": "Uploading Photo Faild"
+  "uploadingPhotoFaild": "Uploading Photo Faild",
+  "emailNotTrue":"Please Enter The Right Email For Your Account",
+  "PleaseEnterYourEmail":"Please Enter Your Email",
+  "wrongEmailFormat":"Wrong email format try to enter the correct email"
 }

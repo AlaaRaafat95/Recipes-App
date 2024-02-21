@@ -49,7 +49,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
               padding: SharedPreferencesServices.getLocale() == "en"
                   ? const EdgeInsets.only(left: 20.0)
                   : const EdgeInsets.only(right: 20.0),
-              child: Image.asset(AppStrings.menuIcon),
+              child: Image.asset(AppImageAssets.menuIcon),
             ),
             onPressed: () {
               ZoomDrawer.of(context)?.toggle();
@@ -77,7 +77,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
                 );
               },
               child: Image.asset(
-                AppStrings.filterIcon,
+                AppImageAssets.filterIcon,
                 scale: 1.5,
               ),
             ),
@@ -115,7 +115,8 @@ class _FavoritesPageState extends State<FavoritesPage> {
                   recipesList: recipesList!);
             } else {
               return DefaultState(
-                imageUrl: AppStrings.favoriteDefaultStateImage,
+                imageUrl: AppImageAssets.favoriteDefaultStateImage,
+                scale: 1.7,
                 title: tr("favoriteDefaultStateTitle"),
               );
             }

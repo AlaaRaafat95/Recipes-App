@@ -28,7 +28,7 @@ class _LogInFormState extends State<LogInForm> {
           children: [
             const Spacer(flex: 3),
             Image.asset(
-              AppStrings.logoPic,
+              AppImageAssets.logoPic,
               scale: 3.0,
             ),
             const SizedBox(
@@ -88,10 +88,24 @@ class _LogInFormState extends State<LogInForm> {
                 const Spacer(),
                 CustomTextButton(
                   onPressed: () async {
-                    await OverlayWidget.showBottomSheet(
-                      context: context,
-                      widget: const UserResetPassword(),
-                    );
+                    if (userLogIn.emailController!.text.isNotEmpty) {
+                      await OverlayWidget.showBottomSheet(
+                        context: context,
+                        widget: UserResetPassword(
+                          emailController: userLogIn.emailController!,
+                          onPressed: () async {
+                            await userLogIn.resetPasswordEmail(
+                                resetEmail: userLogIn.emailController!.text);
+                            if (context.mounted) {
+                              Navigation.popRoute(context);
+                            }
+                          },
+                        ),
+                      );
+                    } else {
+                      OverlayWidget.showSnackBar(
+                          context: context, title: tr("PleaseEnterYourEmail"));
+                    }
                   },
                   title: tr("forgetPassword"),
                   color: AppColors.blue,

@@ -3,7 +3,12 @@ import 'package:recipe_app/utilities/exports.utilities.dart';
 class DefaultState extends StatelessWidget {
   final String imageUrl;
   final String title;
-  const DefaultState({super.key, required this.imageUrl, required this.title});
+  final double scale;
+  const DefaultState(
+      {super.key,
+      required this.imageUrl,
+      required this.title,
+      required this.scale});
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +18,7 @@ class DefaultState extends StatelessWidget {
         children: [
           Image.asset(
             imageUrl,
-            scale: 1.7,
+            scale: scale,
           ),
           CustomText(
             title: title,

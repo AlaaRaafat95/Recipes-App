@@ -30,7 +30,7 @@ class _RecentlyViewedPageState extends State<RecentlyViewedPage> {
               padding: SharedPreferencesServices.getLocale() == "en"
                   ? const EdgeInsets.only(left: 20.0)
                   : const EdgeInsets.only(right: 20.0),
-              child: Image.asset(AppStrings.menuIcon),
+              child: Image.asset(AppImageAssets.menuIcon),
             ),
             onPressed: () {
               ZoomDrawer.of(context)!.toggle();
@@ -58,7 +58,7 @@ class _RecentlyViewedPageState extends State<RecentlyViewedPage> {
                 );
               },
               child: Image.asset(
-                AppStrings.filterIcon,
+                AppImageAssets.filterIcon,
                 scale: 1.5,
               ),
             ),
@@ -99,7 +99,8 @@ class _RecentlyViewedPageState extends State<RecentlyViewedPage> {
                   recipesList: recipesList!);
             } else {
               return DefaultState(
-                imageUrl: AppStrings.recentlyViewedDefaultStateImage,
+                imageUrl: AppImageAssets.recentlyViewedDefaultStateImage,
+                scale: 1,
                 title: tr("recentlyViewedDefaultStateTitle"),
               );
             }

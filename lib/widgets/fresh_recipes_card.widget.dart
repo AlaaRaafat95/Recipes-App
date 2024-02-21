@@ -61,37 +61,40 @@ class FreshRecipesCard extends StatelessWidget {
                   color: AppColors.primaryColor,
                   fontWeight: FontWeight.w400,
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        Image.asset(AppStrings.timeIcon),
-                        const SizedBox(
-                          width: 5.0,
-                        ),
-                        CustomText(
-                          title: " ${recipeModel.mealTime} ${tr("mins")}",
-                          fontSize: 8.0,
-                          fontWeight: FontWeight.w400,
-                          color: AppColors.lightGrey,
-                        ),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Image.asset(AppStrings.servingIcon),
-                        const SizedBox(
-                          width: 5.0,
-                        ),
-                        CustomText(
-                            title: "${recipeModel.serving} ${tr("serving")}",
+                SizedBox(
+                  width: 150,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          Image.asset(AppImageAssets.timeIcon),
+                          const SizedBox(
+                            width: 5.0,
+                          ),
+                          CustomText(
+                            title: " ${recipeModel.mealTime} ${tr("mins")}",
                             fontSize: 8.0,
                             fontWeight: FontWeight.w400,
-                            color: AppColors.lightGrey),
-                      ],
-                    ),
-                  ],
+                            color: AppColors.lightGrey,
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Image.asset(AppImageAssets.servingIcon),
+                          const SizedBox(
+                            width: 5.0,
+                          ),
+                          CustomText(
+                              title: "${recipeModel.serving} ${tr("serving")}",
+                              fontSize: 8.0,
+                              fontWeight: FontWeight.w400,
+                              color: AppColors.lightGrey),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),

@@ -17,7 +17,7 @@ class HomePage extends StatelessWidget {
               padding: SharedPreferencesServices.getLocale() == "en"
                   ? const EdgeInsets.only(left: 20.0)
                   : const EdgeInsets.only(right: 20.0),
-              child: Image.asset(AppStrings.menuIcon),
+              child: Image.asset(AppImageAssets.menuIcon),
             ),
             onPressed: () {
               ZoomDrawer.of(context)!.toggle();

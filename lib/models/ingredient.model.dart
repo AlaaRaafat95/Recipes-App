@@ -1,4 +1,3 @@
-import 'package:recipe_app/Providers/language.provider.dart';
 import 'package:recipe_app/main.dart';
 import 'package:recipe_app/utilities/exports.utilities.dart';
 

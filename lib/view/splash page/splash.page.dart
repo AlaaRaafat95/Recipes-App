@@ -51,7 +51,7 @@ class _SplashPageState extends State<SplashPage> {
         decoration: const BoxDecoration(
           image: DecorationImage(
             image: AssetImage(
-              AppStrings.splashPic,
+              AppImageAssets.splashPic,
             ),
             fit: BoxFit.cover,
           ),
@@ -61,7 +61,7 @@ class _SplashPageState extends State<SplashPage> {
           children: [
             const Spacer(),
             Image.asset(
-              AppStrings.logoPic,
+              AppImageAssets.logoPic,
               scale: 3.0,
             ),
             const SizedBox(

@@ -20,6 +20,7 @@ class UserLogInProvider extends ChangeNotifier {
         await FirebaseAuth.instance.signInWithEmailAndPassword(
             email: emailController?.text ?? "",
             password: passwordController?.text ?? "");
+
         if (FirebaseAuth.instance.currentUser?.emailVerified ?? false) {
           clearLogInData();
           if (context.mounted) {
@@ -110,6 +111,22 @@ class UserLogInProvider extends ChangeNotifier {
         widget: PopUpMsg(
             title: tr("sendEmailSuccessfuly"), userState: UserState.success),
       );
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        OverlayLoadingProgress.stop();
+        OverlayToastMessage.show(
+          widget: PopUpMsg(
+              title: tr("noUserFoundForThatEmail"),
+              userState: UserState.failed),
+        );
+      }
+      if (e.code == 'invalid-email') {
+        OverlayLoadingProgress.stop();
+        OverlayToastMessage.show(
+          widget: PopUpMsg(
+              title: tr("wrongEmailFormat"), userState: UserState.failed),
+        );
+      }
     } catch (e) {
       OverlayLoadingProgress.stop();
       OverlayToastMessage.show(

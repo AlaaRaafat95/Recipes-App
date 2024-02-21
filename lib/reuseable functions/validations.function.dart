@@ -6,7 +6,7 @@ abstract class Validation {
     if (value.isEmpty) {
       return "pleaseEnterEmail".tr();
     } else {
-      if (!AppStrings.regex.hasMatch(value)) {
+      if (!AppImageAssets.regex.hasMatch(value)) {
         return "enterValidEmail".tr();
       } else if (!value.endsWith(".com")) {
         return "enterValidEmail".tr();
@@ -20,7 +20,7 @@ abstract class Validation {
     if (value.isEmpty) {
       return "pleaseEnterPassword".tr();
     } else {
-      if (!AppStrings.regex.hasMatch(value)) {
+      if (!AppImageAssets.regex.hasMatch(value)) {
         return "enterValidPassword".tr();
       } else {
         return null;

@@ -11,7 +11,7 @@ class SelectUserStatePage extends StatelessWidget {
         padding: const EdgeInsets.only(bottom: 20.0, left: 30.0, right: 30.0),
         decoration: const BoxDecoration(
           image: DecorationImage(
-            image: AssetImage(AppStrings.splashPic),
+            image: AssetImage(AppImageAssets.splashPic),
             fit: BoxFit.cover,
           ),
         ),
@@ -22,7 +22,7 @@ class SelectUserStatePage extends StatelessWidget {
               flex: 2,
             ),
             Image.asset(
-              AppStrings.logoPic,
+              AppImageAssets.logoPic,
               scale: 3.0,
             ),
             const SizedBox(
